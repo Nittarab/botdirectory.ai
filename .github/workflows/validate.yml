@@ -1,5 +1,10 @@
 name: Validate
 
+# PRs (incl. auto-merged bot submissions) run the fast path: schema
+# validation only — bot PRs can only add markdown (via-x guard enforces it),
+# and the schema validator catches everything a bad bot file can break.
+# Pushes to main run the full pipeline (type check + build) before deploy.
+
 on:
   pull_request:
   push:
@@ -18,14 +23,21 @@ jobs:
           node-version: 22
           cache: pnpm
 
+      - name: Install (validator deps only)
+        if: github.event_name == 'pull_request'
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
       - name: Install
+        if: github.event_name != 'pull_request'
         run: pnpm install --frozen-lockfile
 
       - name: Validate bot files
         run: pnpm validate
 
       - name: Type check
+        if: github.event_name != 'pull_request'
         run: pnpm check
 
       - name: Build
+        if: github.event_name != 'pull_request'
         run: pnpm build
