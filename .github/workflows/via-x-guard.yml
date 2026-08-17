@@ -1,0 +1,40 @@
+name: via-x guard
+
+# Hard boundary for auto-merged bot submissions: a PR labeled `via-x`
+# (opened by the X mention bot) may ONLY add markdown bot files. Any other
+# change — modified files, deletions, workflows, config, data — fails this
+# required check, which blocks auto-merge. Unlabeled (human) PRs pass
+# trivially; they are never auto-merged anyway.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enforce markdown-only diff for via-x PRs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+        run: |
+          case ",$LABELS," in
+            *,via-x,*) ;;
+            *) echo "No via-x label — guard not applicable."; exit 0 ;;
+          esac
+          gh api "repos/$REPO/pulls/$PR/files" --paginate \
+            --jq '.[] | [.status, .filename] | @tsv' > files.tsv
+          if [ ! -s files.tsv ]; then echo "Empty diff."; exit 1; fi
+          bad=0
+          while IFS=$'\t' read -r status file; do
+            if [ "$status" = "added" ] && printf '%s' "$file" | grep -Eq '^bots/[a-z0-9][a-z0-9-]*\.md$'; then
+              echo "ok: added $file"
+            else
+              echo "::error::forbidden change: $status $file (via-x PRs may only ADD bots/*.md)"
+              bad=1
+            fi
+          done < files.tsv
+          exit $bad

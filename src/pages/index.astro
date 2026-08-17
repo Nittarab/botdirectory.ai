@@ -11,7 +11,7 @@ import EdgeColumn from '../components/EdgeColumn.astro';
 import SponsorShuffle from '../components/SponsorShuffle.astro';
 import { FEATURES, SITE, SPONSORING } from '../config';
 import { catStyle, fmt } from '../lib/constants';
-import { getBots, toolDot, SPONSORS, PROMOS, SPONSOR_FACTS, type Bot, type Promo } from '../lib/data';
+import { getBots, toolDot, SPONSORS, PROMOS, type Bot, type Promo } from '../lib/data';
 import { edgeRight } from '../lib/sponsors';
 import { sponsorUrl } from '../lib/utm';
 
@@ -92,11 +92,8 @@ const structuredData = [
         <Header isHome />
 
         <section class="hero">
-          <p class="iz-eyebrow">
-            Community-curated · Works with <a href={SITE.grokBotUrl}>Grok Bot</a> and <a href={SITE.rakazoUrl}>Rakazo</a>
-          </p>
-          <h1 class="hero-title">Bot prompts for Grok Bot and Rakazo</h1>
-          <p class="hero-sub">Copy a ready-to-use workflow, connect its tools, and run it in minutes.</p>
+          <h1 class="hero-title">The Grok Bot directory</h1>
+          <p class="hero-sub">Set up useful bots with a single prompt and get more done, whether you’re running a business or managing everyday life.</p>
         </section>
 
         <section id="browse" class="browse" style={`max-width: ${browseMax};`}>
@@ -326,25 +323,11 @@ I review before merge.</pre>
           <p class="sponsor-eyebrow">Sponsor</p>
           <h2 class="sponsor-title">Reach people wiring up bots today</h2>
           <p class="sponsor-copy">
-            Every visitor here is picking tools for an automation they are about to run. Slots are monthly, capped at{' '}
-            {SPONSORING.slotsTotalBoth}, and you get a weekly report of impressions, clicks and which bots your slot
-            appeared next to.
+            ${SPONSORING.priceMonthly}/month for one of {SPONSORING.slotsTotalBoth} slots, plus a weekly report of impressions
+            and clicks.
           </p>
-          <div class="cta-row">
-            <PrimaryButton href={SPONSORING.paymentUrl} attrs={{ 'data-sponsor-open': '' }}>Book a slot</PrimaryButton>
-            <button type="button" class="btn-ghost">See the numbers</button>
-          </div>
         </div>
-        <div class="facts-grid">
-          {
-            SPONSOR_FACTS.map((f) => (
-              <div class="fact-card">
-                <div class="fact-value">{f.value}</div>
-                <div class="fact-label">{f.label}</div>
-              </div>
-            ))
-          }
-        </div>
+        <PrimaryButton href={SPONSORING.paymentUrl} attrs={{ 'data-sponsor-open': '' }}>Book a slot</PrimaryButton>
       </div>
     </section>
 

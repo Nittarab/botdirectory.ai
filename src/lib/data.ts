@@ -3,7 +3,6 @@ import type { Category } from './constants';
 import toolsJson from '../../data/tools.json';
 import sponsorsJson from '../../data/sponsors.json';
 import promosJson from '../../data/promos.json';
-import sponsorFactsJson from '../../data/sponsor-facts.json';
 
 
 export interface Sponsor {
@@ -28,11 +27,6 @@ export interface Promo {
   note: string;
 }
 
-export interface SponsorFact {
-  value: string;
-  label: string;
-}
-
 export interface Bot {
   slug: string;
   name: string;
@@ -54,7 +48,6 @@ export interface Bot {
 export const TOOLS = toolsJson as Record<string, string>;
 export const SPONSORS = sponsorsJson as Sponsor[];
 export const PROMOS = promosJson as Promo[];
-export const SPONSOR_FACTS = sponsorFactsJson as SponsorFact[];
 
 export function toolDot(name: string): string {
   return TOOLS[name] ?? '#8E8E8E';

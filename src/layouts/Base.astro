@@ -12,8 +12,8 @@ interface Props {
 
 const { title, description, type = 'website', structuredData } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).href;
-const ogImage = new URL('/og-v2.png', Astro.site ?? SITE.url).href;
-const ogImageAlt = 'botdirectory.ai — ready-to-use bot prompts';
+const ogImage = new URL('/og.png', Astro.site ?? SITE.url).href;
+const ogImageAlt = 'botdirectory.ai — Meet the bots';
 const jsonLd = structuredData
   ? JSON.stringify(structuredData).replace(/</g, '\\u003c')
   : undefined;
