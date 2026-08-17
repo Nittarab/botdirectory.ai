@@ -212,7 +212,7 @@ const description = 'Open source prompts to set up Grok Bot and Rakazo bots in m
 
               <div id="empty-state" class="empty-state" hidden>
                 <p class="empty-state-title">No bot for that yet.</p>
-                <p class="empty-state-sub">Write the prompt, open a PR — it lands on the shelf for everyone.</p>
+                <p class="empty-state-sub">Write the prompt and open a PR — or tag @botdirectoryai on X and our agent does it for you.</p>
               </div>
             </div>
 
@@ -254,6 +254,10 @@ const description = 'Open source prompts to set up Grok Bot and Rakazo bots in m
             <PrimaryButton href={SITE.repoUrl}>Open a pull request</PrimaryButton>
             <a href={SITE.contributingUrl} class="btn-secondary">Read the guide</a>
           </div>
+          <p class="contribute-alt">
+            No PR needed: tag <a href={SITE.xUrl}>{SITE.xHandle}</a> under any tweet about a bot setup — our
+            agent reads the thread, opens the PR, and replies with the live page. You get the scout credit.
+          </p>
         </div>
         <div class="file-card">
           <div class="file-card-head">

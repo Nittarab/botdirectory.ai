@@ -1234,3 +1234,6 @@ a.badge-plain:hover { color: var(--iz-ink); }
 .page-sponsors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
 /* No-JS fallback: cap at three even before the shuffle script prunes. */
 .page-sponsors-grid > :nth-child(n + 4) { display: none; }
+
+/* Contribute section: the tag-on-X alternative path */
+.contribute-alt { font-size: 14px; line-height: 1.55; color: var(--iz-muted); margin: 16px 0 0; max-width: 460px; text-wrap: pretty; }

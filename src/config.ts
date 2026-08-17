@@ -14,6 +14,7 @@ export const SITE = {
   tagline: 'Open source prompts for Grok Bot and Rakazo. Copy one, connect your tools, done.',
   /** X handle the mention bot listens on. */
   xHandle: '@botdirectoryai',
+  xUrl: 'https://x.com/botdirectoryai',
 
   /** Public GitHub repo (placeholder org until the real one exists). */
   repoUrl: 'https://github.com/elie222/botdirectory',
@@ -66,7 +67,7 @@ export const COPIES_API = {
    * The endpoint is the Cloudflare Worker in ../botdirectory-automation/api —
    * flip on once it's deployed and `endpoint` points at it.
    */
-  enabled: false,
+  enabled: true,
   endpoint: 'https://api.botdirectory.ai/api/copies',
 } as const;
 
