@@ -30,7 +30,10 @@ function init(): void {
     integration: 'all',
     query: '',
     sort: 'copies',
-    view: 'table',
+    // The table is useful on wide screens, but on a phone it turns the
+    // directory into a horizontal scroller. Start with the purpose-built
+    // cards there instead.
+    view: window.matchMedia('(max-width: 640px)').matches ? 'cards' : 'table',
   };
   // Bot pages deep-link here with ?category=…; reflect it in the select.
   category.dispatchEvent(new CustomEvent('select:set', { detail: state.category }));

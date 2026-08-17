@@ -1286,6 +1286,148 @@ a.badge-plain:hover { color: var(--iz-ink); }
   .iz-rail > * { flex: 0 0 246px; scroll-snap-align: start; }
 }
 
+/* ---------- Phone layout ---------- */
+@media (max-width: 640px) {
+  .site-header {
+    padding: 16px 18px;
+    gap: 12px;
+  }
+  .wordmark {
+    flex: none;
+    font-size: 18px;
+  }
+  .site-nav {
+    min-width: 0;
+    gap: 8px;
+    margin-left: auto;
+  }
+  /* These destinations remain available in the footer; keeping only the
+     page actions here prevents the header from widening the viewport. */
+  .site-nav .nav-link { display: none; }
+  .theme-btn {
+    flex: none;
+    width: 34px;
+    height: 34px;
+    margin-left: 0;
+  }
+  .btn-add {
+    flex: none;
+    margin-left: 0;
+    padding: 8px 13px;
+    white-space: nowrap;
+  }
+
+  .hero { padding: 28px 18px 24px; }
+  .hero-title { font-size: 36px; }
+  .hero-sub { font-size: 16px; text-wrap: pretty; }
+  .browse { padding: 0 18px 64px; }
+
+  .filterbar {
+    margin-bottom: 18px;
+    padding-bottom: 16px;
+  }
+  .filterbar-controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    gap: 8px 18px;
+  }
+  .search-input {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 36px;
+  }
+  .sel { min-width: 0; }
+  .sel-trigger {
+    width: 100%;
+    min-width: 0;
+    min-height: 36px;
+    justify-content: space-between;
+  }
+  .sel-trigger-body { min-width: 0; }
+  .sel-trigger-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .sel-pop {
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    top: 50%;
+    width: auto;
+    max-width: none;
+    transform: translateY(-50%);
+  }
+  /* Cards are the mobile directory UI; the table remains available once
+     the viewport is wide enough to compare columns meaningfully. */
+  .view-toggle { display: none; }
+  .cards-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .bot-card { padding: 16px; }
+
+  .contribute-inner {
+    padding: 64px 18px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+  .contribute-title { font-size: 32px; }
+  .cta-row { flex-wrap: wrap; }
+  .file-card { min-width: 0; }
+  .file-card-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .sponsor-inner { padding: 40px 18px; }
+
+  .bot-article { padding: 28px 18px 36px; }
+  .bot-title { font-size: 36px; }
+  .badge-row { margin-top: 16px; }
+  .attribution {
+    flex-basis: 100%;
+    margin: 2px 0 0;
+  }
+  .prompt-section { margin-top: 34px; }
+  .prompt-block {
+    padding: 16px;
+    font-size: 13px;
+  }
+  .connect-section, .cta-card { margin-top: 38px; }
+  .connect-sponsor {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .connect-sponsor-copy {
+    flex: 1;
+    min-width: 170px;
+  }
+  .connect-sponsor-label { margin-left: 40px; }
+  .cta-card { padding: 20px; }
+  .cta-actions { width: 100%; }
+  .cta-actions .pbtn-wrap,
+  .cta-actions .pbtn,
+  .cta-actions .btn-view-source { width: 100%; }
+  .cta-actions .btn-view-source { justify-content: center; }
+  .related-section, .page-sponsors { margin-top: 44px; }
+  .related-grid, .page-sponsors-grid { grid-template-columns: minmax(0, 1fr); }
+
+  .footer-inner {
+    padding: 44px 18px 36px;
+    gap: 36px;
+  }
+  .footer-cols {
+    width: 100%;
+    justify-content: space-between;
+    gap: 28px;
+  }
+  .footer-bottom { padding: 0 18px 36px; }
+  .sponsor-dialog {
+    width: calc(100vw - 32px);
+    padding: 22px 20px;
+  }
+}
+
 /* ---------- Bot page sponsor row (3 random, white cards) ---------- */
 .page-sponsors { margin-top: 52px; padding-top: 24px; border-top: 1px solid var(--iz-line); }
 .page-sponsors-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
