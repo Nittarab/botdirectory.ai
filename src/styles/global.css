@@ -1297,3 +1297,5 @@ a.badge-plain:hover { color: var(--iz-ink); }
 .td-handle { font-size: 12.5px; font-weight: 600; color: var(--iz-ink); }
 .td-text { margin: 2px 0 0; font-size: 13px; line-height: 1.45; color: var(--iz-body); }
 .td-mention { color: var(--iz-blue-600); font-weight: 500; }
+.contribute-guide-link { display: inline-block; margin-top: 12px; font-size: 13.5px; color: var(--iz-muted); }
+.contribute-guide-link:hover { color: var(--iz-ink); }

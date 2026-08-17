@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Bot Directory — Open-source Grok Bots">
+  <defs>
+    <linearGradient id="blue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2965EC" />
+      <stop offset="1" stop-color="#5C89F8" />
+    </linearGradient>
+    <style>
+      @font-face {
+        font-family: "Aeonik";
+        src: url("fonts/aeonik-medium.woff") format("woff");
+        font-weight: 500;
+      }
+      @font-face {
+        font-family: "Geist";
+        src: url("fonts/geist-latin.woff2") format("woff2");
+        font-weight: 400 700;
+      }
+      @font-face {
+        font-family: "Geist Mono";
+        src: url("fonts/geist-mono-latin.woff2") format("woff2");
+        font-weight: 400 600;
+      }
+    </style>
+  </defs>
+
+  <rect width="1200" height="630" fill="#FDFDFD" />
+  <rect width="790" height="630" fill="url(#blue)" />
+
+  <text x="68" y="84" fill="#FFFFFF" font-family="Aeonik, sans-serif" font-size="28" font-weight="500">botdirectory.ai</text>
+  <circle cx="745" cy="73" r="5" fill="#FFFFFF" />
+
+  <text x="64" y="264" fill="#FFFFFF" font-family="Aeonik, sans-serif" font-size="92" font-weight="500" letter-spacing="-2">Open-source</text>
+  <text x="64" y="360" fill="#FFFFFF" font-family="Aeonik, sans-serif" font-size="92" font-weight="500" letter-spacing="-2">Grok Bots.</text>
+  <text x="68" y="452" fill="#FFFFFF" fill-opacity="0.84" font-family="Geist, sans-serif" font-size="25">Prompts to set up your bots in minutes.</text>
+
+  <line x1="68" y1="544" x2="330" y2="544" stroke="#FFFFFF" stroke-opacity="0.32" />
+  <text x="68" y="578" fill="#FFFFFF" fill-opacity="0.72" font-family="Geist Mono, monospace" font-size="14" letter-spacing="1.3">COPY  ·  CONNECT  ·  RUN</text>
+
+  <text x="984" y="375" fill="#2965EC" font-family="Aeonik, sans-serif" font-size="360" font-weight="500" text-anchor="middle">b</text>
+
+  <circle cx="866" cy="477" r="6" fill="#006EFF" />
+  <text x="888" y="483" fill="#242424" font-family="Geist Mono, monospace" font-size="15" letter-spacing="0.5">DAILY BRIEFING</text>
+  <circle cx="866" cy="520" r="6" fill="#E65707" />
+  <text x="888" y="526" fill="#242424" font-family="Geist Mono, monospace" font-size="15" letter-spacing="0.5">SEO IMPROVER</text>
+  <circle cx="866" cy="563" r="6" fill="#17A34A" />
+  <text x="888" y="569" fill="#242424" font-family="Geist Mono, monospace" font-size="15" letter-spacing="0.5">CALL COACH</text>
+</svg>
