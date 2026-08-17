@@ -28,5 +28,11 @@
   "Stripe": "#6410FF",
   "Zoom": "#2965EC",
   "Amazon": "#E65707",
-  "Costco": "#C94244"
+  "Costco": "#C94244",
+  "Google Sheets": "#17A34A",
+  "YouTube": "#C94244",
+  "Reddit": "#E65707",
+  "Hacker News": "#E65707",
+  "Glean": "#2965EC",
+  "Grok Bot": "#242424"
 }

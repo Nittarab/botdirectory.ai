@@ -1,0 +1,10 @@
+---
+name: NOTAM Briefer
+category: Productivity
+contributor: mopargtx440
+contributor_url: https://x.com/mopargtx440
+integrations: [FAA NOTAM Search]
+added_via: https://x.com/mopargtx440/status/2089405925727539393
+---
+
+Set up a new bot for me that keeps me current on NOTAMs. Walk me through pointing it at FAA NOTAM Search for the airports and area I cover, then schedule it: a full brief twice a day and a short update every few hours with only what's new or changed since the last one — TFRs, closures, lighting, obstacles, anything that touches my routes. It's a briefing aid, not a substitute for my official preflight. Ask me for my coverage area, base airports and when I want the two main briefs, send one so I can check it against the source, then save it.

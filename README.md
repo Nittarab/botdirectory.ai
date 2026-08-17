@@ -1,6 +1,6 @@
 # botdirectory.ai
 
-An open-source directory of agent-bot prompts for [Grok Bot](https://x.ai/bot),
+A community-maintained directory of ready-to-use agent prompts for [Grok Bot](https://x.ai/bot),
 [Rakazo](https://rakazo.com), and any agent you already use. Copy a prompt,
 paste it into your agent, and it sets itself up as a scheduled bot — email
 triage, daily briefings, SEO fixes, churn warnings, and more.

@@ -11,7 +11,7 @@ export const SITE = {
   /** Canonical origin (no trailing slash). */
   url: 'https://botdirectory.ai',
   /** Default meta description / footer blurb. */
-  tagline: 'Open source prompts for Grok Bot and Rakazo. Copy one, connect your tools, done.',
+  tagline: 'Ready-to-use prompts for Grok Bot, Rakazo, and other AI agents. Copy one, connect your tools, done.',
   /** X handle the mention bot listens on. */
   xHandle: '@botdirectoryai',
   xUrl: 'https://x.com/botdirectoryai',
@@ -21,10 +21,10 @@ export const SITE = {
   contributingUrl: 'https://github.com/elie222/botdirectory.ai/blob/main/CONTRIBUTING.md',
 
   /** Products linked from the header / footer / copy. */
-  rakazoUrl: 'https://rakazo.com',
-  grokBotUrl: 'https://x.ai/bot',
-  grokUrl: 'https://grok.com',
-  inboxZeroUrl: 'https://getinboxzero.com',
+  rakazoUrl: 'https://rakazo.com?utm_source=botdirectory.ai&utm_medium=referral',
+  grokBotUrl: 'https://x.ai/bot?utm_source=botdirectory.ai&utm_medium=referral',
+  grokUrl: 'https://grok.com?utm_source=botdirectory.ai&utm_medium=referral',
+  inboxZeroUrl: 'https://getinboxzero.com?utm_source=botdirectory.ai&utm_medium=referral',
 
   copyrightHolder: 'Inbox Zero Inc.',
   copyrightYear: 2026,

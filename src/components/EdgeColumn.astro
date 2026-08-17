@@ -6,6 +6,7 @@
  */
 import SponsorLogo from './SponsorLogo.astro';
 import { edgeCardStyle, edgeLeft, edgeRight, slotsLineBoth, tinted } from '../lib/sponsors';
+import { sponsorUrl } from '../lib/utm';
 
 interface Props {
   side: 'left' | 'right';
@@ -19,7 +20,7 @@ const cardClass = side === 'left' ? 'edge-card-left' : 'edge-card-right';
 <div class="iz-edge">
   {
     sponsors.map((s) => (
-      <a href={s.url} class:list={['edge-card', cardClass, { 'edge-card-tinted': tinted }]} style={edgeCardStyle(s)}>
+      <a href={sponsorUrl(s.url, 'edge')} class:list={['edge-card', cardClass, { 'edge-card-tinted': tinted }]} style={edgeCardStyle(s)}>
         <SponsorLogo sponsor={s} class="edge-logo" />
         <span class="edge-name">{s.name}</span>
         <p class="edge-tagline">{s.tagline}</p>

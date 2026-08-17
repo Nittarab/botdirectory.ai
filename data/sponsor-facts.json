@@ -1,6 +1,6 @@
 [
   { "value": "$800", "label": "per month — the price rises as slots fill" },
   { "value": "15", "label": "slots total — never more" },
-  { "value": "60+", "label": "open-source bots people come here to copy" },
+  { "value": "60+", "label": "bot prompts people come here to copy" },
   { "value": "Weekly", "label": "report of impressions, clicks and adjacent bots" }
 ]

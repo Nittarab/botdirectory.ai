@@ -13,6 +13,7 @@ import { FEATURES, SITE, SPONSORING } from '../config';
 import { catStyle, fmt } from '../lib/constants';
 import { getBots, toolDot, SPONSORS, PROMOS, SPONSOR_FACTS, type Bot, type Promo } from '../lib/data';
 import { edgeRight } from '../lib/sponsors';
+import { sponsorUrl } from '../lib/utm';
 
 const bots = await getBots(); // sorted by copies desc — the default view
 const allTools = [...new Set(bots.flatMap((b) => b.integrations))].sort();
@@ -39,11 +40,48 @@ if (mode === 'inline') {
 
 const searchText = (b: Bot) => (b.name + ' ' + b.prompt + ' ' + b.integrations.join(' ')).toLowerCase();
 
-const title = `The Grok Bot directory | ${SITE.wordmark}`;
-const description = 'Open source prompts to set up Grok Bot and Rakazo bots in minutes. Copy one, connect your tools, done.';
+const title = `Grok Bot Prompts & AI Bot Directory | ${SITE.wordmark}`;
+const description =
+  'Browse ready-to-use bot prompts for Grok Bot, Rakazo, and other AI agents. Copy a workflow, connect its tools, and launch a scheduled bot in minutes.';
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE.url}/#website`,
+    name: SITE.wordmark,
+    url: SITE.url,
+    description,
+    publisher: {
+      '@type': 'Organization',
+      '@id': `${SITE.url}/#organization`,
+      name: SITE.wordmark,
+      url: SITE.url,
+      sameAs: [SITE.xUrl, SITE.repoUrl],
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${SITE.url}/#directory`,
+    name: 'AI bot prompt directory',
+    url: SITE.url,
+    description,
+    isPartOf: { '@id': `${SITE.url}/#website` },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: bots.length,
+      itemListElement: bots.map((bot, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: bot.name,
+        url: `${SITE.url}/bots/${bot.slug}/`,
+      })),
+    },
+  },
+];
 ---
 
-<Base title={title} description={description}>
+<Base title={title} description={description} structuredData={structuredData}>
   <div class:list={['iz-page-root', { 'hide-copies': !FEATURES.showCopies }]}>
     <MarqueeStrips />
 
@@ -55,10 +93,10 @@ const description = 'Open source prompts to set up Grok Bot and Rakazo bots in m
 
         <section class="hero">
           <p class="iz-eyebrow">
-            Open source · <a href={SITE.grokUrl}>Grok Bot</a> and <a href={SITE.rakazoUrl}>Rakazo</a>
+            Community-curated · Works with <a href={SITE.grokBotUrl}>Grok Bot</a> and <a href={SITE.rakazoUrl}>Rakazo</a>
           </p>
-          <h1 class="hero-title">The Grok Bot directory</h1>
-          <p class="hero-sub">Prompts to set up your bots in minutes.</p>
+          <h1 class="hero-title">Bot prompts for Grok Bot and Rakazo</h1>
+          <p class="hero-sub">Copy a ready-to-use workflow, connect its tools, and run it in minutes.</p>
         </section>
 
         <section id="browse" class="browse" style={`max-width: ${browseMax};`}>
@@ -122,7 +160,7 @@ const description = 'Open source prompts to set up Grok Bot and Rakazo bots in m
                       </a>
                     ) : (
                       <a
-                        href={row.promo.href}
+                        href={sponsorUrl(row.promo.href, 'promo')}
                         class="bot-card"
                         data-promo
                         data-at={row.promo.at}
@@ -185,7 +223,7 @@ const description = 'Open source prompts to set up Grok Bot and Rakazo bots in m
                       </a>
                     ) : (
                       <a
-                        href={row.promo.href}
+                        href={sponsorUrl(row.promo.href, 'promo')}
                         class="bot-row"
                         data-promo
                         data-at={row.promo.at}

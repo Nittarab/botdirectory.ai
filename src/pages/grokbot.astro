@@ -13,12 +13,41 @@ import { getBots } from '../lib/data';
 const bots = await getBots();
 const top = bots.slice(0, 10);
 
-const title = `Grok Bot directory — prompts that work in Grok Bot | ${SITE.wordmark}`;
+const title = `Grok Bot Prompts & Bot Directory | ${SITE.wordmark}`;
 const description =
-  'A directory of open source Grok Bot prompts. Copy a prompt, paste it into Grok Bot, and it sets itself up as a scheduled bot — every prompt also works in Rakazo.';
+  'Browse ready-to-use Grok Bot prompts for email, marketing, sales, operations, and more. Copy a workflow and set up a scheduled bot in minutes.';
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Grok Bot prompt directory',
+    url: `${SITE.url}/grokbot/`,
+    description,
+    isPartOf: { '@type': 'WebSite', name: SITE.wordmark, url: SITE.url },
+    about: { '@type': 'Thing', name: 'Grok Bot', url: SITE.grokBotUrl },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: bots.length,
+      itemListElement: top.map((bot, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: bot.name,
+        url: `${SITE.url}/bots/${bot.slug}/`,
+      })),
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'All bots', item: `${SITE.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Grok Bot prompts', item: `${SITE.url}/grokbot/` },
+    ],
+  },
+];
 ---
 
-<Base title={title} description={description}>
+<Base title={title} description={description} structuredData={structuredData}>
   <Header />
 
   <article class="bot-article">
@@ -28,7 +57,7 @@ const description =
       <span>Grok Bot</span>
     </div>
 
-    <h1 class="bot-title">The Grok Bot directory</h1>
+    <h1 class="bot-title">Grok Bot prompts and workflows</h1>
 
     <section class="prompt-section">
       <h2 class="section-title" style="margin-bottom: 12px;">What is Grok Bot?</h2>
@@ -42,9 +71,9 @@ const description =
     <section class="connect-section">
       <h2 class="section-title">Prompts that work in Grok Bot</h2>
       <p class="section-note" style="margin: 12px 0 16px;">
-        Every bot in this directory is a copy-paste Grok Bot prompt, contributed as one open source markdown file.
-        Nothing is locked in: the same prompts run in <a href={SITE.rakazoUrl}>Rakazo</a>, the open-source Grok Bot
-        alternative, or any agent you already use. These are the ten most copied:
+        Every bot in this directory is a copy-paste prompt published as an editable Markdown file in a public GitHub
+        repository. The same prompts also run in <a href={SITE.rakazoUrl}>Rakazo</a> or another agent you already use.
+        Here are ten to get started:
       </p>
       <div class:list={['bot-table', { 'hide-copies': !FEATURES.showCopies }]}>
         <div class="bot-table-head">

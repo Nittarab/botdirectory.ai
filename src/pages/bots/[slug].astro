@@ -6,6 +6,7 @@ import Footer from '../../components/Footer.astro';
 import { CONNECT_SPONSOR, FEATURES, SITE } from '../../config';
 import { catStyle, fmt } from '../../lib/constants';
 import { getBots, toolDot, SPONSORS, type Bot } from '../../lib/data';
+import { sponsorUrl } from '../../lib/utm';
 
 export async function getStaticPaths() {
   const bots = await getBots();
@@ -27,9 +28,39 @@ const relatedTitle = sameCategory.length ? `More ${bot.category.toLowerCase()} b
 // Same title/description the design's syncHead() produced.
 const title = `${bot.name} — a Grok Bot prompt you can copy | ${SITE.wordmark}`;
 const description = `Copy the ${bot.name} prompt to set up a bot on ${bot.integrations.join(', ')}. Paste it into Grok Bot or Rakazo and it walks you through the setup.`;
+const pageUrl = `${SITE.url}/bots/${bot.slug}/`;
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: `${bot.name} bot prompt`,
+    url: pageUrl,
+    description,
+    genre: bot.category,
+    keywords: [bot.category, ...bot.integrations, 'AI bot prompt', 'Grok Bot prompt'],
+    isAccessibleForFree: true,
+    isPartOf: { '@type': 'WebSite', name: SITE.wordmark, url: SITE.url },
+    ...(bot.contributor && {
+      creator: {
+        '@type': 'Person',
+        name: bot.contributor,
+        url: bot.contributorUrl ?? `https://github.com/${bot.contributor}`,
+      },
+    }),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'All bots', item: `${SITE.url}/` },
+      { '@type': 'ListItem', position: 2, name: bot.category, item: `${SITE.url}/?category=${encodeURIComponent(bot.category)}` },
+      { '@type': 'ListItem', position: 3, name: bot.name, item: pageUrl },
+    ],
+  },
+];
 ---
 
-<Base title={title} description={description}>
+<Base title={title} description={description} type="article" structuredData={structuredData}>
   <Header />
 
   <article class="bot-article" data-slug={bot.slug}>
@@ -102,7 +133,7 @@ const description = `Copy the ${bot.name} prompt to set up a bot on ${bot.integr
       <p class="section-note">The prompt asks for these as it goes — however you normally connect them works.</p>
       {
         CONNECT_SPONSOR.enabled && (
-          <a href={CONNECT_SPONSOR.url} class="connect-sponsor">
+          <a href={sponsorUrl(CONNECT_SPONSOR.url, 'connect')} class="connect-sponsor">
             <img src={CONNECT_SPONSOR.logo} alt={`${CONNECT_SPONSOR.name} logo`} width="128" height="128" class="connect-sponsor-logo" loading="lazy" />
             <span class="connect-sponsor-copy">
               {CONNECT_SPONSOR.copy} <span class="connect-sponsor-cta">{CONNECT_SPONSOR.cta}</span>
@@ -116,7 +147,7 @@ const description = `Copy the ${bot.name} prompt to set up a bot on ${bot.integr
     <section class="cta-card">
       <div>
         <p class="cta-title">Run {bot.name} yourself</p>
-        <p class="cta-sub">Free, open source, and yours to edit after setup.</p>
+        <p class="cta-sub">Free to copy, adapt, and edit after setup.</p>
       </div>
       <div class="cta-actions">
         <div class="pbtn-wrap">
@@ -150,7 +181,7 @@ const description = `Copy the ${bot.name} prompt to set up a bot on ${bot.integr
         <a href="/#sponsor" class="page-sponsors-cta">advertise →</a>
       </div>
       <div class="page-sponsors-grid" id="page-sponsors-grid">
-        {SPONSORS.map((s) => <SponsorCard sponsor={s} />)}
+        {SPONSORS.map((s) => <SponsorCard sponsor={s} placement="bot-page" />)}
       </div>
     </section>
   </article>
