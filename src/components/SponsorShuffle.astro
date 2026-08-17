@@ -1,0 +1,18 @@
+<!-- Randomize sponsor order per page load so impressions split evenly.
+     Inline + right after render so the swap happens before paint. -->
+<script is:inline>
+  (() => {
+    const cols = document.querySelectorAll('.iz-cols > .iz-edge');
+    if (cols.length !== 2) return;
+    const [left, right] = cols;
+    const cards = [...document.querySelectorAll('.iz-cols > .iz-edge .edge-card:not(.edge-card-slot)')];
+    for (let i = cards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [cards[i], cards[j]] = [cards[j], cards[i]];
+    }
+    const half = Math.ceil(cards.length / 2);
+    const slot = left.querySelector('.edge-card-slot');
+    cards.slice(0, half).forEach((c) => right.appendChild(c));
+    cards.slice(half).forEach((c) => (slot ? left.insertBefore(c, slot) : left.appendChild(c)));
+  })();
+</script>

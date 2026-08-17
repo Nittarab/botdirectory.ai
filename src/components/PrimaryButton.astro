@@ -1,0 +1,26 @@
+---
+/**
+ * Design-system PrimaryButton: gradient fill inside a 1px gradient border
+ * wrap with a blue glow; the wrap scales on hover.
+ */
+interface Props {
+  href?: string;
+  /** Inner button height in px (48px overall = 46, bot-page CTA = 44). */
+  height?: 44 | 46;
+  /** Extra attributes for the inner element (data-* hooks). */
+  attrs?: Record<string, string>;
+}
+
+const { href, height = 46, attrs = {} } = Astro.props;
+const inner = `pbtn${height === 44 ? ' pbtn-44' : ''}`;
+---
+
+<div class="pbtn-wrap">
+  {
+    href ? (
+      <a href={href} class={inner} {...attrs}><slot /></a>
+    ) : (
+      <button type="button" class={inner} {...attrs}><slot /></button>
+    )
+  }
+</div>

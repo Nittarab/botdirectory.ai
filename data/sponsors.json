@@ -1,0 +1,12 @@
+[
+  { "name": "Comp AI", "initial": "C", "family": "indigo", "tagline": "AI that gets you SOC 2, ISO 27001 and HIPAA audit-ready in record time.", "cta": "Get audit-ready →", "url": "https://trycomp.ai", "logo": "/images/sponsors/comp-ai.png" },
+  { "name": "Postiz", "initial": "P", "family": "purple", "tagline": "Agentic social scheduling — plan, generate and post across 30+ networks.", "cta": "Schedule a post →", "url": "https://postiz.com", "logo": "/images/sponsors/postiz.png" },
+  { "name": "GojiberryAI", "initial": "G", "family": "pink", "tagline": "Finds warm leads and books sales calls for you automatically.", "cta": "Find warm leads →", "url": "https://gojiberry.ai", "logo": "/images/sponsors/gojiberryai.png" },
+  { "name": "FeedHive", "initial": "F", "family": "blue", "tagline": "AI social media at scale — on-brand content, automated posting.", "cta": "Create with AI →", "url": "https://www.feedhive.com", "logo": "/images/sponsors/feedhive.png" },
+  { "name": "SuperDesign", "initial": "S", "family": "orange", "tagline": "Turns ChatGPT into a designer — real visual design from a prompt.", "cta": "Design with ChatGPT →", "url": "https://superdesign.dev/chatgpt", "logo": "/images/sponsors/superdesign.png" },
+  { "name": "treg", "initial": "T", "family": "green", "tagline": "Connect your agents to 2,630+ API endpoints — one auth, pay per result.", "cta": "Connect your agent →", "url": "https://treg.to", "logo": "/images/sponsors/treg.png" },
+  { "name": "ScreenshotOne", "initial": "S", "family": "purple", "tagline": "Screenshot API for developers — capture any site with one request.", "cta": "Grab an API key →", "url": "https://screenshotone.com", "logo": "/images/sponsors/screenshotone.png" },
+  { "name": "Trends.vc", "initial": "T", "family": "blue", "tagline": "Weekly research reports on new markets and ideas for founders.", "cta": "Read a report →", "url": "https://trends.vc", "logo": "/images/sponsors/trends-vc.png" },
+  { "name": "Inbox Zero", "initial": "I", "family": "blue", "tagline": "Your 24/7 AI email assistant. Open source, works with Gmail and Outlook.", "cta": "Clean your inbox →", "url": "https://getinboxzero.com", "logo": "/images/sponsors/inbox-zero.png" },
+  { "name": "Castos", "initial": "C", "family": "purple", "tagline": "The easiest way to start and grow your podcast — publish in minutes, distribute everywhere.", "cta": "Start a podcast →", "url": "https://castos.com", "logo": "/images/sponsors/castos.png" }
+]

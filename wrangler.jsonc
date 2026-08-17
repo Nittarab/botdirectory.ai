@@ -1,0 +1,10 @@
+{
+  "name": "botdirectory",
+  "compatibility_date": "2026-08-01",
+  // Pure static site: Wrangler serves the built Astro output as static assets.
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

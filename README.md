@@ -1,0 +1,62 @@
+# botdirectory.ai
+
+An open-source directory of agent-bot prompts for [Grok Bot](https://x.ai/bot),
+[Rakazo](https://rakazo.com), and any agent you already use. Copy a prompt,
+paste it into your agent, and it sets itself up as a scheduled bot — email
+triage, daily briefings, SEO fixes, churn warnings, and more.
+
+**Live site: [botdirectory.ai](https://botdirectory.ai)**
+
+![botdirectory.ai screenshot](public/og.png)
+
+## Add your bot in 2 minutes
+
+A bot is one markdown file in [`bots/`](bots/):
+
+```markdown
+---
+name: SEO Improver
+category: Marketing
+contributor: rakazo
+integrations: [GitHub, DataForSEO, Search Console]
+---
+
+Set up a new bot for me. Walk me through connecting GitHub, DataForSEO and
+Google Search Console, then schedule it every 2 weeks: find pages losing
+impressions or sitting on page two, rewrite titles and metadata, fix internal
+links, and open a PR I review before merge.
+```
+
+1. Fork this repo and add `bots/<slug>.md` (slug = name, lowercased,
+   non-alphanumerics → `-`).
+2. Open a pull request. CI validates the file; once merged it's live.
+
+Or skip git entirely: **tag [@botdirectoryai](https://x.com/botdirectoryai) on X**
+with your prompt and the mention bot opens the PR for you.
+
+Full contract, category list, and quality bar: [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Local dev
+
+Astro static site, TypeScript, pnpm, no UI framework.
+
+```sh
+pnpm install
+pnpm dev        # http://localhost:4321
+pnpm build      # static build in dist/
+pnpm validate   # check every file in bots/
+pnpm check      # astro check (types)
+```
+
+- `bots/` — the product: one markdown file per bot
+- `data/` — integrations (dot color + auth), sponsors, promos, sponsor facts
+- `src/config.ts` — every branded string, URL, and knob
+
+## Sponsoring
+
+Sponsor slots (the rail next to the list) are monthly and capped. See the
+[sponsor section](https://botdirectory.ai/#sponsor) on the site.
+
+## License
+
+[MIT](LICENSE) © 2026 Inbox Zero Inc.

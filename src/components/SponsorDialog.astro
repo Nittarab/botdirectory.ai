@@ -1,0 +1,54 @@
+---
+/**
+ * Sponsor booking dialog. Opened by any element with [data-sponsor-open];
+ * those elements keep a real href (Stripe link or #sponsor) as the no-JS
+ * fallback.
+ */
+import PrimaryButton from './PrimaryButton.astro';
+import { SITE, SPONSORING } from '../config';
+---
+
+<dialog id="sponsor-dialog" class="sponsor-dialog">
+  <div class="sd-head">
+    <span class="sd-title">Sponsor {SITE.wordmark}</span>
+    <button type="button" class="sd-close" aria-label="Close" data-sd-close>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+    </button>
+  </div>
+  <ul class="sd-list">
+    <li>A featured card in the sponsor sidebar for 30 days.</li>
+    <li>Renews monthly through Stripe — cancel anytime.</li>
+    <li>
+      {SPONSORING.slotsTakenBoth} of {SPONSORING.slotsTotalBoth} spots taken — the price goes up as slots fill.
+    </li>
+  </ul>
+  <div class="sd-cta">
+    <PrimaryButton
+      href={SPONSORING.paymentUrl}
+      attrs={{ target: '_blank', rel: 'noopener' }}
+    >
+      Book your slot — ${SPONSORING.priceMonthly}/mo
+    </PrimaryButton>
+    <a class="sd-alt" href={SITE.sponsorContactUrl}>Questions? Get in touch</a>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.getElementById('sponsor-dialog') as HTMLDialogElement | null;
+  if (dialog) {
+    document.querySelectorAll<HTMLElement>('[data-sponsor-open]').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        dialog.showModal();
+      });
+    });
+    dialog.querySelector('[data-sd-close]')?.addEventListener('click', () => dialog.close());
+    // Click on the backdrop (outside the dialog's content box) closes it.
+    dialog.addEventListener('click', (e) => {
+      const r = dialog.getBoundingClientRect();
+      const inside =
+        e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      if (!inside) dialog.close();
+    });
+  }
+</script>

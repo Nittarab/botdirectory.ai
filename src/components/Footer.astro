@@ -1,0 +1,29 @@
+---
+import { SITE } from '../config';
+---
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="footer-wordmark">{SITE.wordmark}</a>
+      <p class="footer-blurb">{SITE.tagline}</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <span class="footer-col-title">Directory</span>
+        <a href="/#browse" class="footer-link">Browse bots</a>
+        <a href="/#contribute" class="footer-link">Add a bot</a>
+        <a href={SITE.repoUrl} class="footer-link">GitHub</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title">Run your bots</span>
+        <a href={SITE.rakazoUrl} class="footer-link">Rakazo</a>
+        <a href={SITE.grokUrl} class="footer-link">Grok Bot</a>
+        <a href={SITE.inboxZeroUrl} class="footer-link">Inbox Zero</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copyright">© {SITE.copyrightYear} <a href={SITE.inboxZeroUrl}>{SITE.copyrightHolder}</a></span>
+  </div>
+</footer>

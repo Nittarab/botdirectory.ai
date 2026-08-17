@@ -1,0 +1,10 @@
+---
+name: CRM From Your Phone
+category: Sales
+contributor: ericzakariasson
+contributor_url: https://x.com/ericzakariasson
+integrations: [Salesforce, Slack]
+added_via: https://x.com/ericzakariasson/status/2087258914060664902
+---
+
+Set up a new bot for me that stays always on so I can ask CRM questions from my phone. Walk me through connecting Salesforce read-only and Slack, then configure it: when I ask about the quarter, give me the number, the three deals that move it, and where the data looks wrong. Ask me for quota and quarter definitions once, let me test three questions I know the answers to, then save it.

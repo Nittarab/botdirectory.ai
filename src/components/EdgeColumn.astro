@@ -1,0 +1,51 @@
+---
+/**
+ * One sticky page-edge sponsor column ('both sides' mode). Render as a
+ * direct child of `.iz-cols` — the gutter CSS targets first/last-child.
+ * The left column carries the dashed "Advertise" slot card.
+ */
+import SponsorLogo from './SponsorLogo.astro';
+import { edgeCardStyle, edgeLeft, edgeOpenSlots, edgeRight, slotsLineBoth, tinted } from '../lib/sponsors';
+
+interface Props {
+  side: 'left' | 'right';
+}
+
+const { side } = Astro.props;
+const sponsors = side === 'left' ? edgeLeft : edgeRight;
+const cardClass = side === 'left' ? 'edge-card-left' : 'edge-card-right';
+---
+
+<div class="iz-edge">
+  {
+    sponsors.map((s) => (
+      <a href={s.url} class:list={['edge-card', cardClass, { 'edge-card-tinted': tinted }]} style={edgeCardStyle(s)}>
+        <SponsorLogo sponsor={s} class="edge-logo" />
+        <span class="edge-name">{s.name}</span>
+        <p class="edge-tagline">{s.tagline}</p>
+      </a>
+    ))
+  }
+  {
+    side === 'left' && edgeOpenSlots > 0 && (
+      <a href="/#sponsor" class="edge-card edge-card-left edge-card-slot" data-sponsor-open>
+        <svg
+          class="edge-slot-icon"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="m3 11 18-5v12L3 14v-3z" />
+          <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
+        </svg>
+        <span class="edge-name">Advertise</span>
+        <p class="edge-tagline">{slotsLineBoth}</p>
+      </a>
+    )
+  }
+</div>

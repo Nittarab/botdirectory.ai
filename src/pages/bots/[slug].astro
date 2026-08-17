@@ -1,0 +1,184 @@
+---
+import Base from '../../layouts/Base.astro';
+import SponsorCard from '../../components/SponsorCard.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { FEATURES, SITE } from '../../config';
+import { catStyle, fmt } from '../../lib/constants';
+import { getBots, toolDot, SPONSORS, type Bot } from '../../lib/data';
+
+export async function getStaticPaths() {
+  const bots = await getBots();
+  return bots.map((bot) => ({ params: { slug: bot.slug }, props: { bot, bots } }));
+}
+
+interface Props {
+  bot: Bot;
+  bots: Bot[];
+}
+
+const { bot, bots } = Astro.props;
+const cat = catStyle(bot.category);
+
+const sameCategory = bots.filter((x) => x.slug !== bot.slug && x.category === bot.category).slice(0, 3);
+const related = sameCategory.length ? sameCategory : bots.filter((x) => x.slug !== bot.slug).slice(0, 3);
+const relatedTitle = sameCategory.length ? `More ${bot.category.toLowerCase()} bots` : 'Other bots';
+
+// Same title/description the design's syncHead() produced.
+const title = `${bot.name} — a Grok Bot prompt you can copy | ${SITE.wordmark}`;
+const description = `Copy the ${bot.name} prompt to set up a bot on ${bot.integrations.join(', ')}. Paste it into Grok Bot or Rakazo and it walks you through the setup.`;
+---
+
+<Base title={title} description={description}>
+  <Header />
+
+  <article class="bot-article" data-slug={bot.slug}>
+    <div class="breadcrumb">
+      <a href="/">All bots</a>
+      <span>/</span>
+      <a href={`/?category=${encodeURIComponent(bot.category)}`}>{bot.category}</a>
+    </div>
+
+    <h1 class="bot-title">{bot.name}</h1>
+
+    <div class="badge-row">
+      <span class="badge-cat" style={`color: ${cat.catFg}; background: ${cat.catBg}; border-color: ${cat.catBorder};`}>{bot.category}</span>
+      {FEATURES.showCopies && (
+        <span class="badge-plain" data-copies-slug={bot.slug} data-copies-seed={bot.copies}>{fmt(bot.copies)} copies</span>
+      )}
+      {
+        (bot.contributor || bot.addedVia || bot.scoutedBy) && (
+          <span class="attribution">
+          {bot.addedVia ? (
+            <>
+              Based on <a href={bot.addedVia}>this tweet</a>
+              {bot.contributor && (
+                <>
+                  {'by '}
+                  <a href={bot.contributorUrl ?? `https://x.com/${bot.contributor}`}>@{bot.contributor}</a>
+                </>
+              )}
+            </>
+          ) : (
+            bot.contributor && (
+              <>
+                Contributed by{' '}
+                <a href={bot.contributorUrl ?? `https://github.com/${bot.contributor}`}>@{bot.contributor}</a>
+              </>
+            )
+          )}
+          {bot.scoutedBy && (
+            <>
+              {' · scouted by '}
+              <a href={`https://x.com/${bot.scoutedBy}`}>@{bot.scoutedBy}</a>
+            </>
+          )}
+          </span>
+        )
+      }
+    </div>
+
+    <section class="prompt-section">
+      <div class="prompt-head">
+        <h2 class="section-title">The prompt</h2>
+        <button type="button" class="copy-btn" data-copy-slug={bot.slug} data-copied-label="Copied">Copy prompt</button>
+      </div>
+      <div class="prompt-block" id="prompt-block">{bot.prompt}</div>
+      <p class="section-note">
+        Paste it into <a href={SITE.grokBotUrl}>Grok Bot</a>, <a href={SITE.rakazoUrl}>Rakazo</a> or any agent you
+        already use. It asks for what it needs, then saves itself as a bot.
+      </p>
+    </section>
+
+    <section class="connect-section">
+      <h2 class="section-title">Connect first</h2>
+      <div class="connect-chips">
+        {
+          bot.integrations.map((t) => (
+            <span class="connect-chip"><span class="connect-dot" style={`background: ${toolDot(t)};`}></span>{t}</span>
+          ))
+        }
+      </div>
+      <p class="section-note">The prompt asks for these as it goes — however you normally connect them works.</p>
+    </section>
+
+    <section class="cta-card">
+      <div>
+        <p class="cta-title">Run {bot.name} yourself</p>
+        <p class="cta-sub">Free, open source, and yours to edit after setup.</p>
+      </div>
+      <div class="cta-actions">
+        <div class="pbtn-wrap">
+          <button type="button" class="pbtn pbtn-44" data-copy-slug={bot.slug} data-copied-label="Copied — now open your agent">Copy and set up</button>
+        </div>
+        <a href={`${SITE.repoUrl}/blob/main/bots/${bot.slug}.md`} class="btn-view-source">View source</a>
+      </div>
+    </section>
+
+    <section class="related-section">
+      <h2 class="section-title">{relatedTitle}</h2>
+      <div class="related-grid">
+        {
+          related.map((x) => (
+            <a href={`/bots/${x.slug}/`} class="related-card">
+              <span class="related-name">{x.name}</span>
+              <span class="related-meta">
+                {x.integrations.slice(0, 2).join(', ')}{FEATURES.showCopies && (
+                  <> · <span data-copies-slug={x.slug} data-copies-seed={x.copies}>{fmt(x.copies)} copies</span></>
+                )}
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="page-sponsors">
+      <div class="page-sponsors-head">
+        <span class="page-sponsors-label">Sponsored</span>
+        <a href="/#sponsor" class="page-sponsors-cta">advertise →</a>
+      </div>
+      <div class="page-sponsors-grid" id="page-sponsors-grid">
+        {SPONSORS.map((s) => <SponsorCard sponsor={s} />)}
+      </div>
+    </section>
+  </article>
+
+  <!-- Keep 3 random sponsors per page load; the rest are removed pre-paint. -->
+  <script is:inline>
+    (() => {
+      const grid = document.getElementById('page-sponsors-grid');
+      if (!grid) return;
+      const cards = [...grid.children];
+      for (let i = cards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cards[i], cards[j]] = [cards[j], cards[i]];
+      }
+      cards.slice(3).forEach((c) => c.remove());
+      cards.slice(0, 3).forEach((c) => grid.appendChild(c));
+    })();
+  </script>
+
+  <Footer />
+</Base>
+
+<script>
+  import { trackCopy, refreshCopyLabels } from '../../scripts/copies';
+
+  const promptBlock = document.getElementById('prompt-block');
+  const prompt = promptBlock?.textContent ?? '';
+  const buttons = document.querySelectorAll<HTMLElement>('[data-copy-slug]');
+
+  buttons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      if (navigator.clipboard && prompt) navigator.clipboard.writeText(prompt).catch(() => {});
+      trackCopy(btn.dataset.copySlug || '');
+      buttons.forEach((b) => {
+        b.textContent = b.dataset.copiedLabel || 'Copied';
+      });
+      refreshCopyLabels();
+    })
+  );
+
+  refreshCopyLabels();
+</script>

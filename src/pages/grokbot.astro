@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PrimaryButton from '../components/PrimaryButton.astro';
+import { FEATURES, SITE } from '../config';
+import { catStyle, fmt } from '../lib/constants';
+import { getBots } from '../lib/data';
+
+// SEO landing for "grokbot directory" queries and the
+// grokbotdirectory.com redirect target. Thin but real: what Grok Bot is,
+// the prompts that work in it, and the full list one click away.
+const bots = await getBots();
+const top = bots.slice(0, 10);
+
+const title = `Grok Bot directory — prompts that work in Grok Bot | ${SITE.wordmark}`;
+const description =
+  'A directory of open source Grok Bot prompts. Copy a prompt, paste it into Grok Bot, and it sets itself up as a scheduled bot — every prompt also works in Rakazo.';
+---
+
+<Base title={title} description={description}>
+  <Header />
+
+  <article class="bot-article">
+    <div class="breadcrumb">
+      <a href="/">All bots</a>
+      <span>/</span>
+      <span>Grok Bot</span>
+    </div>
+
+    <h1 class="bot-title">The Grok Bot directory</h1>
+
+    <section class="prompt-section">
+      <h2 class="section-title" style="margin-bottom: 12px;">What is Grok Bot?</h2>
+      <p class="section-note" style="margin: 0;">
+        <a href={SITE.grokBotUrl}>Grok Bot</a> is xAI's agent for running scheduled, tool-connected bots — email
+        triage, daily briefings, SEO fixes — from a single prompt. You describe the job once, it asks for the
+        connections it needs, then saves itself as a bot that keeps running.
+      </p>
+    </section>
+
+    <section class="connect-section">
+      <h2 class="section-title">Prompts that work in Grok Bot</h2>
+      <p class="section-note" style="margin: 12px 0 16px;">
+        Every bot in this directory is a copy-paste Grok Bot prompt, contributed as one open source markdown file.
+        Nothing is locked in: the same prompts run in <a href={SITE.rakazoUrl}>Rakazo</a>, the open-source Grok Bot
+        alternative, or any agent you already use. These are the ten most copied:
+      </p>
+      <div class:list={['bot-table', { 'hide-copies': !FEATURES.showCopies }]}>
+        <div class="bot-table-head">
+          <span>Bot</span><span>Category</span><span>Integrations</span>{FEATURES.showCopies && <span>Copies</span>}<span>Source</span>
+        </div>
+        {
+          top.map((b) => (
+            <a href={`/bots/${b.slug}/`} class="bot-row">
+              <span class="bot-row-namecell">
+                <span class="bot-row-nameline">
+                  <span class="bot-row-name">{b.name}</span>
+                </span>
+              </span>
+              <span
+                class="cat-pill"
+                style={`color: ${catStyle(b.category).catFg}; background: ${catStyle(b.category).catBg}; border-color: ${catStyle(b.category).catBorder};`}
+              >{b.category}</span>
+              <span class="bot-row-tools">{b.integrations.join(', ')}</span>
+              {FEATURES.showCopies && <span class="bot-row-copies">{fmt(b.copies)} copies</span>}
+              <span class="bot-row-contrib">{b.contributor ? `@${b.contributor}` : '—'}</span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="cta-card">
+      <div>
+        <p class="cta-title">Browse all {bots.length} bots</p>
+        <p class="cta-sub">Filter by category or integration, copy a prompt, done.</p>
+      </div>
+      <div class="cta-actions">
+        <PrimaryButton href="/" height={44}>Browse the directory</PrimaryButton>
+        <a href={SITE.repoUrl} class="btn-view-source">Add your bot</a>
+      </div>
+    </section>
+  </article>
+
+  <Footer />
+</Base>

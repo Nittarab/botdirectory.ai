@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Bot Directory">
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2965EC" />
+      <stop offset="1" stop-color="#5C89F8" />
+    </linearGradient>
+    <style>
+      @font-face {
+        font-family: "Aeonik";
+        src: url("../fonts/aeonik-medium.woff") format("woff");
+        font-weight: 500;
+      }
+    </style>
+  </defs>
+  <rect width="512" height="512" rx="113" fill="url(#tile)" />
+  <text x="256" y="354" fill="#FFFFFF" font-family="Aeonik, sans-serif" font-size="320" font-weight="500" text-anchor="middle">b</text>
+</svg>

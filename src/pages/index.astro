@@ -1,0 +1,317 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PrimaryButton from '../components/PrimaryButton.astro';
+import SponsorCard from '../components/SponsorCard.astro';
+import SponsorDialog from '../components/SponsorDialog.astro';
+import MarqueeStrips from '../components/MarqueeStrips.astro';
+import EdgeColumn from '../components/EdgeColumn.astro';
+import SponsorShuffle from '../components/SponsorShuffle.astro';
+import { FEATURES, SITE, SPONSORING } from '../config';
+import { catStyle, fmt } from '../lib/constants';
+import { getBots, toolDot, SPONSORS, PROMOS, SPONSOR_FACTS, type Bot, type Promo } from '../lib/data';
+import { edgeRight } from '../lib/sponsors';
+
+const bots = await getBots(); // sorted by copies desc — the default view
+const allTools = [...new Set(bots.flatMap((b) => b.integrations))].sort();
+
+const mode = SPONSORING.mode;
+const hasRail = mode === 'rail' || mode === 'both';
+const hasEdge = mode === 'both';
+const pageCols = hasEdge ? '252px minmax(0, 1fr) 252px' : 'minmax(0, 1fr)';
+const browseMax = mode === 'rail' ? '1460px' : '1150px';
+const browseGrid = mode === 'rail' ? 'minmax(0, 1fr) 272px' : 'minmax(0, 1fr)';
+const sponsorsRight = mode === 'both' ? edgeRight : SPONSORS.slice(0, 3);
+const slotsLine =
+  mode === 'both'
+    ? `${SPONSORING.slotsTakenBoth} of ${SPONSORING.slotsTotalBoth} spots taken`
+    : `${SPONSORING.slotsTaken} of ${SPONSORING.slotsTotal} spots taken`;
+const railWrapClass = mode === 'both' ? 'iz-only-narrow' : '';
+
+// In-list sponsor mode: promoted rows spliced at fixed indexes.
+type Row = { bot: Bot; promo?: undefined } | { promo: Promo; bot?: undefined };
+const rows: Row[] = bots.map((b) => ({ bot: b }));
+if (mode === 'inline') {
+  for (const p of PROMOS) rows.splice(Math.min(p.at, rows.length), 0, { promo: p });
+}
+
+const searchText = (b: Bot) => (b.name + ' ' + b.prompt + ' ' + b.integrations.join(' ')).toLowerCase();
+
+const title = `Open source Grok Bots | ${SITE.wordmark}`;
+const description = 'Open source prompts to set up Grok Bot and Rakazo bots in minutes. Copy one, connect your tools, done.';
+---
+
+<Base title={title} description={description}>
+  <div class:list={['iz-page-root', { 'hide-copies': !FEATURES.showCopies }]}>
+    <MarqueeStrips />
+
+    <div class="iz-cols" style={`grid-template-columns: ${pageCols};`}>
+      {hasEdge && <EdgeColumn side="left" />}
+
+      <div style="min-width: 0;">
+        <Header isHome />
+
+        <section class="hero">
+          <p class="iz-eyebrow">
+            Open source · <a href={SITE.grokUrl}>Grok Bot</a> and <a href={SITE.rakazoUrl}>Rakazo</a>
+          </p>
+          <h1 class="hero-title">Open source Grok Bots</h1>
+          <p class="hero-sub">Prompts to set up your bots in minutes.</p>
+        </section>
+
+        <section id="browse" class="browse" style={`max-width: ${browseMax};`}>
+          <div class="iz-browse-grid" style={`grid-template-columns: ${browseGrid};`}>
+            <div style="min-width: 0;">
+              <div class="filterbar">
+                <div class="filterbar-controls">
+                  <input type="text" id="bot-search" class="search-input" placeholder="Search" />
+                  <select id="bot-integration" class="filter-select" aria-label="Filter by integration">
+                    <option value="all">Any integration</option>
+                    {allTools.map((t) => <option value={t}>{t}</option>)}
+                  </select>
+                  {
+                    FEATURES.showCopies && (
+                      <select id="bot-sort" class="filter-select" aria-label="Sort bots">
+                        <option value="copies">Most copied</option>
+                        <option value="name">A–Z</option>
+                      </select>
+                    )
+                  }
+                  <div class="view-toggle">
+                    <button type="button" id="view-table-btn" class="view-btn active">Table</button>
+                    <button type="button" id="view-cards-btn" class="view-btn">Cards</button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="cards-view" class="cards-grid" hidden>
+                {
+                  rows.map((row) =>
+                    row.bot ? (
+                      <a
+                        href={`/bots/${row.bot.slug}/`}
+                        class="bot-card"
+                        data-slug={row.bot.slug}
+                        data-name={row.bot.name}
+                        data-category={row.bot.category}
+                        data-copies={row.bot.copies}
+                        data-integrations={row.bot.integrations.join('|')}
+                        data-search={searchText(row.bot)}
+                      >
+                        <div class="bot-card-head">
+                          <span title={row.bot.category} class="cat-dot" style={`background: ${catStyle(row.bot.category).catFg};`}></span>
+                          <h3 class="bot-card-title">{row.bot.name}</h3>
+                        </div>
+                        <div class="card-prompt">{row.bot.prompt}</div>
+                        <div class="chip-row">
+                          {row.bot.integrations.map((t) => (
+                            <span class="tool-chip"><span class="tool-dot" style={`background: ${toolDot(t)};`}></span>{t}</span>
+                          ))}
+                        </div>
+                        <div class="bot-card-meta">
+                          {FEATURES.showCopies && (
+                            <>
+                              <span class="meta-copies" data-copies-slug={row.bot.slug} data-copies-seed={row.bot.copies}>{fmt(row.bot.copies)} copies</span>
+                              <span>·</span>
+                            </>
+                          )}
+                          {row.bot.contributor && <span class="meta-contrib">@{row.bot.contributor}</span>}
+                        </div>
+                      </a>
+                    ) : (
+                      <a
+                        href={row.promo.href}
+                        class="bot-card"
+                        data-promo
+                        data-at={row.promo.at}
+                        style={`background: var(--iz-${row.promo.family}-50); border-color: var(--iz-${row.promo.family}-150, var(--iz-${row.promo.family}-200));`}
+                      >
+                        <div class="bot-card-head">
+                          <span title={row.promo.category} class="cat-dot" style={`background: ${catStyle(row.promo.category).catFg};`}></span>
+                          <h3 class="bot-card-title">{row.promo.name}</h3>
+                          <span class="promo-tag">Promoted</span>
+                        </div>
+                        <p class="promo-note">{row.promo.note}</p>
+                        <div class="card-prompt">{row.promo.note}</div>
+                        <div class="chip-row">
+                          {row.promo.integrations.map((t) => (
+                            <span class="tool-chip"><span class="tool-dot" style={`background: ${toolDot(t)};`}></span>{t}</span>
+                          ))}
+                        </div>
+                        <div class="bot-card-meta">
+                          <span class="meta-copies">Sponsored</span>
+                          <span>·</span>
+                          <span class="meta-contrib">@{row.promo.contributor}</span>
+                        </div>
+                      </a>
+                    )
+                  )
+                }
+              </div>
+
+              <div id="table-view" class="bot-table">
+                <div class="bot-table-head">
+                  <span>Bot</span><span>Category</span><span>Integrations</span>{FEATURES.showCopies && <span>Copies</span>}<span>Source</span>
+                </div>
+                {
+                  rows.map((row) =>
+                    row.bot ? (
+                      <a
+                        href={`/bots/${row.bot.slug}/`}
+                        class="bot-row"
+                        data-slug={row.bot.slug}
+                        data-name={row.bot.name}
+                        data-category={row.bot.category}
+                        data-copies={row.bot.copies}
+                        data-integrations={row.bot.integrations.join('|')}
+                        data-search={searchText(row.bot)}
+                      >
+                        <span class="bot-row-namecell">
+                          <span class="bot-row-nameline">
+                            <span class="bot-row-name">{row.bot.name}</span>
+                          </span>
+                        </span>
+                        <span
+                          class="cat-pill"
+                          style={`color: ${catStyle(row.bot.category).catFg}; background: ${catStyle(row.bot.category).catBg}; border-color: ${catStyle(row.bot.category).catBorder};`}
+                        >{row.bot.category}</span>
+                        <span class="bot-row-tools">{row.bot.integrations.join(', ')}</span>
+                        {FEATURES.showCopies && (
+                          <span class="bot-row-copies" data-copies-slug={row.bot.slug} data-copies-seed={row.bot.copies}>{fmt(row.bot.copies)} copies</span>
+                        )}
+                        <span class="bot-row-contrib">{row.bot.contributor ? `@${row.bot.contributor}` : '—'}</span>
+                      </a>
+                    ) : (
+                      <a
+                        href={row.promo.href}
+                        class="bot-row"
+                        data-promo
+                        data-at={row.promo.at}
+                        style={`background: var(--iz-${row.promo.family}-50);`}
+                      >
+                        <span class="bot-row-namecell">
+                          <span class="bot-row-nameline">
+                            <span class="bot-row-name">{row.promo.name}</span>
+                            <span class="promo-tag-row">Promoted</span>
+                          </span>
+                          <span class="bot-row-note">{row.promo.note}</span>
+                        </span>
+                        <span
+                          class="cat-pill"
+                          style={`color: ${catStyle(row.promo.category).catFg}; background: ${catStyle(row.promo.category).catBg}; border-color: ${catStyle(row.promo.category).catBorder};`}
+                        >{row.promo.category}</span>
+                        <span class="bot-row-tools">{row.promo.integrations.join(', ')}</span>
+                        {FEATURES.showCopies && <span class="bot-row-copies">Sponsored</span>}
+                        <span class="bot-row-contrib">@{row.promo.contributor}</span>
+                      </a>
+                    )
+                  )
+                }
+              </div>
+
+              <div id="empty-state" class="empty-state" hidden>
+                <p class="empty-state-title">No bot for that yet.</p>
+                <p class="empty-state-sub">Write the prompt, open a PR — it lands on the shelf for everyone.</p>
+              </div>
+            </div>
+
+            {
+              hasRail && (
+                <div class:list={['iz-rail-wrap', railWrapClass]}>
+                  <div class="rail-head">
+                    <span class="rail-label">Sponsored</span>
+                    <a href="#sponsor" class="rail-slots">{slotsLine}</a>
+                  </div>
+                  <aside class="iz-rail">
+                    {sponsorsRight.map((s) => <SponsorCard sponsor={s} />)}
+                    <a href="#sponsor" class="slot-empty" data-sponsor-open>
+                      <span class="slot-empty-title">Your tool here</span>
+                      <span class="slot-empty-pitch">{SPONSORING.railPitch}</span>
+                    </a>
+                  </aside>
+                </div>
+              )
+            }
+          </div>
+        </section>
+      </div>
+
+      {hasEdge && <EdgeColumn side="right" />}
+    </div>
+
+    <section id="contribute" class="contribute-section">
+      <div class="contribute-inner">
+        <div>
+          <p class="iz-eyebrow">Contribute</p>
+          <h2 class="contribute-title">A bot is one file in a repo</h2>
+          <p class="contribute-copy">
+            No plugin API, no review board. Add a markdown file with the prompt and the integrations it needs, open a
+            pull request, and it shows up here. Rakazo is the open-source Grok Bot alternative, so nothing here is
+            locked to either one.
+          </p>
+          <div class="cta-row">
+            <PrimaryButton href={SITE.repoUrl}>Open a pull request</PrimaryButton>
+            <a href={SITE.contributingUrl} class="btn-secondary">Read the guide</a>
+          </div>
+        </div>
+        <div class="file-card">
+          <div class="file-card-head">
+            <span class="file-card-name">bots/seo-improver.md</span>
+          </div>
+          <pre class="file-card-body">---
+name: SEO Improver
+category: Marketing
+contributor: elie2222
+integrations: [GitHub, DataForSEO, Search Console]
+---
+
+Set up a new bot for me. Walk me through
+connecting GitHub, DataForSEO and Google
+Search Console, then schedule it every 2
+weeks: find pages losing impressions or
+sitting on page two, rewrite titles and
+metadata, fix internal links, and open a PR
+I review before merge.</pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="sponsor" class="sponsor-section">
+      <div class="sponsor-inner">
+        <div>
+          <p class="sponsor-eyebrow">Sponsor</p>
+          <h2 class="sponsor-title">Reach people wiring up bots today</h2>
+          <p class="sponsor-copy">
+            Every visitor here is picking tools for an automation they are about to run. Slots are monthly, capped at{' '}
+            {SPONSORING.slotsTotalBoth}, and you get a weekly report of impressions, clicks and which bots your slot
+            appeared next to.
+          </p>
+          <div class="cta-row">
+            <PrimaryButton href={SPONSORING.paymentUrl} attrs={{ 'data-sponsor-open': '' }}>Book a slot</PrimaryButton>
+            <button type="button" class="btn-ghost">See the numbers</button>
+          </div>
+        </div>
+        <div class="facts-grid">
+          {
+            SPONSOR_FACTS.map((f) => (
+              <div class="fact-card">
+                <div class="fact-value">{f.value}</div>
+                <div class="fact-label">{f.label}</div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+    <SponsorDialog />
+  </div>
+
+  <SponsorShuffle />
+</Base>
+
+<script>
+  import '../scripts/browse';
+</script>
