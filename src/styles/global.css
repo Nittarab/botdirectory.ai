@@ -500,10 +500,17 @@ code, .iz-code {
 .sel-opt.is-active { background: var(--iz-surface); color: var(--iz-ink); }
 .sel-opt[aria-selected='true'] { color: var(--iz-ink); font-weight: 500; }
 .sel-opt-body { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.sel-swatch { flex: none; width: 9px; height: 9px; border-radius: 3px; margin: 0 2.5px; }
 .sel-opt-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sel-check { flex: none; color: var(--iz-blue-600); visibility: hidden; }
 .sel-opt[aria-selected='true'] .sel-check { visibility: visible; }
 .sel-empty { padding: 10px 9px; font-size: 13px; color: var(--iz-muted); text-align: center; }
+@media (max-width: 640px) {
+  .filterbar-controls { flex-wrap: wrap; margin-left: 0; row-gap: 8px; }
+  .search-input { width: 100%; }
+  /* Controls sit at the left edge once wrapped, so anchor the popover left. */
+  .sel-pop { right: auto; left: 0; max-width: calc(100vw - 48px); }
+}
 .view-toggle {
   display: flex;
   gap: 8px;

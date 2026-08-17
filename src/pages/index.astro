@@ -12,7 +12,7 @@ import SponsorShuffle from '../components/SponsorShuffle.astro';
 import ToolIcon from '../components/ToolIcon.astro';
 import Select from '../components/Select.astro';
 import { FEATURES, SITE, SPONSORING } from '../config';
-import { catStyle, fmt } from '../lib/constants';
+import { CATEGORIES, catStyle, fmt } from '../lib/constants';
 import { getBots, SPONSORS, PROMOS, type Bot, type Promo } from '../lib/data';
 import { edgeRight } from '../lib/sponsors';
 import { sponsorUrl } from '../lib/utm';
@@ -104,6 +104,11 @@ const structuredData = [
               <div class="filterbar">
                 <div class="filterbar-controls">
                   <input type="text" id="bot-search" class="search-input" placeholder="Search" />
+                  <Select
+                    id="bot-category"
+                    label="Filter by category"
+                    options={[{ value: 'All', label: 'Any category' }, ...CATEGORIES.map((c) => ({ value: c, label: c, swatch: catStyle(c).catFg }))]}
+                  />
                   <Select
                     id="bot-integration"
                     label="Filter by integration"

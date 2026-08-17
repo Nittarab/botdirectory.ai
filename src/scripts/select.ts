@@ -64,7 +64,8 @@ function setup(root: HTMLElement): void {
     if (!root.contains(e.target as Node)) close();
   }
 
-  function pick(el: HTMLElement): void {
+  /** Mark `el` selected and mirror it into the trigger. Fires `change` only if the value moved. */
+  function select(el: HTMLElement, notify: boolean): void {
     const value = el.dataset.value ?? '';
     for (const o of options) o.setAttribute('aria-selected', o === el ? 'true' : 'false');
     triggerBody!.innerHTML = el.querySelector('.sel-opt-body')!.innerHTML;
@@ -72,10 +73,21 @@ function setup(root: HTMLElement): void {
     triggerBody!.querySelector('.sel-opt-label')?.classList.replace('sel-opt-label', 'sel-trigger-label');
     if (input!.value !== value) {
       input!.value = value;
-      input!.dispatchEvent(new Event('change', { bubbles: true }));
+      if (notify) input!.dispatchEvent(new Event('change', { bubbles: true }));
     }
+  }
+
+  function pick(el: HTMLElement): void {
+    select(el, true);
     close(true);
   }
+
+  // Programmatic set (no `change` — the caller already knows the value).
+  input.addEventListener('select:set', (e) => {
+    const value = String((e as CustomEvent).detail ?? '');
+    const el = options.find((o) => o.dataset.value === value);
+    if (el) select(el, false);
+  });
 
   function move(delta: number): void {
     const shown = visible();
