@@ -2,7 +2,7 @@
 /**
  * One sticky page-edge sponsor column ('both sides' mode). Render as a
  * direct child of `.iz-cols` — the gutter CSS targets first/last-child.
- * The left column carries the dashed "Advertise" slot card.
+ * The right column carries the dashed "Advertise" slot card.
  */
 import SponsorLogo from './SponsorLogo.astro';
 import { edgeCardStyle, edgeLeft, edgeRight, slotsLineBoth, tinted } from '../lib/sponsors';
@@ -28,8 +28,8 @@ const cardClass = side === 'left' ? 'edge-card-left' : 'edge-card-right';
     ))
   }
   {
-    side === 'left' && (
-      <a href="/#sponsor" class="edge-card edge-card-left edge-card-slot" data-sponsor-open>
+    side === 'right' && (
+      <a href="/#sponsor" class="edge-card edge-card-right edge-card-slot" data-sponsor-open>
         <svg
           class="edge-slot-icon"
           width="20"

@@ -12,11 +12,11 @@
       const j = Math.floor(Math.random() * (i + 1));
       [cards[i], cards[j]] = [cards[j], cards[i]];
     }
-    const slot = left.querySelector('.edge-card-slot');
+    const slot = right.querySelector('.edge-card-slot');
     const keep = slot ? 9 : 10;
     cards.slice(keep).forEach((c) => c.remove());
     const shown = cards.slice(0, keep);
-    shown.slice(0, 5).forEach((c) => right.appendChild(c));
-    shown.slice(5).forEach((c) => (slot ? left.insertBefore(c, slot) : left.appendChild(c)));
+    shown.slice(0, 5).forEach((c) => left.appendChild(c));
+    shown.slice(5).forEach((c) => (slot ? right.insertBefore(c, slot) : right.appendChild(c)));
   })();
 </script>
