@@ -1,6 +1,5 @@
 import { getCollection } from 'astro:content';
-import type { Category } from './constants';
-import toolsJson from '../../data/tools.json';
+import { slugify, type Category } from './constants';
 import sponsorsJson from '../../data/sponsors.json';
 import promosJson from '../../data/promos.json';
 
@@ -44,13 +43,34 @@ export interface Bot {
   addedVia?: string;
 }
 
-/** Tool name → dot color. Purely cosmetic; unknown tools get a neutral dot. */
-export const TOOLS = toolsJson as Record<string, string>;
 export const SPONSORS = sponsorsJson as Sponsor[];
 export const PROMOS = promosJson as Promo[];
 
-export function toolDot(name: string): string {
-  return TOOLS[name] ?? '#8E8E8E';
+/**
+ * Icons that scripts/fetch-icons.ts has mirrored into public/icons/, keyed by
+ * file stem (`slack`, `github-dark`, …). Discovered at build time so the
+ * extension (svg/png/ico) never has to be known here.
+ */
+const ICON_FILES = new Map<string, string>();
+for (const path of Object.keys(import.meta.glob('../../public/icons/*'))) {
+  const file = path.slice(path.lastIndexOf('/') + 1);
+  ICON_FILES.set(file.slice(0, file.lastIndexOf('.')), `/icons/${file}`);
+}
+
+export interface ToolIcon {
+  /** Path under public/ for light backgrounds. */
+  light: string;
+  /** Variant for the dark theme — only mono logos ship one. */
+  dark?: string;
+}
+
+/** Brand icon for a tool, or null when we don't have one (the chip then shows just the name). */
+export function toolIcon(name: string): ToolIcon | null {
+  const slug = slugify(name);
+  const light = ICON_FILES.get(slug);
+  if (!light) return null;
+  const dark = ICON_FILES.get(`${slug}-dark`);
+  return dark ? { light, dark } : { light };
 }
 
 /** All bots, sorted by seed copies desc (the default view order). */

@@ -1,0 +1,94 @@
+{
+  "Slack": "https://svgl.app/library/slack.svg",
+  "Gmail": "https://svgl.app/library/gmail.svg",
+  "Notion": "https://svgl.app/library/notion.svg",
+  "Salesforce": "https://svgl.app/library/salesforce.svg",
+  "Google Calendar": "https://svgl.app/library/google-calendar.svg",
+  "Google Drive": "https://svgl.app/library/drive.svg",
+  "Google Sheets": "https://svgl.app/library/google-sheets.svg",
+  "Google Slides": "https://svgl.app/library/google-slides.svg",
+  "Granola": {
+    "light": "https://svgl.app/library/granola-light.svg",
+    "dark": "https://svgl.app/library/granola-dark.svg"
+  },
+  "X": {
+    "light": "https://svgl.app/library/x.svg",
+    "dark": "https://svgl.app/library/x_dark.svg"
+  },
+  "GitHub": {
+    "light": "https://svgl.app/library/github_light.svg",
+    "dark": "https://svgl.app/library/github_dark.svg"
+  },
+  "Grok Bot": {
+    "light": "https://svgl.app/library/grok-light.svg",
+    "dark": "https://svgl.app/library/grok-dark.svg"
+  },
+  "LinkedIn": "https://svgl.app/library/linkedin.svg",
+  "Linear": "https://svgl.app/library/linear.svg",
+  "Figma": "https://svgl.app/library/figma.svg",
+  "Zoom": "https://svgl.app/library/zoom.svg",
+  "YouTube": "https://svgl.app/library/youtube.svg",
+  "PostHog": "https://svgl.app/library/posthog.svg",
+  "Datadog": "https://svgl.app/library/datadog.svg",
+  "Reddit": "https://svgl.app/library/reddit.svg",
+  "Outlook": "https://svgl.app/library/microsoft-outlook.svg",
+  "Stripe": "https://svgl.app/library/stripe.svg",
+  "Zendesk": {
+    "light": "https://cdn.simpleicons.org/zendesk",
+    "dark": "https://cdn.simpleicons.org/zendesk/F2F2F2"
+  },
+  "Airtable": "https://cdn.simpleicons.org/airtable",
+  "HubSpot": "https://cdn.simpleicons.org/hubspot",
+  "Snowflake": "https://cdn.simpleicons.org/snowflake",
+  "Hacker News": "https://cdn.simpleicons.org/ycombinator",
+  "Anki": "https://cdn.simpleicons.org/anki",
+  "iCloud": "https://cdn.simpleicons.org/icloud",
+  "Postiz": "https://cdn.simpleicons.org/postiz",
+  "Sales Navigator": "https://svgl.app/library/linkedin.svg",
+  "Apple Search Ads": {
+    "light": "https://svgl.app/library/apple.svg",
+    "dark": "https://svgl.app/library/apple_dark.svg"
+  },
+  "Gong": {
+    "site": "https://www.gong.io"
+  },
+  "Amazon": {
+    "site": "https://www.amazon.com"
+  },
+  "Search Console": {
+    "site": "https://search.google.com/search-console/about"
+  },
+  "Luma": {
+    "site": "https://lu.ma"
+  },
+  "Glean": {
+    "site": "https://www.glean.com"
+  },
+  "Ashby": {
+    "site": "https://www.ashbyhq.com"
+  },
+  "DataForSEO": {
+    "site": "https://dataforseo.com"
+  },
+  "ScreenshotOne": {
+    "site": "https://screenshotone.com"
+  },
+  "Castos": {
+    "site": "https://castos.com"
+  },
+  "FeedHive": {
+    "site": "https://www.feedhive.com"
+  },
+  "Costco": {
+    "site": "https://www.costco.com"
+  },
+  "Aviation Weather Center": {
+    "site": "https://aviationweather.gov"
+  },
+  "Bee": {
+    "site": "https://www.bee.computer"
+  },
+  "Comp AI": {
+    "site": "https://trycomp.ai"
+  }
+}

@@ -13,15 +13,17 @@ interface BrowseState {
 
 function init(): void {
   const search = document.getElementById('bot-search') as HTMLInputElement | null;
-  const integration = document.getElementById('bot-integration') as HTMLSelectElement | null;
-  const sort = document.getElementById('bot-sort') as HTMLSelectElement | null;
+  // The selects are <Select /> components: a hidden input that fires `change`.
+  const category = document.getElementById('bot-category') as HTMLInputElement | null;
+  const integration = document.getElementById('bot-integration') as HTMLInputElement | null;
+  const sort = document.getElementById('bot-sort') as HTMLInputElement | null;
   const btnTable = document.getElementById('view-table-btn');
   const btnCards = document.getElementById('view-cards-btn');
   const tableView = document.getElementById('table-view');
   const cardsView = document.getElementById('cards-view');
   const empty = document.getElementById('empty-state');
   // `sort` is optional: the select is hidden pre-launch while copy counts are hidden.
-  if (!search || !integration || !btnTable || !btnCards || !tableView || !cardsView || !empty) return;
+  if (!search || !category || !integration || !btnTable || !btnCards || !tableView || !cardsView || !empty) return;
 
   const state: BrowseState = {
     category: new URLSearchParams(location.search).get('category') || 'All',
@@ -30,6 +32,16 @@ function init(): void {
     sort: 'copies',
     view: 'table',
   };
+  // Bot pages deep-link here with ?category=…; reflect it in the select.
+  category.dispatchEvent(new CustomEvent('select:set', { detail: state.category }));
+
+  /** Keep ?category= shareable without adding history entries. */
+  function syncUrl(): void {
+    const url = new URL(location.href);
+    if (state.category === 'All') url.searchParams.delete('category');
+    else url.searchParams.set('category', state.category);
+    history.replaceState(null, '', url);
+  }
 
   const effectiveCopies = (row: HTMLElement): number =>
     Number(row.dataset.copies || '0') + deltaFor(row.dataset.slug || '');
@@ -83,6 +95,11 @@ function init(): void {
 
   search.addEventListener('input', () => {
     state.query = search.value;
+    apply();
+  });
+  category.addEventListener('change', () => {
+    state.category = category.value || 'All';
+    syncUrl();
     apply();
   });
   integration.addEventListener('change', () => {

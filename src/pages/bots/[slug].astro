@@ -3,9 +3,10 @@ import Base from '../../layouts/Base.astro';
 import SponsorCard from '../../components/SponsorCard.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import ToolIcon from '../../components/ToolIcon.astro';
 import { CONNECT_SPONSOR, FEATURES, SITE } from '../../config';
 import { catStyle, fmt } from '../../lib/constants';
-import { getBots, toolDot, SPONSORS, type Bot } from '../../lib/data';
+import { getBots, SPONSORS, type Bot } from '../../lib/data';
 import { sponsorUrl } from '../../lib/utm';
 
 export async function getStaticPaths() {
@@ -126,7 +127,7 @@ const structuredData = [
       <div class="connect-chips">
         {
           bot.integrations.map((t) => (
-            <span class="connect-chip"><span class="connect-dot" style={`background: ${toolDot(t)};`}></span>{t}</span>
+            <span class="connect-chip"><ToolIcon name={t} size={18} />{t}</span>
           ))
         }
       </div>
