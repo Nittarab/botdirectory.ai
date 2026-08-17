@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import SponsorCard from '../../components/SponsorCard.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import { FEATURES, SITE } from '../../config';
+import { CONNECT_SPONSOR, FEATURES, SITE } from '../../config';
 import { catStyle, fmt } from '../../lib/constants';
 import { getBots, toolDot, SPONSORS, type Bot } from '../../lib/data';
 
@@ -100,6 +100,17 @@ const description = `Copy the ${bot.name} prompt to set up a bot on ${bot.integr
         }
       </div>
       <p class="section-note">The prompt asks for these as it goes — however you normally connect them works.</p>
+      {
+        CONNECT_SPONSOR.enabled && (
+          <a href={CONNECT_SPONSOR.url} class="connect-sponsor">
+            <img src={CONNECT_SPONSOR.logo} alt={`${CONNECT_SPONSOR.name} logo`} width="128" height="128" class="connect-sponsor-logo" loading="lazy" />
+            <span class="connect-sponsor-copy">
+              {CONNECT_SPONSOR.copy} <span class="connect-sponsor-cta">{CONNECT_SPONSOR.cta}</span>
+            </span>
+            <span class="connect-sponsor-label">Sponsored</span>
+          </a>
+        )
+      }
     </section>
 
     <section class="cta-card">

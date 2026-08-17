@@ -1237,3 +1237,29 @@ a.badge-plain:hover { color: var(--iz-ink); }
 
 /* Contribute section: the tag-on-X alternative path */
 .contribute-alt { font-size: 14px; line-height: 1.55; color: var(--iz-muted); margin: 16px 0 0; max-width: 460px; text-wrap: pretty; }
+
+/* ---------- Connect-section contextual sponsor ---------- */
+.connect-sponsor {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--iz-white);
+  border: 1px solid var(--iz-line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: var(--iz-shadow);
+  transition: box-shadow 180ms ease;
+}
+.connect-sponsor:hover { box-shadow: var(--iz-shadow-lg); }
+.connect-sponsor-logo { flex: none; width: 28px; height: 28px; border-radius: 8px; }
+.connect-sponsor-copy { font-size: 13.5px; line-height: 1.5; color: var(--iz-body); text-wrap: pretty; }
+.connect-sponsor-cta { font-weight: 500; color: var(--iz-blue-600); white-space: nowrap; }
+.connect-sponsor-label {
+  flex: none;
+  align-self: flex-start;
+  margin-left: auto;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--iz-muted-2);
+}

@@ -71,6 +71,19 @@ export const COPIES_API = {
   endpoint: 'https://api.botdirectory.ai/api/copies',
 } as const;
 
+/**
+ * Contextual sponsor in the bot pages' "Connect first" section — separate
+ * inventory from the sidebar slots (not part of sponsors.json rotation).
+ */
+export const CONNECT_SPONSOR = {
+  enabled: true,
+  name: 'Executor',
+  logo: '/images/sponsors/executor.png',
+  url: 'https://executor.sh',
+  copy: 'Tired of signing in to each service for every harness? Executor signs you in once — every client shares the credentials.',
+  cta: 'Try Executor →',
+} as const;
+
 export const FEATURES = {
   /**
    * Show copy counts (table column, card meta, bot-page badge) and the
