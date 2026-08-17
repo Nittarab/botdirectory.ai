@@ -1,6 +1,6 @@
 /**
- * Outbound-link tagging. Sponsors get placement-level campaigns so the
- * weekly reports can say which slot drove the click; product links get a
+ * Outbound-link tagging. Sponsors get placement-level campaigns so
+ * analytics can say which slot drove the click; product links get a
  * plain referral tag. Existing query params on the target are preserved.
  */
 const SOURCE = 'botdirectory.ai';

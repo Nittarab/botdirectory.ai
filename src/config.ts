@@ -29,7 +29,7 @@ export const SITE = {
   copyrightHolder: 'Inbox Zero Inc.',
   copyrightYear: 2026,
 
-  /** Where "Book a slot" points until a real booking flow exists. */
+  /** Where "Sponsor" points until a real booking flow exists. */
   sponsorContactUrl: 'mailto:elie@getinboxzero.com',
 } as const;
 
