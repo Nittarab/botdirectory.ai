@@ -1,0 +1,69 @@
+---
+/**
+ * "Tag a tweet" explainer dialog. Opened by any element with [data-tag-open].
+ * Shows the three-step flow plus a mock thread of how tagging looks on X.
+ */
+import PrimaryButton from './PrimaryButton.astro';
+import { SITE } from '../config';
+---
+
+<dialog id="tag-dialog" class="sponsor-dialog tag-dialog">
+  <div class="sd-head">
+    <span class="sd-title">Add a bot by tagging us</span>
+    <button type="button" class="sd-close" aria-label="Close" data-td-close>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+    </button>
+  </div>
+
+  <ol class="td-steps">
+    <li>Find a tweet describing a bot setup — yours or anyone's.</li>
+    <li>Reply to it and tag <strong>{SITE.xHandle}</strong>.</li>
+    <li>Our agent reads the thread, adds the bot here, and replies with the live page. You get the scout credit.</li>
+  </ol>
+
+  <div class="td-demo" aria-hidden="true">
+    <div class="td-tweet">
+      <span class="td-avatar">R</span>
+      <div class="td-body">
+        <span class="td-handle">@rhys</span>
+        <p class="td-text">built a grocery bot — orders Costco + Amazon weekly and puts what to cook on my calendar</p>
+      </div>
+    </div>
+    <div class="td-tweet td-reply">
+      <span class="td-avatar td-avatar-you">Y</span>
+      <div class="td-body">
+        <span class="td-handle">@you</span>
+        <p class="td-text"><span class="td-mention">@botdirectoryai</span> add this</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sd-cta">
+    <PrimaryButton attrs={{ 'data-copy-handle': '' }}>Copy @botdirectoryai</PrimaryButton>
+    <a class="sd-alt" href={SITE.xUrl}>See our X profile</a>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.getElementById('tag-dialog') as HTMLDialogElement | null;
+  if (dialog) {
+    document.querySelectorAll<HTMLElement>('[data-tag-open]').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        dialog.showModal();
+      });
+    });
+    dialog.querySelector('[data-td-close]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => {
+      const r = dialog.getBoundingClientRect();
+      const inside =
+        e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      if (!inside) dialog.close();
+    });
+    const copyBtn = dialog.querySelector<HTMLElement>('[data-copy-handle]');
+    copyBtn?.addEventListener('click', () => {
+      navigator.clipboard?.writeText('@botdirectoryai').catch(() => {});
+      copyBtn.textContent = 'Copied — now go tag';
+    });
+  }
+</script>

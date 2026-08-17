@@ -5,7 +5,7 @@
  * The left column carries the dashed "Advertise" slot card.
  */
 import SponsorLogo from './SponsorLogo.astro';
-import { edgeCardStyle, edgeLeft, edgeOpenSlots, edgeRight, slotsLineBoth, tinted } from '../lib/sponsors';
+import { edgeCardStyle, edgeLeft, edgeRight, slotsLineBoth, tinted } from '../lib/sponsors';
 
 interface Props {
   side: 'left' | 'right';
@@ -27,7 +27,7 @@ const cardClass = side === 'left' ? 'edge-card-left' : 'edge-card-right';
     ))
   }
   {
-    side === 'left' && edgeOpenSlots > 0 && (
+    side === 'left' && (
       <a href="/#sponsor" class="edge-card edge-card-left edge-card-slot" data-sponsor-open>
         <svg
           class="edge-slot-icon"

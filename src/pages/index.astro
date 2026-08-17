@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import PrimaryButton from '../components/PrimaryButton.astro';
 import SponsorCard from '../components/SponsorCard.astro';
 import SponsorDialog from '../components/SponsorDialog.astro';
+import TagDialog from '../components/TagDialog.astro';
 import MarqueeStrips from '../components/MarqueeStrips.astro';
 import EdgeColumn from '../components/EdgeColumn.astro';
 import SponsorShuffle from '../components/SponsorShuffle.astro';
@@ -38,7 +39,7 @@ if (mode === 'inline') {
 
 const searchText = (b: Bot) => (b.name + ' ' + b.prompt + ' ' + b.integrations.join(' ')).toLowerCase();
 
-const title = `Open source Grok Bots | ${SITE.wordmark}`;
+const title = `The Grok Bot directory | ${SITE.wordmark}`;
 const description = 'Open source prompts to set up Grok Bot and Rakazo bots in minutes. Copy one, connect your tools, done.';
 ---
 
@@ -56,7 +57,7 @@ const description = 'Open source prompts to set up Grok Bot and Rakazo bots in m
           <p class="iz-eyebrow">
             Open source · <a href={SITE.grokUrl}>Grok Bot</a> and <a href={SITE.rakazoUrl}>Rakazo</a>
           </p>
-          <h1 class="hero-title">Open source Grok Bots</h1>
+          <h1 class="hero-title">The Grok Bot directory</h1>
           <p class="hero-sub">Prompts to set up your bots in minutes.</p>
         </section>
 
@@ -247,16 +248,16 @@ const description = 'Open source prompts to set up Grok Bot and Rakazo bots in m
           <h2 class="contribute-title">A bot is one file in a repo</h2>
           <p class="contribute-copy">
             No plugin API, no review board. Add a markdown file with the prompt and the integrations it needs, open a
-            pull request, and it shows up here. Rakazo is the open-source Grok Bot alternative, so nothing here is
-            locked to either one.
+            pull request, and it shows up here.
           </p>
           <div class="cta-row">
             <PrimaryButton href={SITE.repoUrl}>Open a pull request</PrimaryButton>
+            <button type="button" class="btn-secondary" data-tag-open>Tag a tweet</button>
             <a href={SITE.contributingUrl} class="btn-secondary">Read the guide</a>
           </div>
           <p class="contribute-alt">
-            No PR needed: tag <a href={SITE.xUrl}>{SITE.xHandle}</a> under any tweet about a bot setup — our
-            agent reads the thread, opens the PR, and replies with the live page. You get the scout credit.
+            No PR needed: tag <a href={SITE.xUrl}>{SITE.xHandle}</a> under any tweet about a bot setup and our
+            agent does the rest.
           </p>
         </div>
         <div class="file-card">
@@ -311,6 +312,7 @@ I review before merge.</pre>
 
     <Footer />
     <SponsorDialog />
+    <TagDialog />
   </div>
 
   <SponsorShuffle />

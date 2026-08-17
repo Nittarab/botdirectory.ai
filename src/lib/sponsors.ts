@@ -8,9 +8,6 @@ const edgePool = SPONSORS.slice(0, 10);
 const half = Math.ceil(edgePool.length / 2);
 export const edgeRight = edgePool.slice(0, half);
 export const edgeLeft = edgePool.slice(half);
-/** Unsold edge slots (of the 10 visual placements) → "Advertise" card. */
-export const edgeOpenSlots = Math.max(0, 10 - edgePool.length);
-
 export const slotsLineBoth = `${SPONSORING.slotsTakenBoth} of ${SPONSORING.slotsTotalBoth} spots taken`;
 
 export const tinted = SPONSORING.cardStyle === 'tinted';
