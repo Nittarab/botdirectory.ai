@@ -37,13 +37,21 @@ added_via: https://x.com/.../status/…  # optional — set by the X mention bot
   a "scouted by" credit on the page.
 - **integrations** — the tools the prompt connects, as plain names
   (`[Gmail, Notion, Stripe]`). Any tool name is welcome — there's no fixed list.
-  If the tool has an entry in [`data/tools.json`](data/tools.json) it gets its
-  brand-colored dot; unknown tools get a neutral one. Adding a `tools.json`
-  entry for a new tool is appreciated but optional:
+  If the tool has an entry in [`data/tool-icons.json`](data/tool-icons.json)
+  it shows its brand icon; otherwise the chip is just the name. Adding one for
+  a new tool is appreciated but optional:
 
   ```json
-  "Stripe": "#6410FF"
+  // an SVG from https://svgl.app or https://simpleicons.org (preferred)…
+  "Stripe": "https://svgl.app/library/stripe.svg"
+  // …a light/dark pair for mono logos so they stay visible in dark mode…
+  "GitHub": { "light": "https://svgl.app/library/github_light.svg", "dark": "https://svgl.app/library/github_dark.svg" }
+  // …or the tool's own favicon, pulled from its site
+  "Gong": { "site": "https://www.gong.io" }
   ```
+
+  Then run `pnpm icons` to download into `public/icons/` and commit the file
+  alongside.
 
 - Copy counts are **not** part of the file — they're tracked server-side and
   start at zero for every bot.

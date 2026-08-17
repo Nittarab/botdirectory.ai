@@ -13,8 +13,9 @@ interface BrowseState {
 
 function init(): void {
   const search = document.getElementById('bot-search') as HTMLInputElement | null;
-  const integration = document.getElementById('bot-integration') as HTMLSelectElement | null;
-  const sort = document.getElementById('bot-sort') as HTMLSelectElement | null;
+  // Both selects are <Select /> components: a hidden input that fires `change`.
+  const integration = document.getElementById('bot-integration') as HTMLInputElement | null;
+  const sort = document.getElementById('bot-sort') as HTMLInputElement | null;
   const btnTable = document.getElementById('view-table-btn');
   const btnCards = document.getElementById('view-cards-btn');
   const tableView = document.getElementById('table-view');

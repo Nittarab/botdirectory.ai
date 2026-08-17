@@ -9,9 +9,11 @@ import TagDialog from '../components/TagDialog.astro';
 import MarqueeStrips from '../components/MarqueeStrips.astro';
 import EdgeColumn from '../components/EdgeColumn.astro';
 import SponsorShuffle from '../components/SponsorShuffle.astro';
+import ToolIcon from '../components/ToolIcon.astro';
+import Select from '../components/Select.astro';
 import { FEATURES, SITE, SPONSORING } from '../config';
 import { catStyle, fmt } from '../lib/constants';
-import { getBots, toolDot, SPONSORS, PROMOS, type Bot, type Promo } from '../lib/data';
+import { getBots, SPONSORS, PROMOS, type Bot, type Promo } from '../lib/data';
 import { edgeRight } from '../lib/sponsors';
 import { sponsorUrl } from '../lib/utm';
 
@@ -102,16 +104,21 @@ const structuredData = [
               <div class="filterbar">
                 <div class="filterbar-controls">
                   <input type="text" id="bot-search" class="search-input" placeholder="Search" />
-                  <select id="bot-integration" class="filter-select" aria-label="Filter by integration">
-                    <option value="all">Any integration</option>
-                    {allTools.map((t) => <option value={t}>{t}</option>)}
-                  </select>
+                  <Select
+                    id="bot-integration"
+                    label="Filter by integration"
+                    options={[{ value: 'all', label: 'Any integration' }, ...allTools.map((t) => ({ value: t, label: t, tool: t }))]}
+                  />
                   {
                     FEATURES.showCopies && (
-                      <select id="bot-sort" class="filter-select" aria-label="Sort bots">
-                        <option value="copies">Most copied</option>
-                        <option value="name">A–Z</option>
-                      </select>
+                      <Select
+                        id="bot-sort"
+                        label="Sort bots"
+                        options={[
+                          { value: 'copies', label: 'Most copied' },
+                          { value: 'name', label: 'A–Z' },
+                        ]}
+                      />
                     )
                   }
                   <div class="view-toggle">
@@ -136,13 +143,12 @@ const structuredData = [
                         data-search={searchText(row.bot)}
                       >
                         <div class="bot-card-head">
-                          <span title={row.bot.category} class="cat-dot" style={`background: ${catStyle(row.bot.category).catFg};`}></span>
                           <h3 class="bot-card-title">{row.bot.name}</h3>
                         </div>
                         <div class="card-prompt">{row.bot.prompt}</div>
                         <div class="chip-row">
                           {row.bot.integrations.map((t) => (
-                            <span class="tool-chip"><span class="tool-dot" style={`background: ${toolDot(t)};`}></span>{t}</span>
+                            <span class="tool-chip"><ToolIcon name={t} size={14} />{t}</span>
                           ))}
                         </div>
                         <div class="bot-card-meta">
@@ -164,7 +170,6 @@ const structuredData = [
                         style={`background: var(--iz-${row.promo.family}-50); border-color: var(--iz-${row.promo.family}-150, var(--iz-${row.promo.family}-200));`}
                       >
                         <div class="bot-card-head">
-                          <span title={row.promo.category} class="cat-dot" style={`background: ${catStyle(row.promo.category).catFg};`}></span>
                           <h3 class="bot-card-title">{row.promo.name}</h3>
                           <span class="promo-tag">Promoted</span>
                         </div>
@@ -172,7 +177,7 @@ const structuredData = [
                         <div class="card-prompt">{row.promo.note}</div>
                         <div class="chip-row">
                           {row.promo.integrations.map((t) => (
-                            <span class="tool-chip"><span class="tool-dot" style={`background: ${toolDot(t)};`}></span>{t}</span>
+                            <span class="tool-chip"><ToolIcon name={t} size={14} />{t}</span>
                           ))}
                         </div>
                         <div class="bot-card-meta">
@@ -212,7 +217,11 @@ const structuredData = [
                           class="cat-pill"
                           style={`color: ${catStyle(row.bot.category).catFg}; background: ${catStyle(row.bot.category).catBg}; border-color: ${catStyle(row.bot.category).catBorder};`}
                         >{row.bot.category}</span>
-                        <span class="bot-row-tools">{row.bot.integrations.join(', ')}</span>
+                        <span class="bot-row-tools">
+                          {row.bot.integrations.map((t) => (
+                            <span class="bot-row-tool"><ToolIcon name={t} size={14} />{t}</span>
+                          ))}
+                        </span>
                         {FEATURES.showCopies && (
                           <span class="bot-row-copies" data-copies-slug={row.bot.slug} data-copies-seed={row.bot.copies}>{fmt(row.bot.copies)} copies</span>
                         )}
@@ -237,7 +246,11 @@ const structuredData = [
                           class="cat-pill"
                           style={`color: ${catStyle(row.promo.category).catFg}; background: ${catStyle(row.promo.category).catBg}; border-color: ${catStyle(row.promo.category).catBorder};`}
                         >{row.promo.category}</span>
-                        <span class="bot-row-tools">{row.promo.integrations.join(', ')}</span>
+                        <span class="bot-row-tools">
+                          {row.promo.integrations.map((t) => (
+                            <span class="bot-row-tool"><ToolIcon name={t} size={14} />{t}</span>
+                          ))}
+                        </span>
                         {FEATURES.showCopies && <span class="bot-row-copies">Sponsored</span>}
                         <span class="bot-row-contrib">@{row.promo.contributor}</span>
                       </a>

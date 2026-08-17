@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "validate": "tsx scripts/validate-bots.ts",
-    "astro": "astro"
+    "astro": "astro",
+    "icons": "tsx scripts/fetch-icons.ts"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.4.1",

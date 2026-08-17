@@ -1,0 +1,90 @@
+---
+/**
+ * A styled single-select: a plain-text trigger that opens a popover listbox
+ * (shadcn-style) with optional tool icons per option and a type-to-filter box.
+ * State lives in a hidden <input id={id}> which fires `change` on pick, so
+ * scripts can treat it like a native select (`el.value`, `change` event).
+ * Behaviour is wired once in `src/scripts/select.ts`.
+ */
+import ToolIcon from './ToolIcon.astro';
+
+export interface SelectOption {
+  value: string;
+  label: string;
+  /** Integration name → shows its brand icon (when we have one) before the label. */
+  tool?: string;
+}
+
+interface Props {
+  id: string;
+  label: string;
+  options: SelectOption[];
+  value?: string;
+  /** Show the filter box (default: only when there are more than 8 options). */
+  searchable?: boolean;
+  class?: string;
+}
+
+const { id, label, options, value = options[0]?.value ?? '', searchable = options.length > 8, class: className } = Astro.props;
+const selected = options.find((o) => o.value === value) ?? options[0];
+---
+
+<div class:list={['sel', className]} data-select>
+  <input type="hidden" id={id} value={selected?.value ?? ''} />
+  <button
+    type="button"
+    class="sel-trigger"
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    aria-label={label}
+    aria-controls={`${id}-list`}
+  >
+    <span class="sel-trigger-body">
+      {selected?.tool && <ToolIcon name={selected.tool} size={14} />}
+      <span class="sel-trigger-label">{selected?.label}</span>
+    </span>
+    <svg class="sel-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </button>
+
+  <div class="sel-pop" hidden>
+    {
+      searchable && (
+        <div class="sel-search">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
+            <path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          <input type="text" class="sel-search-input" placeholder="Search…" autocomplete="off" spellcheck="false" aria-label={`Filter ${label.toLowerCase()}`} />
+        </div>
+      )
+    }
+    <ul class="sel-list" role="listbox" id={`${id}-list`} aria-label={label} tabindex="-1">
+      {
+        options.map((o) => (
+          <li
+            role="option"
+            class="sel-opt"
+            data-value={o.value}
+            data-label={o.label.toLowerCase()}
+            aria-selected={o.value === selected?.value ? 'true' : 'false'}
+          >
+            <span class="sel-opt-body">
+              {o.tool && <ToolIcon name={o.tool} size={14} />}
+              <span class="sel-opt-label">{o.label}</span>
+            </span>
+            <svg class="sel-check" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </li>
+        ))
+      }
+      <li class="sel-empty" hidden>No matches</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  import '../scripts/select';
+</script>

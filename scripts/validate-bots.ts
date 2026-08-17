@@ -5,7 +5,7 @@
  * Checks: frontmatter schema, filename = slug(name), unique slug,
  * known category, non-empty prompt body, unique `url` (dedupe key).
  * Integrations are free-form strings — any tool name is welcome; entries
- * in data/tools.json only add a colored dot. Copy counts are server-side
+ * in data/tool-icons.json only add a brand icon. Copy counts are server-side
  * (the copies API), never in the repo markdown.
  */
 import { readdirSync, readFileSync } from 'node:fs';
