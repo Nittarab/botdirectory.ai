@@ -16,9 +16,16 @@
  * only when adding or changing an entry.
  *
  * Output: public/icons/<slugify(name)>.<ext>, plus <slug>-dark.<ext> for the
- * light/dark form. The extension follows the bytes (svg/png/jpg/ico);
- * src/lib/data.ts finds files by slug, so it never needs to know which.
+ * light/dark form. The extension follows the bytes (svg/png/jpg); .ico is
+ * converted to .png. src/lib/data.ts finds files by slug, so it never needs
+ * to know which.
+ *
+ * Rasters are shrunk to MAX_PX (we render icons at 14–18px, so 64px covers
+ * 3× screens) with macOS `sips`; on other platforms they're kept as-is with
+ * a note. Run ImageOptim (or `svgo`) over public/icons/ afterwards to
+ * squeeze the bytes.
  */
+import { execFileSync } from 'node:child_process';
 import { mkdirSync, readdirSync, unlinkSync, writeFileSync } from 'node:fs';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -31,6 +38,7 @@ mkdirSync(OUT, { recursive: true });
 
 type Entry = string | { light: string; dark: string } | { site: string };
 
+const MAX_PX = 64;
 const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36';
 const TIMEOUT_MS = 15_000;
 
@@ -121,12 +129,36 @@ function removeExisting(base: string) {
   }
 }
 
+let sipsMissing = false;
+/** Shrink a raster to MAX_PX and normalise .ico → .png. Returns the final filename. */
+function shrink(base: string, ext: string): string {
+  if (ext === 'svg') return `${base}.${ext}`;
+  const src = join(OUT, `${base}.${ext}`);
+  const outExt = ext === 'ico' ? 'png' : ext;
+  const dest = join(OUT, `${base}.${outExt}`);
+  try {
+    const px = Math.max(...execFileSync('sips', ['-g', 'pixelWidth', '-g', 'pixelHeight', src], { encoding: 'utf8' })
+      .split('\n').map((l) => parseInt(l.split(':').pop() ?? '', 10) || 0));
+    if (px <= MAX_PX && outExt === ext) return `${base}.${ext}`;
+    // -Z fits within MAX_PX; never upscale — sips would happily blur a 16px favicon up to 64.
+    const size = px > MAX_PX ? ['-Z', String(MAX_PX)] : [];
+    execFileSync('sips', ['-s', 'format', outExt === 'jpg' ? 'jpeg' : outExt, ...size, src, '--out', dest], { stdio: 'ignore' });
+    if (dest !== src) unlinkSync(src);
+    return `${base}.${outExt}`;
+  } catch {
+    if (!sipsMissing) console.warn('  (sips not available — rasters kept at original size; resize them by hand)');
+    sipsMissing = true;
+    return `${base}.${ext}`;
+  }
+}
+
 async function save(base: string, job: () => Promise<{ ext: string; bytes: Uint8Array; url?: string }>, label: string) {
   try {
     const { ext, bytes, url } = await job();
     removeExisting(base);
     writeFileSync(join(OUT, `${base}.${ext}`), bytes);
-    console.log(`✓ ${base}.${ext}  ←  ${url ?? label}`);
+    const file = shrink(base, ext);
+    console.log(`✓ ${file}  ←  ${url ?? label}`);
     return true;
   } catch (err) {
     console.error(`✗ ${base}  ←  ${label}: ${(err as Error).message}`);
