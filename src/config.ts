@@ -17,8 +17,8 @@ export const SITE = {
   xUrl: 'https://x.com/botdirectoryai',
 
   /** Public GitHub repo (placeholder org until the real one exists). */
-  repoUrl: 'https://github.com/elie222/botdirectory',
-  contributingUrl: 'https://github.com/elie222/botdirectory/blob/main/CONTRIBUTING.md',
+  repoUrl: 'https://github.com/elie222/botdirectory.ai',
+  contributingUrl: 'https://github.com/elie222/botdirectory.ai/blob/main/CONTRIBUTING.md',
 
   /** Products linked from the header / footer / copy. */
   rakazoUrl: 'https://rakazo.com',
