@@ -1286,6 +1286,14 @@ a.badge-plain:hover { color: var(--iz-ink); }
   .iz-rail > * { flex: 0 0 246px; scroll-snap-align: start; }
 }
 
+/* Phones always use the card directory, including before the browse script
+   initializes. This also covers wider landscape and foldable viewports. */
+@media (max-width: 900px) {
+  #table-view { display: none !important; }
+  #cards-view { display: grid !important; }
+  .view-toggle { display: none; }
+}
+
 /* ---------- Phone layout ---------- */
 @media (max-width: 640px) {
   .site-header {
