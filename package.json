@@ -11,7 +11,8 @@
     "check": "astro check",
     "validate": "tsx scripts/validate-bots.ts",
     "astro": "astro",
-    "icons": "tsx scripts/fetch-icons.ts"
+    "icons": "tsx scripts/fetch-icons.ts",
+    "icons:sync": "tsx scripts/fetch-icons.ts --sync"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.4.1",

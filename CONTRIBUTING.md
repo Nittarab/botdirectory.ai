@@ -21,6 +21,8 @@ contributor: elie2222                    # optional — whose setup this is
 contributor_url: https://x.com/elie2222  # optional — where the handle links (default: GitHub)
 scouted_by: someoneelse                # optional — X handle of whoever found/submitted it
 integrations: [GitHub, DataForSEO, Search Console]
+integration_urls:                       # optional; lets deploy fetch missing favicons
+  DataForSEO: https://dataforseo.com
 url: https://example.com/my-bot        # optional — canonical homepage (dedupe key)
 added_via: https://x.com/.../status/…  # optional — set by the X mention bot
 ---
@@ -54,6 +56,13 @@ added_via: https://x.com/.../status/…  # optional — set by the X mention bot
 
   Then run `pnpm icons` to download into `public/icons/` and commit the file
   alongside.
+
+- **integration_urls** — optional official HTTPS homepages keyed by the exact
+  names in `integrations`. On deploy, these are sent to Google's favicon proxy
+  and mirrored into the site; the build runner never requests contributed
+  hosts directly. The X mention bot fills these when it can identify a product
+  confidently. Exact Simple Icons matches are discovered automatically, and
+  every remaining integration gets a generated monogram rather than a blank.
 
 - Copy counts are **not** part of the file — they're tracked server-side and
   start at zero for every bot.

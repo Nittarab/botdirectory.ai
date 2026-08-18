@@ -20,6 +20,7 @@ category: Marketing
 added_at: "2026-08-18T12:00:00.000Z"
 contributor: rakazo
 integrations: [GitHub, DataForSEO, Search Console]
+integration_urls: { DataForSEO: https://dataforseo.com }
 ---
 
 Set up a new bot for me. Walk me through connecting GitHub, DataForSEO and

@@ -1,9 +1,10 @@
 ---
 /**
  * The brand icon in front of an integration name, when we have one in
- * public/icons/ (see data/tool-icons.json + `pnpm icons`). Renders nothing
- * otherwise — the chip is just the name. Mono logos ship a dark variant;
- * CSS swaps them on [data-theme='dark'].
+ * public/icons/ (see data/tool-icons.json + `pnpm icons`). Unknown tools get
+ * a small deterministic monogram so newly-added bots never have a blank icon
+ * slot while their favicon is being discovered. Mono logos ship a dark
+ * variant; CSS swaps them on [data-theme='dark'].
  */
 import { toolIcon } from '../lib/data';
 
@@ -15,13 +16,23 @@ interface Props {
 
 const { name, size } = Astro.props;
 const icon = toolIcon(name);
+const initial = name.trim().match(/[A-Za-z0-9]/)?.[0]?.toUpperCase() ?? '?';
+let hash = 0;
+for (const char of name) hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
+const hue = hash % 360;
 ---
 
 {
-  icon && (
+  icon ? (
     <>
       <img src={icon.light} alt="" width={size} height={size} class:list={['tool-icon', icon.dark && 'tool-icon-light']} loading="lazy" decoding="async" />
       {icon.dark && <img src={icon.dark} alt="" width={size} height={size} class="tool-icon tool-icon-dark" loading="lazy" decoding="async" />}
     </>
+  ) : (
+    <span
+      class="tool-icon tool-icon-fallback"
+      style={`--tool-icon-hue: ${hue}; width: ${size}px; height: ${size}px; font-size: ${Math.max(8, Math.round(size * 0.57))}px;`}
+      aria-hidden="true"
+    >{initial}</span>
   )
 }

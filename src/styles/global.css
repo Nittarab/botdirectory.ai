@@ -604,9 +604,23 @@ code, .iz-code {
 }
 /* Brand icon in front of a tool name (ToolIcon.astro). Mono logos ship a dark twin, swapped per theme. */
 .tool-icon { flex: none; object-fit: contain; }
+.tool-icon-fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: hsl(var(--tool-icon-hue) 72% 92%);
+  color: hsl(var(--tool-icon-hue) 55% 35%);
+  font-weight: 700;
+  line-height: 1;
+}
 .tool-icon-dark { display: none; }
 :root[data-theme='dark'] .tool-icon-light { display: none; }
 :root[data-theme='dark'] .tool-icon-dark { display: inline-block; }
+:root[data-theme='dark'] .tool-icon-fallback {
+  background: hsl(var(--tool-icon-hue) 35% 24%);
+  color: hsl(var(--tool-icon-hue) 70% 82%);
+}
 .bot-card-meta {
   display: flex;
   align-items: center;

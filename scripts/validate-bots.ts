@@ -18,6 +18,8 @@ import { CATEGORIES, slugify } from '../src/lib/constants';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const BOTS_DIR = join(ROOT, 'bots');
 
+const httpsUrl = z.string().url().refine((value) => value.startsWith('https://'), 'Must use HTTPS');
+
 const schema = z
   .object({
     name: z.string().min(1),
@@ -27,10 +29,22 @@ const schema = z
     contributor_url: z.string().url().optional(),
     scouted_by: z.string().min(1).optional(),
     integrations: z.array(z.string().min(1)).min(1),
+    integration_urls: z.record(z.string().min(1), httpsUrl).optional(),
     url: z.string().url().optional(),
     added_via: z.string().url().optional(),
   })
-  .strict();
+  .strict()
+  .superRefine((bot, ctx) => {
+    for (const name of Object.keys(bot.integration_urls ?? {})) {
+      if (!bot.integrations.includes(name)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ['integration_urls', name],
+          message: 'Must match a name in integrations',
+        });
+      }
+    }
+  });
 
 const errors: string[] = [];
 const seenSlugs = new Map<string, string>();

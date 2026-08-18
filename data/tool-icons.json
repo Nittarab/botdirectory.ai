@@ -94,5 +94,55 @@
   },
   "Converly": {
     "site": "https://converly.io"
-  }
+  },
+  "Axiom": {
+    "site": "https://axiom.co"
+  },
+  "Bible": {
+    "site": "https://www.bible.com"
+  },
+  "Bot Directory": {
+    "site": "https://botdirectory.ai"
+  },
+  "Claude Code": "https://cdn.simpleicons.org/claudecode",
+  "Codex": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fopenai.com%2Fcodex%2F&sz=64",
+  "Codex CLI": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fopenai.com%2Fcodex%2F&sz=64",
+  "Cursor Background Agents": "https://cdn.simpleicons.org/cursor",
+  "Cursor Cloud Agents": "https://cdn.simpleicons.org/cursor",
+  "Discord": "https://cdn.simpleicons.org/discord",
+  "ExifTool": {
+    "site": "https://exiftool.org"
+  },
+  "FAA NOTAM Search": {
+    "site": "https://notams.aim.faa.gov/notamSearch/"
+  },
+  "Ferndesk": {
+    "site": "https://ferndesk.com"
+  },
+  "Google Flights": {
+    "site": "https://www.google.com/travel/flights"
+  },
+  "Help Scout": "https://cdn.simpleicons.org/helpscout",
+  "HelpSpot": {
+    "site": "https://www.helpspot.com"
+  },
+  "HireNimbus": {
+    "site": "https://hirenimbus.com"
+  },
+  "Infisical": {
+    "site": "https://infisical.com"
+  },
+  "Intercom": "https://cdn.simpleicons.org/intercom",
+  "Kindle": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fwww.amazon.com%2Fkindle&sz=64",
+  "Photos": {
+    "site": "https://www.apple.com/ios/photos/"
+  },
+  "QuickBooks": "https://cdn.simpleicons.org/quickbooks",
+  "Trends.vc": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Ftrends.vc&sz=64",
+  "Web Search": {
+    "site": "https://www.google.com"
+  },
+  "Whole Foods": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fwww.wholefoodsmarket.com&sz=64",
+  "Whole Foods delivery": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fwww.wholefoodsmarket.com&sz=64",
+  "Xero": "https://cdn.simpleicons.org/xero"
 }

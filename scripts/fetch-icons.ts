@@ -12,8 +12,10 @@
  * fetches the homepage and picks its best icon: apple-touch-icon, else the
  * largest <link rel="icon">, else /favicon.ico.
  *
- * Files are committed, so the site build never hits the network; re-run this
- * only when adding or changing an entry.
+ * Curated files are committed. `pnpm icons:sync` additionally fills gaps at
+ * deploy time: it discovers exact Simple Icons matches and uses Google's
+ * favicon proxy for official `integration_urls` stored in bot frontmatter.
+ * Unknown/generic integrations still receive the UI's monogram fallback.
  *
  * Output: public/icons/<slugify(name)>.<ext>, plus <slug>-dark.<ext> for the
  * light/dark form. The extension follows the bytes (svg/png/jpg); .ico is
@@ -26,9 +28,10 @@
  * squeeze the bytes.
  */
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, readdirSync, unlinkSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readdirSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parse as parseYaml } from 'yaml';
 import { slugify } from '../src/lib/constants';
 import manifest from '../data/tool-icons.json';
 
@@ -122,11 +125,75 @@ async function fetchSiteIcon(site: string): Promise<{ ext: string; bytes: Uint8A
   throw new Error(`no usable icon\n    ${errors.join('\n    ')}`);
 }
 
+/**
+ * Fetch through Google's favicon proxy for URLs contributed in bot markdown.
+ * This keeps the deploy runner from requesting an untrusted host directly.
+ */
+async function fetchProxiedFavicon(site: string): Promise<{ ext: string; bytes: Uint8Array; url: string }> {
+  const url = new URL('https://www.google.com/s2/favicons');
+  url.searchParams.set('domain_url', site);
+  url.searchParams.set('sz', String(MAX_PX));
+  return { ...(await fetchImage(url.href)), url: url.href };
+}
+
+/** Exact brand matches from Simple Icons; broad/fuzzy matches are rejected. */
+async function simpleIconUrl(name: string): Promise<string | null> {
+  const candidates = [
+    name,
+    name.replace(/\s+(?:CLI|Background Agents|Cloud Agents)$/i, ''),
+  ].filter((value, index, all) => value && all.indexOf(value) === index);
+
+  for (const candidate of candidates) {
+    const url = new URL('https://api.iconify.design/search');
+    url.searchParams.set('query', candidate);
+    url.searchParams.set('prefixes', 'simple-icons');
+    url.searchParams.set('limit', '10');
+    const result = (await (await get(url.href, 'application/json')).json()) as { icons?: string[] };
+    const expected = slugify(candidate).replace(/-/g, '');
+    const exact = result.icons?.find((icon) => {
+      const id = icon.slice(icon.indexOf(':') + 1);
+      return slugify(id).replace(/-/g, '') === expected;
+    });
+    if (exact) return `https://cdn.simpleicons.org/${exact.slice(exact.indexOf(':') + 1)}`;
+  }
+  return null;
+}
+
+/** Every integration in bot markdown, plus an optional official homepage. */
+function botIntegrations(): Map<string, string | undefined> {
+  const result = new Map<string, string | undefined>();
+  const botsDir = join(ROOT, 'bots');
+  for (const file of readdirSync(botsDir).filter((name) => name.endsWith('.md'))) {
+    const raw = readFileSync(join(botsDir, file), 'utf8');
+    const frontmatter = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+    if (!frontmatter) continue;
+    const data = parseYaml(frontmatter[1]!) as {
+      integrations?: unknown;
+      integration_urls?: unknown;
+    };
+    const integrations = Array.isArray(data.integrations)
+      ? data.integrations.filter((name): name is string => typeof name === 'string')
+      : [];
+    const sites = data.integration_urls && typeof data.integration_urls === 'object'
+      ? data.integration_urls as Record<string, unknown>
+      : {};
+    for (const name of integrations) {
+      const site = typeof sites[name] === 'string' ? sites[name] : undefined;
+      if (!result.has(name) || (!result.get(name) && site)) result.set(name, site);
+    }
+  }
+  return result;
+}
+
 /** Drop any earlier download for this base name so an extension change leaves no stale file. */
 function removeExisting(base: string) {
   for (const f of readdirSync(OUT)) {
     if (f.startsWith(base + '.')) unlinkSync(join(OUT, f));
   }
+}
+
+function hasIcon(base: string): boolean {
+  return readdirSync(OUT).some((file) => file.slice(0, file.lastIndexOf('.')) === base);
 }
 
 let sipsMissing = false;
@@ -166,11 +233,19 @@ async function save(base: string, job: () => Promise<{ ext: string; bytes: Uint8
   }
 }
 
-const only = new Set(process.argv.slice(2)); // optional: pnpm icons Gong "Comp AI"
+const args = process.argv.slice(2);
+const sync = args.includes('--sync');
+const only = new Set(args.filter((arg) => !arg.startsWith('--'))); // optional: pnpm icons Gong "Comp AI"
 let failed = 0;
 for (const [name, entry] of Object.entries(manifest as Record<string, Entry>)) {
   if (only.size && !only.has(name)) continue;
   const slug = slugify(name);
+  if (sync) {
+    const complete = typeof entry === 'object' && 'light' in entry
+      ? hasIcon(slug) && hasIcon(`${slug}-dark`)
+      : hasIcon(slug);
+    if (complete) continue;
+  }
   const jobs: Array<Promise<boolean>> = [];
   if (typeof entry === 'string') {
     jobs.push(save(slug, () => fetchImage(entry), entry));
@@ -181,6 +256,31 @@ for (const [name, entry] of Object.entries(manifest as Record<string, Entry>)) {
     jobs.push(save(`${slug}-dark`, () => fetchImage(entry.dark), entry.dark));
   }
   for (const ok of await Promise.all(jobs)) if (!ok) failed++;
+}
+
+if (sync) {
+  console.log('\nSyncing icons for integrations used by bot files…');
+  for (const [name, site] of botIntegrations()) {
+    const slug = slugify(name);
+    if (hasIcon(slug)) continue;
+
+    try {
+      if (site) {
+        const ok = await save(slug, () => fetchProxiedFavicon(site), site);
+        if (!ok) console.warn(`  ${name}: favicon unavailable; using monogram fallback`);
+        continue;
+      }
+      const iconUrl = await simpleIconUrl(name);
+      if (iconUrl) {
+        const ok = await save(slug, () => fetchImage(iconUrl), iconUrl);
+        if (!ok) console.warn(`  ${name}: brand icon unavailable; using monogram fallback`);
+      } else {
+        console.log(`· ${name}: no exact brand match; using monogram fallback`);
+      }
+    } catch (err) {
+      console.warn(`  ${name}: discovery failed (${(err as Error).message}); using monogram fallback`);
+    }
+  }
 }
 
 if (failed) {
