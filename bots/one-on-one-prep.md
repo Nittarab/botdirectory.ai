@@ -1,7 +1,7 @@
 ---
 name: One-On-One Prep
 category: Productivity
-added_at: "2026-08-17"
+added_at: "2026-08-17T19:08:55.000Z"
 contributor: kristaletz
 contributor_url: https://x.com/kristaletz
 integrations: [Granola, Google Calendar]

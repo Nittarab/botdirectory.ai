@@ -1,7 +1,7 @@
 ---
 name: Chief of Staff Briefing
 category: Ops
-added_at: "2026-08-17"
+added_at: "2026-08-17T23:08:40.000Z"
 contributor: jessethanley
 contributor_url: https://x.com/jessethanley
 scouted_by: elie2222

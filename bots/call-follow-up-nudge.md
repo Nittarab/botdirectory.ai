@@ -1,7 +1,7 @@
 ---
 name: Call Follow-Up Nudge
 category: Productivity
-added_at: "2026-08-17"
+added_at: "2026-08-17T18:23:33.000Z"
 contributor: ericzakariasson
 contributor_url: https://x.com/ericzakariasson
 integrations: [Google Calendar, Slack]

@@ -1,7 +1,7 @@
 ---
 name: Daily Briefing
 category: Productivity
-added_at: "2026-08-17"
+added_at: "2026-08-17T18:23:33.000Z"
 contributor: elie2222
 contributor_url: https://x.com/elie2222
 integrations: [Google Calendar, Slack]

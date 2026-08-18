@@ -1,7 +1,7 @@
 ---
 name: Home Services Autopilot
 category: Personal
-added_at: "2026-08-18"
+added_at: "2026-08-18T05:59:04.000Z"
 contributor: elie2222
 contributor_url: https://x.com/elie2222
 scouted_by: leonspight

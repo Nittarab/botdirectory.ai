@@ -1,7 +1,7 @@
 ---
 name: Podcast Summarizer
 category: Productivity
-added_at: "2026-08-17"
+added_at: "2026-08-17T21:26:11.000Z"
 contributor: GavinSBaker
 contributor_url: https://x.com/GavinSBaker
 scouted_by: elie2222

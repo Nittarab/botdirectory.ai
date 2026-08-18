@@ -1,7 +1,7 @@
 ---
 name: Starlink Flight Finder
 category: Personal
-added_at: "2026-08-17"
+added_at: "2026-08-17T21:45:00.000Z"
 contributor: benln
 contributor_url: https://x.com/benln
 scouted_by: elie2222

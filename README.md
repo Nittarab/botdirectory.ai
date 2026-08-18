@@ -17,7 +17,7 @@ A bot is one markdown file in [`bots/`](bots/):
 ---
 name: SEO Improver
 category: Marketing
-added_at: "2026-08-18"
+added_at: "2026-08-18T12:00:00.000Z"
 contributor: rakazo
 integrations: [GitHub, DataForSEO, Search Console]
 ---
@@ -41,10 +41,12 @@ Full contract, category list, and quality bar: [CONTRIBUTING.md](CONTRIBUTING.md
 
 `GET https://api.botdirectory.ai/api/bots` returns listings as paginated JSON.
 It accepts `q`, `category`, `integration`, `page`, `limit` (maximum 100), and
-`sort` (`newest` or `name`):
+`sort` (`newest` or `name`). For append-safe synchronization, begin with
+`cursor=start` and reuse the returned `sync.nextCursor`:
 
 ```text
 https://api.botdirectory.ai/api/bots?q=slack&category=Ops&page=1&limit=25&sort=newest
+https://api.botdirectory.ai/api/bots?cursor=start&limit=100
 ```
 
 For mirroring the whole directory in one request, use the canonical raw feed

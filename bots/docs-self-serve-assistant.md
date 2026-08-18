@@ -1,7 +1,7 @@
 ---
 name: Docs Self-Serve Assistant
 category: Success
-added_at: "2026-08-18"
+added_at: "2026-08-18T07:50:09.000Z"
 contributor: euboid
 contributor_url: https://x.com/euboid
 scouted_by: elie2222

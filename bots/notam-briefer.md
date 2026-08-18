@@ -1,7 +1,7 @@
 ---
 name: NOTAM Briefer
 category: Productivity
-added_at: "2026-08-17"
+added_at: "2026-08-17T19:08:55.000Z"
 contributor: mopargtx440
 contributor_url: https://x.com/mopargtx440
 integrations: [FAA NOTAM Search]

@@ -1,7 +1,7 @@
 ---
 name: Find the Signal
 category: Personal
-added_at: "2026-08-17"
+added_at: "2026-08-18T02:23:31.000Z"
 contributor: nate-stellar
 contributor_url: https://github.com/nate-stellar
 integrations: [Granola, Slack]

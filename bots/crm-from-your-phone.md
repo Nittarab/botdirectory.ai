@@ -1,7 +1,7 @@
 ---
 name: CRM From Your Phone
 category: Sales
-added_at: "2026-08-17"
+added_at: "2026-08-17T18:23:33.000Z"
 contributor: ericzakariasson
 contributor_url: https://x.com/ericzakariasson
 integrations: [Salesforce, Slack]

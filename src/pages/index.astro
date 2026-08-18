@@ -117,6 +117,7 @@ const structuredData = [
                   <Select
                     id="bot-sort"
                     label="Sort bots"
+                    value="name"
                     options={[
                       ...(FEATURES.showCopies ? [{ value: 'copies', label: 'Most copied' }] : []),
                       { value: 'newest', label: 'Newly added' },
@@ -323,7 +324,7 @@ const structuredData = [
           <pre class="file-card-body">---
 name: SEO Improver
 category: Marketing
-added_at: "2026-08-18"
+added_at: "2026-08-18T12:00:00.000Z"
 contributor: elie2222
 integrations: [GitHub, DataForSEO, Search Console]
 ---

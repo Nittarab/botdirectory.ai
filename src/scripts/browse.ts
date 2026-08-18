@@ -29,7 +29,7 @@ function init(): void {
     category: new URLSearchParams(location.search).get('category') || 'All',
     integration: 'all',
     query: '',
-    sort: sort?.value === 'copies' ? 'copies' : 'newest',
+    sort: sort?.value === 'copies' || sort?.value === 'newest' ? sort.value : 'name',
     // The table is useful on wide screens, but on a phone it turns the
     // directory into a horizontal scroller. Start with the purpose-built
     // cards there instead.

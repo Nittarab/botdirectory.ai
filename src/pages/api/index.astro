@@ -1,0 +1,111 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE } from '../../config';
+
+const title = `Public API | ${SITE.wordmark}`;
+const description =
+  'Search, filter, paginate, or continuously sync the botdirectory.ai catalog through a public JSON API. No API key required.';
+const apiUrl = 'https://api.botdirectory.ai/api/bots';
+const rawFeedUrl = `${SITE.url}/api/bots.json`;
+const cursorExample = `GET ${apiUrl}?cursor=start&limit=100
+
+{
+  "bots": [ ... ],
+  "sync": {
+    "returned": 100,
+    "hasMore": true,
+    "nextCursor": "WyIyMDI2LTA4..."
+  },
+  "links": {
+    "next": "${apiUrl}?cursor=WyIyMDI2LTA4...&limit=100"
+  }
+}`;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: 'botdirectory.ai public API',
+  description,
+  url: `${SITE.url}/api/`,
+  about: { '@type': 'WebAPI', name: 'botdirectory.ai API', documentation: `${SITE.url}/api/` },
+};
+---
+
+<Base title={title} description={description} structuredData={structuredData}>
+  <div class="iz-page-root">
+    <Header />
+
+    <main class="api-page">
+      <div class="breadcrumb">
+        <a href="/">All bots</a>
+        <span>/</span>
+        <span>API</span>
+      </div>
+
+      <p class="iz-eyebrow">Public API</p>
+      <h1 class="api-title">A directory bots can read</h1>
+      <p class="api-lead">
+        Search the catalog, filter it, or keep a local copy continuously in sync. The API returns JSON, requires no
+        key, supports cross-origin requests, and is cached at Cloudflare's edge for 60 seconds.
+      </p>
+
+      <div class="api-endpoint-card">
+        <span class="api-method">GET</span>
+        <a href={apiUrl} class="api-endpoint">{apiUrl}</a>
+      </div>
+
+      <section class="api-doc-section">
+        <h2>Browse and search</h2>
+        <p>Results default to newest first. Use any combination of these query parameters:</p>
+        <div class="api-table-wrap">
+          <table class="api-param-table">
+            <thead><tr><th>Parameter</th><th>Meaning</th><th>Default</th></tr></thead>
+            <tbody>
+              <tr><td><code>q</code></td><td>Search names, prompts, contributors, categories, and integrations</td><td>—</td></tr>
+              <tr><td><code>category</code></td><td>Exact category, case-insensitive</td><td>—</td></tr>
+              <tr><td><code>integration</code></td><td>Exact integration, case-insensitive</td><td>—</td></tr>
+              <tr><td><code>page</code></td><td>Page number</td><td><code>1</code></td></tr>
+              <tr><td><code>limit</code></td><td>Results per request; maximum 100</td><td><code>25</code></td></tr>
+              <tr><td><code>sort</code></td><td><code>newest</code> or <code>name</code></td><td><code>newest</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre class="api-code"><code>GET {apiUrl}?q=slack&amp;category=Ops&amp;limit=25&amp;sort=newest</code></pre>
+      </section>
+
+      <section class="api-doc-section" id="sync">
+        <h2>Continuously sync new bots</h2>
+        <p>
+          Cursor mode is append-safe. It returns bots oldest-to-newest, so a client can save each page and append
+          later additions without page numbers shifting underneath it.
+        </p>
+        <ol class="api-steps">
+          <li>Start with <code>cursor=start</code>.</li>
+          <li>Store <code>sync.nextCursor</code> from the response.</li>
+          <li>Call the returned <code>links.next</code> URL later and append any bots returned.</li>
+        </ol>
+        <pre class="api-code"><code>{cursorExample}</code></pre>
+        <p class="api-note">Keep the same search and filter parameters when reusing a cursor.</p>
+      </section>
+
+      <section class="api-doc-section">
+        <h2>Send this page to a bot</h2>
+        <p>
+          This page contains the complete usage contract and can be read without JavaScript. Give a bot
+          <code>{SITE.url}/api/</code> and ask it to browse the directory or maintain a cursor-based local mirror.
+        </p>
+      </section>
+
+      <section class="api-doc-section">
+        <h2>Raw feed</h2>
+        <p>
+          For a small one-request mirror, fetch <a href={rawFeedUrl}>{rawFeedUrl}</a>. It returns the complete catalog
+          without pagination. Prefer cursor mode for ongoing synchronization.
+        </p>
+      </section>
+    </main>
+
+    <Footer />
+  </div>
+</Base>

@@ -1,7 +1,7 @@
 ---
 name: Article Idea Briefing
 category: Marketing
-added_at: "2026-08-17"
+added_at: "2026-08-17T19:08:55.000Z"
 contributor: kevinace
 contributor_url: https://x.com/kevinace
 integrations: [X]

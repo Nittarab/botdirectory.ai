@@ -1,6 +1,7 @@
 ---
 name: Social Content Operator
 category: Marketing
+added_at: "2026-08-18T07:37:37.000Z"
 contributor: delulusocial
 contributor_url: https://x.com/delulusocial
 integrations: [Delulu Social, Google Drive]

@@ -1,7 +1,7 @@
 ---
 name: Technology Study Guide
 category: Productivity
-added_at: "2026-08-18"
+added_at: "2026-08-18T06:05:15.000Z"
 contributor: LBallz77283
 contributor_url: https://x.com/LBallz77283
 integrations: [Web Search, Google Drive]

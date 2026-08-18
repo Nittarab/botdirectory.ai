@@ -1,7 +1,7 @@
 ---
 name: Biblical Accuracy Study Bot
 category: Personal
-added_at: "2026-08-18"
+added_at: "2026-08-18T06:05:15.000Z"
 contributor: LBallz77283
 contributor_url: https://x.com/LBallz77283
 integrations: [Bible, Web Search]
