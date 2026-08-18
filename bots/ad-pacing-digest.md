@@ -1,6 +1,7 @@
 ---
 name: Ad Pacing Digest
 category: Marketing
+added_at: "2026-08-17"
 contributor: ericzakariasson
 contributor_url: https://x.com/ericzakariasson
 integrations: [Apple Search Ads, Slack]

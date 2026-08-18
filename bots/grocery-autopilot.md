@@ -1,6 +1,7 @@
 ---
 name: Grocery Autopilot
 category: Personal
+added_at: "2026-08-17"
 contributor: RhysSullivan
 contributor_url: https://x.com/RhysSullivan
 integrations: [Amazon, Costco, Google Calendar]

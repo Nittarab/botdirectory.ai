@@ -1,6 +1,7 @@
 ---
 name: X Account Crew
 category: Marketing
+added_at: "2026-08-17"
 contributor: Axel_bitblaze69
 contributor_url: https://x.com/Axel_bitblaze69
 integrations: [X, Hacker News, GitHub, Reddit]

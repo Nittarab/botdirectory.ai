@@ -1,6 +1,7 @@
 ---
 name: Inbox Reply Digest
 category: Sales
+added_at: "2026-08-17"
 contributor: kristaletz
 contributor_url: https://x.com/kristaletz
 integrations: [Gmail]

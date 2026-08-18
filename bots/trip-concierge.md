@@ -1,6 +1,7 @@
 ---
 name: Trip Concierge
 category: Personal
+added_at: "2026-08-17"
 contributor: petergyang
 contributor_url: https://x.com/petergyang
 integrations: [Gmail]

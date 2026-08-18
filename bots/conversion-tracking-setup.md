@@ -1,6 +1,7 @@
 ---
 name: Conversion Tracking Setup
 category: Marketing
+added_at: "2026-08-18"
 contributor: converlyio
 integrations: [Converly]
 url: https://converly.io

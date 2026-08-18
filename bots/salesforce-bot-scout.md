@@ -1,6 +1,7 @@
 ---
 name: Salesforce Bot Scout
 category: Productivity
+added_at: "2026-08-18"
 contributor: elie2222
 contributor_url: https://x.com/elie2222
 scouted_by: colinpthomson

@@ -2,8 +2,8 @@
  * Validates every file in bots/ against the contribution contract.
  * Run with: pnpm validate
  *
- * Checks: frontmatter schema, filename = slug(name), unique slug,
- * known category, non-empty prompt body, unique `url` (dedupe key).
+ * Checks: frontmatter schema (including `added_at`), filename = slug(name),
+ * unique slug, known category, non-empty prompt body, unique `url` (dedupe key).
  * Integrations are free-form strings — any tool name is welcome; entries
  * in data/tool-icons.json only add a brand icon. Copy counts are server-side
  * (the copies API), never in the repo markdown.
@@ -22,6 +22,7 @@ const schema = z
   .object({
     name: z.string().min(1),
     category: z.enum(CATEGORIES),
+    added_at: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
     contributor: z.string().min(1).optional(),
     contributor_url: z.string().url().optional(),
     scouted_by: z.string().min(1).optional(),

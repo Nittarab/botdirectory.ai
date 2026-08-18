@@ -1,6 +1,7 @@
 ---
 name: Trust Center Deal Desk
 category: Sales
+added_at: "2026-08-18"
 contributor: elie2222
 contributor_url: https://x.com/elie2222
 integrations: [Comp AI, Slack]

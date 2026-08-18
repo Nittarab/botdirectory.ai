@@ -17,7 +17,7 @@ import { getBots, SPONSORS, PROMOS, type Bot, type Promo } from '../lib/data';
 import { edgeRight } from '../lib/sponsors';
 import { sponsorUrl } from '../lib/utm';
 
-const bots = await getBots(); // sorted by copies desc — the default view
+const bots = await getBots();
 const allTools = [...new Set(bots.flatMap((b) => b.integrations))].sort();
 
 const mode = SPONSORING.mode;
@@ -114,18 +114,15 @@ const structuredData = [
                     label="Filter by integration"
                     options={[{ value: 'all', label: 'Any integration' }, ...allTools.map((t) => ({ value: t, label: t, tool: t }))]}
                   />
-                  {
-                    FEATURES.showCopies && (
-                      <Select
-                        id="bot-sort"
-                        label="Sort bots"
-                        options={[
-                          { value: 'copies', label: 'Most copied' },
-                          { value: 'name', label: 'A–Z' },
-                        ]}
-                      />
-                    )
-                  }
+                  <Select
+                    id="bot-sort"
+                    label="Sort bots"
+                    options={[
+                      ...(FEATURES.showCopies ? [{ value: 'copies', label: 'Most copied' }] : []),
+                      { value: 'newest', label: 'Newly added' },
+                      { value: 'name', label: 'A–Z' },
+                    ]}
+                  />
                   <div class="view-toggle">
                     <button type="button" id="view-table-btn" class="view-btn active">Table</button>
                     <button type="button" id="view-cards-btn" class="view-btn">Cards</button>
@@ -144,6 +141,7 @@ const structuredData = [
                         data-name={row.bot.name}
                         data-category={row.bot.category}
                         data-copies={row.bot.copies}
+                        data-added-at={row.bot.addedAt}
                         data-integrations={row.bot.integrations.join('|')}
                         data-search={searchText(row.bot)}
                       >
@@ -210,6 +208,7 @@ const structuredData = [
                         data-name={row.bot.name}
                         data-category={row.bot.category}
                         data-copies={row.bot.copies}
+                        data-added-at={row.bot.addedAt}
                         data-integrations={row.bot.integrations.join('|')}
                         data-search={searchText(row.bot)}
                       >
@@ -312,6 +311,10 @@ const structuredData = [
             No PR needed: tag <a href={SITE.xUrl}>{SITE.xHandle}</a> under any tweet about a bot setup and our
             agent does the rest.
           </p>
+          <p class="contribute-alt">
+            Building a bot that watches the directory? <a href="https://api.botdirectory.ai/api/bots">Use the public JSON API</a>
+            — search, filter, and page through every listing.
+          </p>
         </div>
         <div class="file-card">
           <div class="file-card-head">
@@ -320,6 +323,7 @@ const structuredData = [
           <pre class="file-card-body">---
 name: SEO Improver
 category: Marketing
+added_at: "2026-08-18"
 contributor: elie2222
 integrations: [GitHub, DataForSEO, Search Console]
 ---

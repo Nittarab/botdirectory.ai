@@ -1,6 +1,7 @@
 ---
 name: Linear Development Orchestrator
 category: Productivity
+added_at: "2026-08-17"
 contributor: iannuttall
 contributor_url: https://x.com/iannuttall
 scouted_by: elie2222

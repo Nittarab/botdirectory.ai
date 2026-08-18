@@ -1,6 +1,7 @@
 ---
 name: Podcast Clip Publisher
 category: Marketing
+added_at: "2026-08-17"
 contributor: GavinSBaker
 contributor_url: https://x.com/GavinSBaker
 scouted_by: elie2222

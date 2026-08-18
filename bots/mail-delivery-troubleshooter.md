@@ -1,6 +1,7 @@
 ---
 name: Mail Delivery Troubleshooter
 category: Ops
+added_at: "2026-08-18"
 contributor: euboid
 contributor_url: https://x.com/euboid
 scouted_by: elie2222

@@ -1,6 +1,7 @@
 ---
 name: Prospecting Sheet Builder
 category: Sales
+added_at: "2026-08-17"
 contributor: kristaletz
 contributor_url: https://x.com/kristaletz
 integrations: [Salesforce, Gmail, Google Sheets, LinkedIn]

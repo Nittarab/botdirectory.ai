@@ -1,6 +1,7 @@
 ---
 name: Important Email Triage
 category: Productivity
+added_at: "2026-08-17"
 contributor: elie2222
 contributor_url: https://x.com/elie2222
 integrations: [Gmail]

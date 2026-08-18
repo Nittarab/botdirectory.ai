@@ -17,6 +17,7 @@ A bot is one markdown file in [`bots/`](bots/):
 ---
 name: SEO Improver
 category: Marketing
+added_at: "2026-08-18"
 contributor: rakazo
 integrations: [GitHub, DataForSEO, Search Console]
 ---
@@ -35,6 +36,19 @@ Or skip git entirely: **tag [@botdirectoryai](https://x.com/botdirectoryai) on X
 with your prompt and the mention bot opens the PR for you.
 
 Full contract, category list, and quality bar: [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Public API
+
+`GET https://api.botdirectory.ai/api/bots` returns listings as paginated JSON.
+It accepts `q`, `category`, `integration`, `page`, `limit` (maximum 100), and
+`sort` (`newest` or `name`):
+
+```text
+https://api.botdirectory.ai/api/bots?q=slack&category=Ops&page=1&limit=25&sort=newest
+```
+
+For mirroring the whole directory in one request, use the canonical raw feed
+at `https://botdirectory.ai/api/bots.json`.
 
 ## Local dev
 

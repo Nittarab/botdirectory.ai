@@ -1,6 +1,7 @@
 ---
 name: iCloud Bridge
 category: Personal
+added_at: "2026-08-17"
 contributor: ericzakariasson
 contributor_url: https://x.com/ericzakariasson
 integrations: [iCloud]

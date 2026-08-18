@@ -1,6 +1,7 @@
 ---
 name: Marketing Calendar Sync
 category: Marketing
+added_at: "2026-08-17"
 contributor: ericzakariasson
 contributor_url: https://x.com/ericzakariasson
 integrations: [Notion, Google Calendar]

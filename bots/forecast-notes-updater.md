@@ -1,6 +1,7 @@
 ---
 name: Forecast Notes Updater
 category: Sales
+added_at: "2026-08-17"
 contributor: kristaletz
 contributor_url: https://x.com/kristaletz
 integrations: [Salesforce, Granola, Gong, Slack, Gmail]

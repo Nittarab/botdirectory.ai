@@ -1,6 +1,7 @@
 ---
 name: Bot Advisor
 category: Productivity
+added_at: "2026-08-17"
 contributor: petergyang
 contributor_url: https://x.com/petergyang
 integrations: [Grok Bot]

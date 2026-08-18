@@ -1,6 +1,7 @@
 ---
 name: Slack Noise Filter
 category: Productivity
+added_at: "2026-08-17"
 contributor: ericzakariasson
 contributor_url: https://x.com/ericzakariasson
 integrations: [Slack]

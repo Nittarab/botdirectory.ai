@@ -1,6 +1,7 @@
 ---
 name: Voice-Matched Drafts
 category: Marketing
+added_at: "2026-08-17"
 contributor: ericzakariasson
 contributor_url: https://x.com/ericzakariasson
 integrations: [X, LinkedIn, Notion]

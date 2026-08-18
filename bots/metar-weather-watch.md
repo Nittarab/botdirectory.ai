@@ -1,6 +1,7 @@
 ---
 name: METAR Weather Watch
 category: Productivity
+added_at: "2026-08-17"
 contributor: mopargtx440
 contributor_url: https://x.com/mopargtx440
 integrations: [Aviation Weather Center]

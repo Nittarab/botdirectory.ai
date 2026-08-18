@@ -1,6 +1,7 @@
 ---
 name: Drive Wiki Rebuilder
 category: Ops
+added_at: "2026-08-17"
 contributor: ericzakariasson
 contributor_url: https://x.com/ericzakariasson
 integrations: [Google Drive, Notion]

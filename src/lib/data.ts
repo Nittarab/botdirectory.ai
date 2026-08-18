@@ -30,6 +30,7 @@ export interface Bot {
   slug: string;
   name: string;
   category: Category;
+  addedAt: string;
   /** Whose setup/prompt this is. Absent for anonymous/deleted sources. */
   contributor?: string;
   /** Where the contributor handle links (X profile, blog…). Defaults to GitHub. */
@@ -73,13 +74,14 @@ export function toolIcon(name: string): ToolIcon | null {
   return dark ? { light, dark } : { light };
 }
 
-/** All bots, sorted by seed copies desc (the default view order). */
+/** All bots in a stable A–Z build order; the browser applies the selected sort. */
 export async function getBots(): Promise<Bot[]> {
   const entries = await getCollection('bots');
   const bots = entries.map((e) => ({
     slug: e.id,
     name: e.data.name,
     category: e.data.category,
+    addedAt: e.data.added_at,
     contributor: e.data.contributor,
     contributorUrl: e.data.contributor_url,
     scoutedBy: e.data.scouted_by,

@@ -1,6 +1,7 @@
 ---
 name: Win/Loss Memo
 category: Sales
+added_at: "2026-08-17"
 contributor: ericzakariasson
 contributor_url: https://x.com/ericzakariasson
 integrations: [Gong, Notion]

@@ -7,7 +7,7 @@ interface BrowseState {
   category: string;
   integration: string;
   query: string;
-  sort: 'copies' | 'name';
+  sort: 'copies' | 'newest' | 'name';
   view: 'table' | 'cards';
 }
 
@@ -29,7 +29,7 @@ function init(): void {
     category: new URLSearchParams(location.search).get('category') || 'All',
     integration: 'all',
     query: '',
-    sort: 'copies',
+    sort: sort?.value === 'copies' ? 'copies' : 'newest',
     // The table is useful on wide screens, but on a phone it turns the
     // directory into a horizontal scroller. Start with the purpose-built
     // cards there instead.
@@ -61,11 +61,14 @@ function init(): void {
     const q = state.query.trim().toLowerCase();
 
     const visible = botRows.filter((r) => matches(r, q));
-    visible.sort(
-      state.sort === 'name'
-        ? (a, b) => (a.dataset.name || '').localeCompare(b.dataset.name || '')
-        : (a, b) => effectiveCopies(b) - effectiveCopies(a)
-    );
+    visible.sort((a, b) => {
+      if (state.sort === 'name') return (a.dataset.name || '').localeCompare(b.dataset.name || '');
+      if (state.sort === 'newest') {
+        const byDate = (b.dataset.addedAt || '').localeCompare(a.dataset.addedAt || '');
+        return byDate || (a.dataset.name || '').localeCompare(b.dataset.name || '');
+      }
+      return effectiveCopies(b) - effectiveCopies(a);
+    });
 
     // Promoted rows keep their fixed positions in the visible list.
     const ordered = [...visible];
@@ -110,7 +113,7 @@ function init(): void {
     apply();
   });
   sort?.addEventListener('change', () => {
-    state.sort = sort.value === 'name' ? 'name' : 'copies';
+    state.sort = sort.value === 'name' || sort.value === 'newest' ? sort.value : 'copies';
     apply();
   });
   btnTable.addEventListener('click', () => {

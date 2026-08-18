@@ -16,6 +16,7 @@ non-alphanumerics replaced by `-` (e.g. `SEO Improver` → `seo-improver`).
 ---
 name: SEO Improver
 category: Marketing
+added_at: "2026-08-18"                  # UTC date the listing is added
 contributor: elie2222                    # optional — whose setup this is
 contributor_url: https://x.com/elie2222  # optional — where the handle links (default: GitHub)
 scouted_by: someoneelse                # optional — X handle of whoever found/submitted it
@@ -28,6 +29,7 @@ added_via: https://x.com/.../status/…  # optional — set by the X mention bot
 ```
 
 - **name** — what the bot is called on the shelf.
+- **added_at** — the UTC date the listing is added, as `YYYY-MM-DD`.
 - **category** — one of: `Productivity`, `Sales`, `Marketing`, `Ops`, `Success`,
   `Personal`. Pick the closest fit — this list is deliberately short and curated.
 - **contributor** — whose setup/prompt this is (optional; omit for anonymous

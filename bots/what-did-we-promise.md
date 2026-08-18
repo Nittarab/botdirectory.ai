@@ -1,6 +1,7 @@
 ---
 name: What Did We Promise
 category: Success
+added_at: "2026-08-17"
 contributor: ericzakariasson
 contributor_url: https://x.com/ericzakariasson
 integrations: [Slack, Salesforce, Google Drive]

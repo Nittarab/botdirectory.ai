@@ -1,6 +1,7 @@
 ---
 name: SEO Improver
 category: Marketing
+added_at: "2026-08-17"
 contributor: elie2222
 contributor_url: https://x.com/elie2222
 integrations: [GitHub, DataForSEO, Search Console]

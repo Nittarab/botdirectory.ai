@@ -1,6 +1,7 @@
 ---
 name: Relationship Coach
 category: Personal
+added_at: "2026-08-17"
 contributor: awilkinson
 contributor_url: https://x.com/awilkinson
 integrations: [Bee]

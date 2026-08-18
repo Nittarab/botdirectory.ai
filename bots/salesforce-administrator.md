@@ -1,6 +1,7 @@
 ---
 name: Salesforce Administrator
 category: Ops
+added_at: "2026-08-17"
 contributor: alnandr
 integrations: [Salesforce]
 ---

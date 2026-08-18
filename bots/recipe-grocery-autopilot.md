@@ -1,6 +1,7 @@
 ---
 name: Recipe Grocery Autopilot
 category: Personal
+added_at: "2026-08-17"
 contributor: benln
 contributor_url: https://x.com/benln
 scouted_by: elie2222

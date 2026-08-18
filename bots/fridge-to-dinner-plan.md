@@ -1,6 +1,7 @@
 ---
 name: Fridge To Dinner Plan
 category: Personal
+added_at: "2026-08-17"
 contributor: ericzakariasson
 contributor_url: https://x.com/ericzakariasson
 integrations: [Amazon]
