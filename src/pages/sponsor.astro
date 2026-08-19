@@ -1,0 +1,219 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PrimaryButton from '../components/PrimaryButton.astro';
+import SponsorLogo from '../components/SponsorLogo.astro';
+import { SITE, SPONSORING } from '../config';
+import { getBots, SPONSORS } from '../lib/data';
+import { sponsorUrl } from '../lib/utm';
+
+// Sponsor landing page (design: Sponsor.dc.html). Every number here is
+// derived from the repo or config — never hardcoded copy that drifts.
+const bots = await getBots();
+const botCount = bots.length;
+const slotsTotal = SPONSORING.slotsTotalBoth;
+const slotsOpen = slotsTotal - SPONSORING.slotsTakenBoth;
+const slotsShown = 9; // SponsorShuffle keeps 9 sponsor cards + the Advertise slot per load
+const price = `$${SPONSORING.priceMonthly.toLocaleString('en-US')}`;
+const elonPostUrl = 'https://x.com/elonmusk/status/2090079706402164857';
+const elonPostViews = '7.5M';
+const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen'];
+const word = (n: number) => words[n] ?? String(n);
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+const title = `Sponsor ${SITE.wordmark} — reach people setting up bots`;
+const description = `${botCount} open source bot prompts, ${slotsTotal} sponsor slots, ${slotsShown} on the page at any one time. ${price}/mo, month to month.`;
+
+const stats = [
+  { value: String(botCount), label: 'open source bot prompts, every one a copy-paste workflow' },
+  { value: elonPostViews, label: 'views on Elon Musk’s post sharing the directory' },
+  { value: `${slotsShown} of ${slotsTotal}`, label: 'sponsor slots shown on every page load' },
+];
+
+const tiers = [
+  {
+    name: 'Side rail',
+    price,
+    perMonth: true,
+    availability: `${slotsOpen} open`,
+    blurb: 'A card in the sticky rail beside the bot table, visible the whole scroll.',
+    points: ['Logo, name and one line of copy', 'Sticky on desktop, strip on mobile', `${slotsShown} of ${slotsTotal} cards shown per load, rotated evenly`],
+  },
+  {
+    name: 'In-list',
+    price: 'Ask',
+    perMonth: false,
+    availability: 'Enquire',
+    blurb: 'Your bot sits inside the table as a labelled promoted row.',
+    points: ['Reads like a real directory entry', 'Fixed rows near the top of the list', 'Marked Promoted, always'],
+  },
+  {
+    name: 'Full takeover',
+    price: 'Ask',
+    perMonth: false,
+    availability: 'Enquire',
+    blurb: 'Both edge rails plus the dark sponsor band for a full month.',
+    points: ['Exclusive — no other sponsors', 'Band copy written with you', 'Home page and every bot page'],
+  },
+];
+
+const faqs = [
+  { q: 'How is a slot priced?', a: `Flat ${price} a month, paid through Stripe. No CPM, no auction, no bidding against the other ${word(slotsTotal - 1)}. The price rises as slots fill.` },
+  { q: 'Can I test one month?', a: 'That is the default. Month to month, cancel anytime, no annual commitment.' },
+  { q: `Why ${word(slotsTotal)} but ${word(slotsShown)} shown?`, a: `${cap(word(slotsShown))} slots render per page load, rotated evenly across the ${word(slotsTotal)}. Every sponsor gets the same share of impressions.` },
+  { q: 'What do you not accept?', a: 'No competing directories, no crypto, no anything you would not put in front of a working engineer.' },
+  { q: 'Who writes the copy?', a: 'You send a line, we edit it to match the page voice and send it back before it goes live.' },
+];
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    url: `${SITE.url}/sponsor/`,
+    description,
+    isPartOf: { '@type': 'WebSite', name: SITE.wordmark, url: SITE.url },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+
+<Base title={title} description={description} structuredData={structuredData}>
+  <Header />
+
+  <main class="sp-page">
+    <section class="sp-hero">
+      <div class="sp-hero-copy">
+        <p class="iz-eyebrow sp-eyebrow">Sponsor</p>
+        <h1 class="sp-h1">Sponsor the directory engineers actually copy from</h1>
+        <p class="sp-lede">
+          {botCount} open source bot prompts, copied into production the same afternoon they are found.
+          {cap(word(slotsTotal))} sponsor slots, {word(slotsShown)} on the page at any one time — and Elon Musk shared us,
+          which is why the traffic looks like this.
+        </p>
+        <div class="sp-actions">
+          <PrimaryButton href={SPONSORING.paymentUrl} attrs={{ target: '_blank', rel: 'noopener' }}>Book a slot</PrimaryButton>
+          <a href="#slots" class="sp-btn-secondary">See placements</a>
+        </div>
+        <p class="sp-hero-note">
+          {slotsOpen} of {slotsTotal} slots open · <a href={SITE.sponsorContactUrl}>Questions? Get in touch</a>
+        </p>
+      </div>
+      <figure class="sp-figure">
+        <a href={elonPostUrl} class="sp-figure-frame" target="_blank" rel="noopener">
+          <img
+            src="/images/sponsor/elon-musk-post.png"
+            alt="Elon Musk sharing the Grok Bot directory on X"
+            width="890"
+            height="1000"
+          />
+        </a>
+        <figcaption class="sp-figcaption">
+          <a href={elonPostUrl} target="_blank" rel="noopener">@elonmusk on X</a> · now {elonPostViews} views
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="sp-stats">
+      <div class="sp-stat-grid">
+        {
+          stats.map((s) => (
+            <div class="sp-stat">
+              <div class="sp-stat-value">{s.value}</div>
+              <div class="sp-stat-label">{s.label}</div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section id="slots" class="sp-section">
+      <p class="iz-eyebrow sp-eyebrow">Placements</p>
+      <h2 class="sp-h2">Three places a slot can live</h2>
+      <p class="sp-section-lede">
+        {cap(word(slotsTotal))} slots exist, {word(slotsShown)} render on any given page load, and no two go to companies
+        in the same category.
+      </p>
+      <div class="sp-tiers">
+        {
+          tiers.map((t) => (
+            <div class="sp-tier">
+              <div class="sp-tier-head">
+                <span class="sp-tier-name">{t.name}</span>
+                <span class="sp-tier-avail">{t.availability}</span>
+              </div>
+              <div class="sp-tier-price">
+                {t.price}
+                {t.perMonth && <span>/mo</span>}
+              </div>
+              <p class="sp-tier-blurb">{t.blurb}</p>
+              <div class="sp-tier-points">
+                {t.points.map((p) => (
+                  <div class="sp-tier-point">
+                    <span class="sp-tier-dot" />
+                    <span>{p}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="sp-section">
+      <p class="iz-eyebrow sp-eyebrow">Current sponsors</p>
+      <h2 class="sp-h2">Who is on the page now</h2>
+      <div class="sp-sponsors">
+        {
+          SPONSORS.map((s) => (
+            <a href={sponsorUrl(s.url, 'sponsor-page')} class="sp-sponsor">
+              <SponsorLogo sponsor={s} class="sp-sponsor-logo" />
+              <span class="sp-sponsor-name">{s.name}</span>
+              <p class="sp-sponsor-tagline">{s.tagline}</p>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section id="faq" class="sp-faq-band">
+      <div class="sp-faq-inner">
+        <div>
+          <p class="sponsor-eyebrow">Before you ask</p>
+          <h2 class="sp-faq-title">
+            {cap(word(slotsTotal))} slots, one invoice, no dashboard to learn
+          </h2>
+          <p class="sp-faq-lede">
+            Book through Stripe, then send your logo, one line of copy and a link. The slot is live the next day.
+          </p>
+          <div class="sp-actions">
+            <PrimaryButton href={SPONSORING.paymentUrl} attrs={{ target: '_blank', rel: 'noopener' }}>Book a slot</PrimaryButton>
+            <a href={SITE.sponsorContactUrl} class="sp-btn-ghost">Email us</a>
+          </div>
+        </div>
+        <div class="sp-faq-list">
+          {
+            faqs.map((f) => (
+              <div class="sp-faq-item">
+                <div class="sp-faq-q">{f.q}</div>
+                <p class="sp-faq-a">{f.a}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
