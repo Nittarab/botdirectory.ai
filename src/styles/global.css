@@ -854,7 +854,7 @@ code, .iz-code {
 .attribution { margin-left: 6px; font-size: 13.5px; color: var(--iz-muted); }
 .attribution a { color: var(--iz-blue-600); }
 
-/* ---------- Sponsor dialog ---------- */
+/* ---------- Dialog base (TagDialog) ---------- */
 .sponsor-dialog {
   border: 1px solid var(--iz-line);
   border-radius: var(--r-card, 20px);
@@ -881,9 +881,7 @@ code, .iz-code {
   justify-content: center;
 }
 .sd-close:hover { background: var(--iz-surface); color: var(--iz-ink); }
-.sd-list { margin: 16px 0 0; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 8px; font-size: 14px; line-height: 1.5; color: var(--iz-body); }
 .sd-cta { margin-top: 22px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-.sd-alt { font-size: 13.5px; color: var(--iz-muted); }
 
 /* ---------- Mobile marquee strips ---------- */
 .iz-strip { display: none; }
@@ -1641,8 +1639,6 @@ a.badge-plain:hover { color: var(--iz-ink); }
   transition: all 160ms ease;
 }
 .sp-btn-secondary:hover { background: var(--iz-surface); color: var(--iz-ink); }
-.sp-hero-note { font-size: 13px; color: var(--iz-muted-2); margin: 18px 0 0; }
-.sp-hero-note a { color: var(--iz-muted-2); text-decoration: underline; text-underline-offset: 3px; }
 .sp-figure { margin: 0; }
 .sp-figure-frame {
   display: block;
@@ -1795,3 +1791,7 @@ a.badge-plain:hover { color: var(--iz-ink); }
 }
 .sponsor-copy .sponsor-more { color: #8AA9FF; white-space: nowrap; }
 .sponsor-copy .sponsor-more:hover { color: #fff; }
+.sp-tier-note { margin: -6px 0 0; font-size: 12.5px; line-height: 1.45; color: var(--iz-muted-2); }
+.sp-tier-cta { margin-top: auto; padding-top: 10px; }
+.sp-tier-cta .pbtn-wrap, .sp-tier-cta .sp-btn-secondary { width: 100%; }
+.sp-tier-cta .pbtn, .sp-tier-cta .sp-btn-secondary { width: 100%; justify-content: center; box-sizing: border-box; }

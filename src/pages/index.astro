@@ -4,7 +4,6 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import PrimaryButton from '../components/PrimaryButton.astro';
 import SponsorCard from '../components/SponsorCard.astro';
-import SponsorDialog from '../components/SponsorDialog.astro';
 import TagDialog from '../components/TagDialog.astro';
 import MarqueeStrips from '../components/MarqueeStrips.astro';
 import EdgeColumn from '../components/EdgeColumn.astro';
@@ -278,11 +277,11 @@ const structuredData = [
                 <div class:list={['iz-rail-wrap', railWrapClass]}>
                   <div class="rail-head">
                     <span class="rail-label">Sponsored</span>
-                    <a href="#sponsor" class="rail-slots">{slotsLine}</a>
+                    <a href="/sponsor/" class="rail-slots">{slotsLine}</a>
                   </div>
                   <aside class="iz-rail">
                     {sponsorsRight.map((s) => <SponsorCard sponsor={s} />)}
-                    <a href="#sponsor" class="slot-empty" data-sponsor-open>
+                    <a href="/sponsor/" class="slot-empty">
                       <span class="slot-empty-title">Your tool here</span>
                       <span class="slot-empty-pitch">{SPONSORING.railPitch}</span>
                     </a>
@@ -352,12 +351,11 @@ I review before merge.</pre>
             This is where people decide what to build with. <a href="/sponsor/" class="sponsor-more">See placements and pricing →</a>
           </p>
         </div>
-        <PrimaryButton href={SPONSORING.paymentUrl} attrs={{ 'data-sponsor-open': '' }}>Sponsor</PrimaryButton>
+        <PrimaryButton href="/sponsor/">Sponsor</PrimaryButton>
       </div>
     </section>
 
     <Footer />
-    <SponsorDialog />
     <TagDialog />
   </div>
 
