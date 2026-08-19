@@ -17,16 +17,16 @@ const slotsOpen = slotsTotal - SPONSORING.slotsTakenBoth;
 const slotsShown = 9; // SponsorShuffle keeps 9 sponsor cards + the Advertise slot per load
 const price = `$${SPONSORING.priceMonthly.toLocaleString('en-US')}`;
 const elonPostUrl = 'https://x.com/elonmusk/status/2090079706402164857';
-const elonPostViews = '7.5M';
+const elonPostViews = '7.7M';
 const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen'];
 const word = (n: number) => words[n] ?? String(n);
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
-const title = `Sponsor ${SITE.wordmark} — reach people setting up bots`;
-const description = `${botCount} open source bot prompts, ${slotsTotal} sponsor slots, ${slotsShown} on the page at any one time. ${price}/mo, month to month.`;
+const title = `Sponsor ${SITE.wordmark}: reach people setting up bots`;
+const description = `${botCount} ready-to-use bot prompts, ${slotsTotal} sponsor slots, ${slotsShown} on the page at any one time. ${price}/mo, month to month.`;
 
 const stats = [
-  { value: String(botCount), label: 'open source bot prompts, every one a copy-paste workflow' },
+  { value: String(botCount), label: 'ready-to-use bot prompts. Copy, paste into Grok, done.' },
   { value: elonPostViews, label: 'views on Elon Musk’s post sharing the directory' },
   { value: `${slotsShown} of ${slotsTotal}`, label: 'sponsor slots shown on every page load' },
 ];
@@ -36,7 +36,9 @@ const tiers = [
     name: 'Side rail',
     price,
     perMonth: true,
+    cta: { label: 'Book a slot', href: SPONSORING.paymentUrl, primary: true },
     availability: `${slotsOpen} open`,
+    note: 'Current rate. It goes up as more sponsors join.',
     blurb: 'A card in the sticky rail beside the bot table, visible the whole scroll.',
     points: ['Logo, name and one line of copy', 'Sticky on desktop, strip on mobile', `${slotsShown} of ${slotsTotal} cards shown per load, rotated evenly`],
   },
@@ -44,6 +46,7 @@ const tiers = [
     name: 'In-list',
     price: 'Ask',
     perMonth: false,
+    cta: { label: 'Email to enquire', href: SITE.sponsorContactUrl, primary: false },
     availability: 'Enquire',
     blurb: 'Your bot sits inside the table as a labelled promoted row.',
     points: ['Reads like a real directory entry', 'Fixed rows near the top of the list', 'Marked Promoted, always'],
@@ -52,17 +55,18 @@ const tiers = [
     name: 'Full takeover',
     price: 'Ask',
     perMonth: false,
+    cta: { label: 'Email to enquire', href: SITE.sponsorContactUrl, primary: false },
     availability: 'Enquire',
     blurb: 'Both edge rails plus the dark sponsor band for a full month.',
-    points: ['Exclusive — no other sponsors', 'Band copy written with you', 'Home page and every bot page'],
+    points: ['Exclusive, no other sponsors', 'Band copy written with you', 'Home page and every bot page'],
   },
 ];
 
 const faqs = [
-  { q: 'How is a slot priced?', a: `Flat ${price} a month, paid through Stripe. No CPM, no auction, no bidding against the other ${word(slotsTotal - 1)}. The price rises as slots fill.` },
+  { q: 'How is a slot priced?', a: `Flat ${price} a month, paid through Stripe. No CPM, no auction, no bidding against the other ${word(slotsTotal - 1)}. That is today's rate. It goes up as more sponsors join.` },
   { q: 'Can I test one month?', a: 'That is the default. Month to month, cancel anytime, no annual commitment.' },
   { q: `Why ${word(slotsTotal)} but ${word(slotsShown)} shown?`, a: `${cap(word(slotsShown))} slots render per page load, rotated evenly across the ${word(slotsTotal)}. Every sponsor gets the same share of impressions.` },
-  { q: 'What do you not accept?', a: 'No competing directories, no crypto, no anything you would not put in front of a working engineer.' },
+  { q: 'What do you not accept?', a: 'No competing directories, no crypto, nothing you would not want sitting next to your own product.' },
   { q: 'Who writes the copy?', a: 'You send a line, we edit it to match the page voice and send it back before it goes live.' },
 ];
 
@@ -94,31 +98,26 @@ const structuredData = [
     <section class="sp-hero">
       <div class="sp-hero-copy">
         <p class="iz-eyebrow sp-eyebrow">Sponsor</p>
-        <h1 class="sp-h1">Sponsor the directory engineers actually copy from</h1>
+        <h1 class="sp-h1">Reach people setting up bots, in the bot directory shared by Elon Musk</h1>
         <p class="sp-lede">
-          {botCount} open source bot prompts, copied into production the same afternoon they are found.
-          {cap(word(slotsTotal))} sponsor slots, {word(slotsShown)} on the page at any one time — and Elon Musk shared us,
-          which is why the traffic looks like this.
+          {botCount} ready-to-use prompts for Grok Bot and Rakazo. Anyone can copy one, paste it into a chat and have a bot
+          running in minutes. {cap(word(slotsTotal))} sponsor slots, {word(slotsShown)} on the page at any one time.
         </p>
         <div class="sp-actions">
           <PrimaryButton href={SPONSORING.paymentUrl} attrs={{ target: '_blank', rel: 'noopener' }}>Book a slot</PrimaryButton>
-          <a href="#slots" class="sp-btn-secondary">See placements</a>
         </div>
-        <p class="sp-hero-note">
-          {slotsOpen} of {slotsTotal} slots open · <a href={SITE.sponsorContactUrl}>Questions? Get in touch</a>
-        </p>
       </div>
       <figure class="sp-figure">
         <a href={elonPostUrl} class="sp-figure-frame" target="_blank" rel="noopener">
           <img
             src="/images/sponsor/elon-musk-post.png"
             alt="Elon Musk sharing the Grok Bot directory on X"
-            width="890"
+            width="901"
             height="1000"
           />
         </a>
         <figcaption class="sp-figcaption">
-          <a href={elonPostUrl} target="_blank" rel="noopener">@elonmusk on X</a> · now {elonPostViews} views
+          <a href={elonPostUrl} target="_blank" rel="noopener">@elonmusk on X</a>
         </figcaption>
       </figure>
     </section>
@@ -155,6 +154,7 @@ const structuredData = [
                 {t.price}
                 {t.perMonth && <span>/mo</span>}
               </div>
+              {t.note && <p class="sp-tier-note">{t.note}</p>}
               <p class="sp-tier-blurb">{t.blurb}</p>
               <div class="sp-tier-points">
                 {t.points.map((p) => (
@@ -163,6 +163,17 @@ const structuredData = [
                     <span>{p}</span>
                   </div>
                 ))}
+              </div>
+              <div class="sp-tier-cta">
+                {t.cta.primary ? (
+                  <PrimaryButton href={t.cta.href} attrs={{ target: '_blank', rel: 'noopener' }}>
+                    {t.cta.label}
+                  </PrimaryButton>
+                ) : (
+                  <a href={t.cta.href} class="sp-btn-secondary">
+                    {t.cta.label}
+                  </a>
+                )}
               </div>
             </div>
           ))
