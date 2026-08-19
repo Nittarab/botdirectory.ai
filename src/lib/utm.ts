@@ -17,7 +17,7 @@ function withParams(url: string, params: Record<string, string>): string {
   }
 }
 
-export type SponsorPlacement = 'edge' | 'rail' | 'marquee' | 'bot-page' | 'connect' | 'promo';
+export type SponsorPlacement = 'edge' | 'rail' | 'marquee' | 'bot-page' | 'connect' | 'promo' | 'sponsor-page';
 
 export function sponsorUrl(url: string, placement: SponsorPlacement): string {
   return withParams(url, { utm_source: SOURCE, utm_medium: 'sponsor', utm_campaign: placement });
