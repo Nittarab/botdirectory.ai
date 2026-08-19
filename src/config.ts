@@ -53,11 +53,11 @@ export const SPONSORING = {
   slotsTakenBoth: 10,
   slotsTotalBoth: 15,
   /** Stripe payment link for booking a slot. */
-  paymentUrl: 'https://buy.stripe.com/fZu7sM3DLezU8pD4u64ko02',
+  paymentUrl: 'https://buy.stripe.com/bJedRa7U18bw9tH7Gi4ko04',
   /** Current monthly price in USD — rises as slots fill. */
-  priceMonthly: 800,
+  priceMonthly: 1200,
   /** Copy inside the "Your tool here" empty slot. */
-  railPitch: 'Reach people setting up bots right now. $800/mo.',
+  railPitch: 'Reach people setting up bots right now. $1200/mo.',
 } as const;
 
 export const COPIES_API = {
