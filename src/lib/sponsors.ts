@@ -4,7 +4,7 @@ import { familyStyle } from './constants';
 import { SPONSORS, type Sponsor } from './data';
 
 /** Balanced split that degrades gracefully below the design's 5-per-side. */
-const edgePool = SPONSORS.slice(0, 10);
+const edgePool = SPONSORS;
 const half = Math.ceil(edgePool.length / 2);
 export const edgeRight = edgePool.slice(0, half);
 export const edgeLeft = edgePool.slice(half);
