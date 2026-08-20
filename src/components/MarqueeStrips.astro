@@ -1,35 +1,48 @@
 ---
 import SponsorLogo from './SponsorLogo.astro';
-import { SPONSORS } from '../lib/data';
+import { SPONSORS, type Sponsor } from '../lib/data';
 import { sponsorUrl } from '../lib/utm';
 
 // Top strip scrolls left (42s); bottom scrolls right (52s). With 6+
 // sponsors the strips split the list (design: 0–4 / 5–9); with fewer,
 // both strips show the full list (bottom reversed) so neither is empty.
 // Each list is doubled so the -50% keyframe loops seamlessly.
+// The Advertise pill stands in for the desktop edge-column slot, which
+// is hidden below 1440px.
+type StripItem = { kind: 'sponsor'; sponsor: Sponsor } | { kind: 'slot' };
+const withSlot = (list: Sponsor[]): StripItem[] => [
+  ...list.map((sponsor) => ({ kind: 'sponsor' as const, sponsor })),
+  { kind: 'slot' },
+];
 const pool = SPONSORS;
 const half = Math.ceil(pool.length / 2);
 const topList = pool.length > 5 ? pool.slice(0, half) : pool;
 const bottomList = pool.length > 5 ? pool.slice(half) : [...pool].reverse();
-const top = [...topList, ...topList];
-const bottom = [...bottomList, ...bottomList];
+const top = [...withSlot(topList), ...withSlot(topList)];
+const bottom = [...withSlot(bottomList), ...withSlot(bottomList)];
 const strips = [
-  { className: 'iz-strip iz-strip-top', sponsors: top },
-  { className: 'iz-strip iz-strip-bottom', sponsors: bottom },
+  { className: 'iz-strip iz-strip-top', items: top },
+  { className: 'iz-strip iz-strip-bottom', items: bottom },
 ];
 ---
 
 {
-  strips.map(({ className, sponsors }) => (
+  strips.map(({ className, items }) => (
     <div class={className}>
       <span class="iz-strip-label">Sponsored</span>
       <div class="iz-strip-track">
-        {sponsors.map((s) => (
-          <a href={sponsorUrl(s.url, 'marquee')} class="strip-pill">
-            <SponsorLogo sponsor={s} class="strip-logo" />
-            <span class="strip-name">{s.name}</span>
-          </a>
-        ))}
+        {items.map((item) =>
+          item.kind === 'slot' ? (
+            <a href="/sponsor/" class="strip-pill strip-pill-slot">
+              <span class="strip-name">Advertise</span>
+            </a>
+          ) : (
+            <a href={sponsorUrl(item.sponsor.url, 'marquee')} class="strip-pill">
+              <SponsorLogo sponsor={item.sponsor} class="strip-logo" />
+              <span class="strip-name">{item.sponsor.name}</span>
+            </a>
+          )
+        )}
       </div>
     </div>
   ))
