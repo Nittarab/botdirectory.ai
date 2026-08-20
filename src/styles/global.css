@@ -925,6 +925,14 @@ code, .iz-code {
   font-weight: 500;
 }
 .strip-name { font-size: 13px; font-weight: 500; color: var(--iz-ink); white-space: nowrap; }
+.strip-pill-slot {
+  border-style: dashed;
+  border-color: var(--iz-line-2);
+  background: transparent;
+  box-shadow: none;
+  padding: 6px 14px;
+}
+.strip-pill-slot:hover { background: var(--iz-surface); }
 
 /* ---------- Contribute section ---------- */
 .contribute-section { border-top: 1px solid var(--iz-line); background: var(--iz-white); }
@@ -1384,6 +1392,7 @@ a.badge-plain:hover { color: var(--iz-ink); }
   .site-header {
     padding: 16px 18px;
     gap: 12px;
+    flex-wrap: wrap;
   }
   .wordmark {
     flex: none;
@@ -1394,10 +1403,11 @@ a.badge-plain:hover { color: var(--iz-ink); }
     gap: 8px;
     margin-left: auto;
   }
-  /* These destinations remain available in the footer; keeping only the
-     page actions here prevents the header from widening the viewport. */
+  /* Rakazo / Grok Bot stay in the footer. Sponsor stays here so there is
+     still a booking link once the desktop Advertise slot is gone. */
   .site-nav .nav-link { display: none; }
-  .site-nav .nav-link-api { display: block; }
+  .site-nav .nav-link-api,
+  .site-nav .nav-link-sponsor { display: block; padding: 8px; }
   .theme-btn {
     flex: none;
     width: 34px;
