@@ -50,7 +50,7 @@ export const SPONSORING = {
   slotsTaken: 3,
   slotsTotal: 6,
   /** "N of M taken" when mode === 'both'. */
-  slotsTakenBoth: 10,
+  slotsTakenBoth: 14,
   slotsTotalBoth: 15,
   /** Stripe payment link for booking a slot. */
   paymentUrl: 'https://buy.stripe.com/bJedRa7U18bw9tH7Gi4ko04',

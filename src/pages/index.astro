@@ -13,7 +13,6 @@ import Select from '../components/Select.astro';
 import { FEATURES, SITE, SPONSORING } from '../config';
 import { CATEGORIES, catStyle, fmt } from '../lib/constants';
 import { getBots, SPONSORS, PROMOS, type Bot, type Promo } from '../lib/data';
-import { edgeRight } from '../lib/sponsors';
 import { sponsorUrl } from '../lib/utm';
 
 const bots = await getBots();
@@ -25,7 +24,7 @@ const hasEdge = mode === 'both';
 const pageCols = hasEdge ? '252px minmax(0, 1fr) 252px' : 'minmax(0, 1fr)';
 const browseMax = mode === 'rail' ? '1460px' : '1150px';
 const browseGrid = mode === 'rail' ? 'minmax(0, 1fr) 272px' : 'minmax(0, 1fr)';
-const sponsorsRight = mode === 'both' ? edgeRight : SPONSORS.slice(0, 3);
+const sponsorsRight = mode === 'both' ? SPONSORS : SPONSORS.slice(0, 3);
 const slotsLine =
   mode === 'both'
     ? `${SPONSORING.slotsTakenBoth} of ${SPONSORING.slotsTotalBoth} spots taken`

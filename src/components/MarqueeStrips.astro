@@ -7,7 +7,7 @@ import { sponsorUrl } from '../lib/utm';
 // sponsors the strips split the list (design: 0–4 / 5–9); with fewer,
 // both strips show the full list (bottom reversed) so neither is empty.
 // Each list is doubled so the -50% keyframe loops seamlessly.
-const pool = SPONSORS.slice(0, 10);
+const pool = SPONSORS;
 const half = Math.ceil(pool.length / 2);
 const topList = pool.length > 5 ? pool.slice(0, half) : pool;
 const bottomList = pool.length > 5 ? pool.slice(half) : [...pool].reverse();

@@ -1,6 +1,7 @@
 <!-- Randomize sponsor order per page load so impressions split evenly.
      Shows 10 cards total: the Advertise slot always included, the other 9
      drawn at random from the sponsor pool (the rest sit out per load).
+     The narrower desktop rail draws half the pool independently.
      Inline + right after render so the swap happens before paint. -->
 <script is:inline>
   (() => {
@@ -18,5 +19,19 @@
     const shown = cards.slice(0, keep);
     shown.slice(0, 5).forEach((c) => left.appendChild(c));
     shown.slice(5).forEach((c) => (slot ? right.insertBefore(c, slot) : right.appendChild(c)));
+
+    const rail = document.querySelector('.iz-rail-wrap.iz-only-narrow .iz-rail');
+    if (!rail) return;
+    const railCards = [...rail.querySelectorAll('.sponsor-card')];
+    for (let i = railCards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [railCards[i], railCards[j]] = [railCards[j], railCards[i]];
+    }
+    const railSlot = rail.querySelector('.slot-empty');
+    const railKeep = Math.ceil(railCards.length / 2);
+    railCards.slice(railKeep).forEach((c) => c.remove());
+    railCards.slice(0, railKeep).forEach((c) =>
+      railSlot ? rail.insertBefore(c, railSlot) : rail.appendChild(c)
+    );
   })();
 </script>
