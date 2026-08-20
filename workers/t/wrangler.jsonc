@@ -1,0 +1,10 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  // Generic hostname on purpose — ad blockers flag analytics/posthog/ph/tracking.
+  "name": "botdirectory-t",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-19",
+  "workers_dev": false,
+  "routes": [{ "pattern": "t.botdirectory.ai", "custom_domain": true }],
+  "observability": { "enabled": true }
+}
