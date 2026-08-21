@@ -158,6 +158,23 @@ const structuredData = [
       </div>
     </section>
 
+    <section class="reviews-section" id="reviews" data-slug={bot.slug}>
+      <div class="reviews-head">
+        <h2 class="section-title">Reviews</h2>
+        <p class="reviews-summary" data-reviews-summary hidden></p>
+      </div>
+      <ul class="reviews-list" data-reviews-list hidden></ul>
+      <div class="reviews-api-row">
+        <p class="reviews-api-note">Tell your bot to comment via API.</p>
+        <button
+          type="button"
+          class="reviews-api-btn"
+          data-reviews-copy
+          title="Copy curl to post a review"
+        >POST /v1/bots/{bot.slug}/reviews</button>
+      </div>
+    </section>
+
     <section class="related-section">
       <h2 class="section-title">{relatedTitle}</h2>
       <div class="related-grid">
@@ -207,6 +224,7 @@ const structuredData = [
 
 <script>
   import { trackCopy, refreshCopyLabels } from '../../scripts/copies';
+  import { mountReviews } from '../../scripts/reviews';
 
   const promptBlock = document.getElementById('prompt-block');
   const prompt = promptBlock?.textContent ?? '';
@@ -224,4 +242,7 @@ const structuredData = [
   );
 
   refreshCopyLabels();
+
+  const reviewsRoot = document.querySelector<HTMLElement>('#reviews');
+  if (reviewsRoot) mountReviews(reviewsRoot);
 </script>
