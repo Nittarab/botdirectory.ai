@@ -10,10 +10,12 @@
     "preview": "astro preview",
     "check": "astro check",
     "validate": "tsx scripts/validate-bots.ts",
+    "test:api": "tsx scripts/test-bot-file.ts",
     "astro": "astro",
     "icons": "tsx scripts/fetch-icons.ts",
     "icons:sync": "tsx scripts/fetch-icons.ts --sync",
-    "deploy:proxy": "wrangler deploy -c workers/t/wrangler.jsonc"
+    "deploy:proxy": "wrangler deploy -c workers/t/wrangler.jsonc",
+    "deploy:api": "wrangler deploy -c workers/api/wrangler.jsonc"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.4.1",

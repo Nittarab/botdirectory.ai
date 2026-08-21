@@ -1,0 +1,37 @@
+name: via-api guard
+
+# Hard boundary for API-submitted bots: a PR labeled `via-api` (opened by the
+# write API worker) may ONLY add markdown bot files. Same rule as via-x.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enforce markdown-only diff for via-api PRs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+        run: |
+          case ",$LABELS," in
+            *,via-api,*) ;;
+            *) echo "No via-api label — guard not applicable."; exit 0 ;;
+          esac
+          gh api "repos/$REPO/pulls/$PR/files" --paginate \
+            --jq '.[] | [.status, .filename] | @tsv' > files.tsv
+          if [ ! -s files.tsv ]; then echo "Empty diff."; exit 1; fi
+          bad=0
+          while IFS=$'\t' read -r status file; do
+            if [ "$status" = "added" ] && printf '%s' "$file" | grep -Eq '^bots/[a-z0-9][a-z0-9-]*\.md$'; then
+              echo "ok: added $file"
+            else
+              echo "::error::forbidden change: $status $file (via-api PRs may only ADD bots/*.md)"
+              bad=1
+            fi
+          done < files.tsv
+          exit $bad

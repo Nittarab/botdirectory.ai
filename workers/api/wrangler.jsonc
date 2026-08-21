@@ -1,0 +1,11 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  // Public JSON API for api.botdirectory.ai (list + write).
+  // Replaces / extends the sibling botdirectory-automation worker — see workers/api/README.md.
+  "name": "botdirectory-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-19",
+  "workers_dev": false,
+  "routes": [{ "pattern": "api.botdirectory.ai", "custom_domain": true }],
+  "observability": { "enabled": true }
+}

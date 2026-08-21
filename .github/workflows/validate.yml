@@ -34,6 +34,9 @@ jobs:
       - name: Validate bot files
         run: pnpm validate
 
+      - name: Test write-API helpers
+        run: pnpm test:api
+
       - name: Type check
         if: github.event_name != 'pull_request'
         run: pnpm check

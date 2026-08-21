@@ -1178,6 +1178,7 @@ a.pbtn { text-decoration: none; }
   background: var(--iz-surface);
   overflow-x: auto;
 }
+.api-endpoint-card + .api-endpoint-card { margin-top: 10px; }
 .api-method {
   flex: none;
   padding: 4px 8px;
@@ -1187,6 +1188,10 @@ a.pbtn { text-decoration: none; }
   font-family: var(--iz-font-mono);
   font-size: 12px;
   font-weight: 700;
+}
+.api-method-write {
+  background: var(--iz-green-100);
+  color: var(--iz-green-700);
 }
 .api-endpoint { color: var(--iz-ink); font-family: var(--iz-font-mono); font-size: 13px; white-space: nowrap; }
 .api-doc-section { margin-top: 52px; }

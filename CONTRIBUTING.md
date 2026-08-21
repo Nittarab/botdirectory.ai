@@ -5,7 +5,8 @@ shows up on [botdirectory.ai](https://botdirectory.ai). No plugin API, no review
 board.
 
 Prefer not to touch git? Tag **@botdirectoryai** on X with your prompt and the
-mention bot will open the PR for you.
+mention bot will open the PR for you. Or use the authenticated write API
+(`POST https://api.botdirectory.ai/api/bots`) — see [botdirectory.ai/api](https://botdirectory.ai/api/).
 
 ## The bot file contract
 

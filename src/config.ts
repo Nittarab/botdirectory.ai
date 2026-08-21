@@ -64,8 +64,8 @@ export const COPIES_API = {
   /**
    * When true, every prompt copy also fires a fire-and-forget
    * POST { slug } to `endpoint` so counts aggregate globally.
-   * The endpoint is the Cloudflare Worker in ../botdirectory-automation/api —
-   * flip on once it's deployed and `endpoint` points at it.
+   * The endpoint is the Cloudflare Worker in `workers/api` (historically
+   * deployed from the sibling botdirectory-automation repo).
    */
   enabled: true,
   endpoint: 'https://api.botdirectory.ai/api/copies',

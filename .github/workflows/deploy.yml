@@ -28,6 +28,15 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: 2186c37bbe78421b642c7133f91e8e87
+      # Public API worker (api.botdirectory.ai). Opt-in via repo variable
+      # DEPLOY_API_WORKER=true after secrets (API_WRITE_KEY, GITHUB_TOKEN) are set
+      # and any existing COPIES KV namespace is bound — see workers/api/README.md.
+      - name: Deploy public API
+        if: ${{ vars.DEPLOY_API_WORKER == 'true' }}
+        run: pnpm exec wrangler deploy -c workers/api/wrangler.jsonc
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: 2186c37bbe78421b642c7133f91e8e87
       - name: Deploy to Cloudflare
         run: pnpm exec wrangler deploy
         env:

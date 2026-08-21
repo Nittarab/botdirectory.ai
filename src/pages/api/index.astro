@@ -6,8 +6,9 @@ import { SITE } from '../../config';
 
 const title = `Public API | ${SITE.wordmark}`;
 const description =
-  'Search, filter, paginate, or continuously sync the botdirectory.ai catalog through a public JSON API. No API key required.';
+  'Search, filter, paginate, or continuously sync the botdirectory.ai catalog through a public JSON API. Add bots and send feedback with a write key.';
 const apiUrl = 'https://api.botdirectory.ai/api/bots';
+const feedbackUrl = 'https://api.botdirectory.ai/api/feedback';
 const rawFeedUrl = `${SITE.url}/api/bots.json`;
 const cursorExample = `GET ${apiUrl}?cursor=start&limit=100
 
@@ -22,6 +23,40 @@ const cursorExample = `GET ${apiUrl}?cursor=start&limit=100
     "next": "${apiUrl}?cursor=WyIyMDI2LTA4...&limit=100"
   }
 }`;
+const postBotExample = `POST ${apiUrl}
+Authorization: Bearer <API_WRITE_KEY>
+Content-Type: application/json
+
+{
+  "name": "SEO Improver",
+  "category": "Marketing",
+  "integrations": ["GitHub", "DataForSEO", "Search Console"],
+  "contributor": "rakazo",
+  "prompt": "Set up a new bot for me. Walk me through connecting GitHub…"
+}
+
+→ 201
+{
+  "ok": true,
+  "slug": "seo-improver",
+  "path": "bots/seo-improver.md",
+  "branch": "bot/seo-improver-…",
+  "prUrl": "https://github.com/elie222/botdirectory.ai/pull/…",
+  "prNumber": 123
+}`;
+const feedbackExample = `POST ${feedbackUrl}
+Authorization: Bearer <API_WRITE_KEY>
+Content-Type: application/json
+
+{
+  "slug": "seo-improver",
+  "message": "Prompt works end-to-end on Grok Bot.",
+  "kind": "works",
+  "rating": 5
+}
+
+GET ${feedbackUrl}?limit=25
+Authorization: Bearer <API_WRITE_KEY>`;
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'TechArticle',
@@ -44,15 +79,24 @@ const structuredData = {
       </div>
 
       <p class="iz-eyebrow">Public API</p>
-      <h1 class="api-title">A directory bots can read</h1>
+      <h1 class="api-title">A directory bots can read — and write</h1>
       <p class="api-lead">
-        Search the catalog, filter it, or keep a local copy continuously in sync. The API returns JSON, requires no
-        key, supports cross-origin requests, and is cached at Cloudflare's edge for 60 seconds.
+        Search the catalog, filter it, or keep a local copy continuously in sync. The read API returns JSON, requires no
+        key, supports cross-origin requests, and is cached at Cloudflare's edge for 60 seconds. Authenticated write
+        routes open a GitHub PR for a new bot or store listing feedback.
       </p>
 
       <div class="api-endpoint-card">
         <span class="api-method">GET</span>
         <a href={apiUrl} class="api-endpoint">{apiUrl}</a>
+      </div>
+      <div class="api-endpoint-card">
+        <span class="api-method api-method-write">POST</span>
+        <span class="api-endpoint">{apiUrl}</span>
+      </div>
+      <div class="api-endpoint-card">
+        <span class="api-method api-method-write">POST</span>
+        <span class="api-endpoint">{feedbackUrl}</span>
       </div>
 
       <section class="api-doc-section">
@@ -89,11 +133,66 @@ const structuredData = {
         <p class="api-note">Keep the same search and filter parameters when reusing a cursor.</p>
       </section>
 
+      <section class="api-doc-section" id="add-bot">
+        <h2>Add a bot</h2>
+        <p>
+          <code>POST {apiUrl}</code> validates the payload against the same contribution contract as a manual PR
+          (<a href={SITE.contributingUrl}>CONTRIBUTING.md</a>) and opens a pull request that adds
+          <code>bots/&lt;slug&gt;.md</code>. It never pushes straight to <code>main</code>.
+        </p>
+        <p>
+          Auth: send the shared write key as <code>Authorization: Bearer &lt;API_WRITE_KEY&gt;</code> or
+          <code>X-Api-Key: &lt;API_WRITE_KEY&gt;</code>. The site owner sets the secret on the Cloudflare Worker
+          (<code>pnpm exec wrangler secret put API_WRITE_KEY -c workers/api/wrangler.jsonc</code>) together with a
+          <code>GITHUB_TOKEN</code> that can open PRs. Details: the <code>workers/api</code> README in the repo.
+        </p>
+        <div class="api-table-wrap">
+          <table class="api-param-table">
+            <thead><tr><th>Field</th><th>Meaning</th><th>Required</th></tr></thead>
+            <tbody>
+              <tr><td><code>name</code></td><td>Listing title (slug is derived from this)</td><td>yes</td></tr>
+              <tr><td><code>category</code></td><td><code>Productivity</code>, <code>Sales</code>, <code>Marketing</code>, <code>Ops</code>, <code>Success</code>, or <code>Personal</code></td><td>yes</td></tr>
+              <tr><td><code>prompt</code></td><td>File body — the prompt someone pastes into their agent</td><td>yes</td></tr>
+              <tr><td><code>integrations</code></td><td>Non-empty array of tool names</td><td>yes</td></tr>
+              <tr><td><code>contributor</code></td><td>Whose setup this is</td><td>no</td></tr>
+              <tr><td><code>contributor_url</code></td><td>Where the handle links</td><td>no</td></tr>
+              <tr><td><code>scouted_by</code></td><td>Submitter when the setup is someone else's</td><td>no</td></tr>
+              <tr><td><code>integration_urls</code></td><td>HTTPS homepages keyed by integration name</td><td>no</td></tr>
+              <tr><td><code>url</code></td><td>Canonical homepage (dedupe key)</td><td>no</td></tr>
+              <tr><td><code>added_at</code></td><td>ISO 8601 UTC; defaults to request time</td><td>no</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre class="api-code"><code>{postBotExample}</code></pre>
+      </section>
+
+      <section class="api-doc-section" id="feedback">
+        <h2>Send feedback</h2>
+        <p>
+          <code>POST {feedbackUrl}</code> records feedback on a listing (same write key as above). Each item becomes a
+          GitHub issue labeled <code>feedback</code>. <code>GET {feedbackUrl}</code> returns recent items for the owner
+          (also keyed).
+        </p>
+        <div class="api-table-wrap">
+          <table class="api-param-table">
+            <thead><tr><th>Field</th><th>Meaning</th><th>Required</th></tr></thead>
+            <tbody>
+              <tr><td><code>slug</code></td><td>Directory slug, e.g. <code>seo-improver</code></td><td>yes</td></tr>
+              <tr><td><code>message</code></td><td>Free-text note (≤ 4000 characters)</td><td>yes</td></tr>
+              <tr><td><code>kind</code></td><td><code>works</code>, <code>broken</code>, <code>spam</code>, or <code>other</code></td><td>no</td></tr>
+              <tr><td><code>rating</code></td><td>Integer 1–5</td><td>no</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre class="api-code"><code>{feedbackExample}</code></pre>
+      </section>
+
       <section class="api-doc-section">
         <h2>Send this page to a bot</h2>
         <p>
           This page contains the complete usage contract and can be read without JavaScript. Give a bot
-          <code>{SITE.url}/api/</code> and ask it to browse the directory or maintain a cursor-based local mirror.
+          <code>{SITE.url}/api/</code> and ask it to browse the directory, maintain a cursor-based local mirror, or
+          submit a bot through the write API when it has a key.
         </p>
       </section>
 

@@ -40,10 +40,12 @@ Full contract, category list, and quality bar: [CONTRIBUTING.md](CONTRIBUTING.md
 
 ## Public API
 
-`GET https://api.botdirectory.ai/api/bots` returns listings as paginated JSON.
-It accepts `q`, `category`, `integration`, `page`, `limit` (maximum 100), and
-`sort` (`newest` or `name`). For append-safe synchronization, begin with
-`cursor=start` and reuse the returned `sync.nextCursor`:
+Full contract (readable without JavaScript): [botdirectory.ai/api](https://botdirectory.ai/api/).
+
+**Read (keyless).** `GET https://api.botdirectory.ai/api/bots` returns listings as
+paginated JSON. It accepts `q`, `category`, `integration`, `page`, `limit`
+(maximum 100), and `sort` (`newest` or `name`). For append-safe synchronization,
+begin with `cursor=start` and reuse the returned `sync.nextCursor`:
 
 ```text
 https://api.botdirectory.ai/api/bots?q=slack&category=Ops&page=1&limit=25&sort=newest
@@ -52,6 +54,12 @@ https://api.botdirectory.ai/api/bots?cursor=start&limit=100
 
 For mirroring the whole directory in one request, use the canonical raw feed
 at `https://botdirectory.ai/api/bots.json`.
+
+**Write (API key).** `POST https://api.botdirectory.ai/api/bots` validates a bot
+payload against the contribution contract and opens a GitHub PR adding
+`bots/<slug>.md` (does not push to `main`). `POST/GET /api/feedback` stores and
+lists listing feedback. Send `Authorization: Bearer <API_WRITE_KEY>` or
+`X-Api-Key: <API_WRITE_KEY>`. Secrets and deploy: [`workers/api/README.md`](workers/api/README.md).
 
 ## Local dev
 
@@ -62,12 +70,14 @@ pnpm install
 pnpm dev        # http://localhost:4321
 pnpm build      # static build in dist/
 pnpm validate   # check every file in bots/
+pnpm test:api   # write-API validation helpers
 pnpm check      # astro check (types)
 ```
 
 - `bots/` — the product: one markdown file per bot
 - `data/` — integrations (dot color + auth), sponsors, promos, sponsor facts
 - `src/config.ts` — every branded string, URL, and knob
+- `workers/api` — Cloudflare Worker for `api.botdirectory.ai` (list + write)
 
 ## Sponsoring
 
