@@ -87,10 +87,7 @@ export const CONNECT_SPONSOR = {
 export const FEATURES = {
   /**
    * Show copy counts (table column, card meta, bot-page badge) and the
-   * "Most copied" sort. OFF at launch — real counts start at zero and
-   * seed numbers would be fake. Copies are still *tracked* while hidden
-   * (localStorage + API when enabled), so there's data by the time this
-   * flips on.
+   * "Most copied" sort. Totals come from the deduplicated copies API.
    */
-  showCopies: false,
+  showCopies: true,
 } as const;

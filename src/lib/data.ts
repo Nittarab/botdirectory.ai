@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import { slugify, type Category } from './constants';
+import { COPIES_API } from '../config';
 import sponsorsJson from '../../data/sponsors.json';
 import promosJson from '../../data/promos.json';
 
@@ -80,6 +81,25 @@ export interface ToolIcon {
   dark?: string;
 }
 
+let copyCountsPromise: Promise<Record<string, number>> | undefined;
+
+/** Fetch the global, deduplicated copy totals once per build. */
+async function getCopyCounts(): Promise<Record<string, number>> {
+  if (!COPIES_API.enabled) return {};
+  copyCountsPromise ??= fetch(COPIES_API.endpoint, { headers: { Accept: 'application/json' } })
+    .then(async (response) => {
+      if (!response.ok) throw new Error(`copies API returned ${response.status}`);
+      const payload = (await response.json()) as { counts?: unknown };
+      if (!payload.counts || typeof payload.counts !== 'object') throw new Error('copies API returned invalid data');
+      return payload.counts as Record<string, number>;
+    })
+    .catch((error) => {
+      console.warn('Could not load copy counts; using zeroes for this build.', error);
+      return {};
+    });
+  return copyCountsPromise;
+}
+
 /** Brand icon for a tool, or null when we don't have one (the chip then shows just the name). */
 export function toolIcon(name: string): ToolIcon | null {
   const slug = slugify(name);
@@ -91,7 +111,7 @@ export function toolIcon(name: string): ToolIcon | null {
 
 /** All bots in a stable A–Z build order; the browser applies the selected sort. */
 export async function getBots(): Promise<Bot[]> {
-  const entries = await getCollection('bots');
+  const [entries, copyCounts] = await Promise.all([getCollection('bots'), getCopyCounts()]);
   const bots = entries.map((e) => ({
     slug: e.id,
     name: e.data.name,
@@ -101,7 +121,7 @@ export async function getBots(): Promise<Bot[]> {
     contributorUrl: e.data.contributor_url,
     scoutedBy: e.data.scouted_by,
     // Counts live server-side (copies API), never in the repo markdown.
-    copies: 0,
+    copies: Number.isFinite(copyCounts[e.id]) ? copyCounts[e.id] : 0,
     integrations: e.data.integrations,
     prompt: (e.body ?? '').trim(),
     url: e.data.url,

@@ -15,7 +15,9 @@ import { CATEGORIES, catStyle, fmt } from '../lib/constants';
 import { getBots, SPONSORS, PROMOS, type Bot, type Promo } from '../lib/data';
 import { sponsorUrl } from '../lib/utm';
 
-const bots = await getBots();
+const bots = [...(await getBots())].sort(
+  (a, b) => b.copies - a.copies || a.name.localeCompare(b.name),
+);
 const allTools = [...new Set(bots.flatMap((b) => b.integrations))].sort();
 
 const mode = SPONSORING.mode;
@@ -118,7 +120,7 @@ const structuredData = [
                   <Select
                     id="bot-sort"
                     label="Sort bots"
-                    value="name"
+                    value="copies"
                     options={[
                       ...(FEATURES.showCopies ? [{ value: 'copies', label: 'Most copied' }] : []),
                       { value: 'newest', label: 'Newly added' },

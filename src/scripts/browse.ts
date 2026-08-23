@@ -1,7 +1,7 @@
 // Home-page interactivity: filter / sort / search / view toggle over the
 // statically rendered rows. Rows are never re-created — they are shown,
 // hidden and reordered in place, so the full list stays in the HTML.
-import { deltaFor, refreshCopyLabels } from './copies';
+import { loadCopyCounts, refreshCopyLabels } from './copies';
 
 interface BrowseState {
   category: string;
@@ -46,8 +46,7 @@ function init(): void {
     history.replaceState(null, '', url);
   }
 
-  const effectiveCopies = (row: HTMLElement): number =>
-    Number(row.dataset.copies || '0') + deltaFor(row.dataset.slug || '');
+  const effectiveCopies = (row: HTMLElement): number => Number(row.dataset.copies || '0');
 
   const matches = (row: HTMLElement, q: string): boolean =>
     (state.category === 'All' || row.dataset.category === state.category) &&
@@ -67,7 +66,8 @@ function init(): void {
         const byDate = (b.dataset.addedAt || '').localeCompare(a.dataset.addedAt || '');
         return byDate || (a.dataset.name || '').localeCompare(b.dataset.name || '');
       }
-      return effectiveCopies(b) - effectiveCopies(a);
+      return effectiveCopies(b) - effectiveCopies(a) ||
+        (a.dataset.name || '').localeCompare(b.dataset.name || '');
     });
 
     // Promoted rows keep their fixed positions in the visible list.
@@ -128,6 +128,7 @@ function init(): void {
   refreshCopyLabels();
   apply();
   syncView();
+  void loadCopyCounts().then(apply);
 }
 
 init();

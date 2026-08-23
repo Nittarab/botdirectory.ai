@@ -223,7 +223,7 @@ const structuredData = [
 </Base>
 
 <script>
-  import { trackCopy, refreshCopyLabels } from '../../scripts/copies';
+  import { loadCopyCounts, trackCopy, refreshCopyLabels } from '../../scripts/copies';
   import { mountReviews } from '../../scripts/reviews';
 
   const promptBlock = document.getElementById('prompt-block');
@@ -242,6 +242,7 @@ const structuredData = [
   );
 
   refreshCopyLabels();
+  void loadCopyCounts();
 
   const reviewsRoot = document.querySelector<HTMLElement>('#reviews');
   if (reviewsRoot) mountReviews(reviewsRoot);

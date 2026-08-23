@@ -11,7 +11,9 @@ import { getBots } from '../lib/data';
 // grokbotdirectory.com redirect target. Thin but real: what Grok Bot is,
 // the prompts that work in it, and the full list one click away.
 const bots = await getBots();
-const top = bots.slice(0, 10);
+const top = [...bots]
+  .sort((a, b) => b.copies - a.copies || a.name.localeCompare(b.name))
+  .slice(0, 10);
 
 const title = `Grok Bot Prompts & Bot Directory | ${SITE.wordmark}`;
 const description =
