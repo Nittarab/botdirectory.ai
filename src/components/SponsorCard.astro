@@ -11,7 +11,13 @@ interface Props {
 const { sponsor: s, placement = 'rail' } = Astro.props;
 ---
 
-<a href={sponsorUrl(s.url, placement)} class="sponsor-card" {...sponsorAbAttrs(s)}>
+<a
+  href={sponsorUrl(s.url, placement)}
+  class="sponsor-card"
+  data-sponsor={s.name}
+  data-sponsor-placement={placement}
+  {...sponsorAbAttrs(s)}
+>
   <div class="sponsor-head">
     <SponsorLogo sponsor={s} class="sponsor-logo" />
     <span class="sponsor-name">{s.name}</span>

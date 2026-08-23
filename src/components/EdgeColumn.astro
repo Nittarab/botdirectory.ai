@@ -27,6 +27,8 @@ const cardClass = side === 'left' ? 'edge-card-left' : 'edge-card-right';
             href={sponsorUrl(s.url, 'edge')}
             class:list={['edge-card', 'edge-flip-face', 'edge-flip-front', cardClass, { 'edge-card-tinted': tinted }]}
             style={edgeCardStyle(s)}
+            data-sponsor={s.name}
+            data-sponsor-placement="edge"
             {...sponsorAbAttrs(s)}
           >
             <SponsorLogo sponsor={s} class="edge-logo" />

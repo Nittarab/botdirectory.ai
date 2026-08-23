@@ -26,7 +26,6 @@ export interface Sponsor {
 export function sponsorAbAttrs(s: Sponsor): Record<string, string> {
   if (!s.ab?.length) return {};
   return {
-    'data-sponsor': s.name,
     'data-ab-taglines': JSON.stringify(s.ab),
   };
 }

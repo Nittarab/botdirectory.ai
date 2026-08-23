@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import PostHog from '../components/posthog.astro';
+import OutboundTracking from '../components/OutboundTracking.astro';
 import SponsorAb from '../components/SponsorAb.astro';
 import { SITE } from '../config';
 
@@ -69,5 +70,6 @@ const jsonLd = structuredData
   <body>
     <slot />
     <SponsorAb />
+    <OutboundTracking />
   </body>
 </html>

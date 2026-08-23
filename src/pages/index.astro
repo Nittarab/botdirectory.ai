@@ -173,6 +173,8 @@ const structuredData = [
                         href={sponsorUrl(row.promo.href, 'promo')}
                         class="bot-card"
                         data-promo
+                        data-sponsor={row.promo.name}
+                        data-sponsor-placement="promo"
                         data-at={row.promo.at}
                         style={`background: var(--iz-${row.promo.family}-50); border-color: var(--iz-${row.promo.family}-150, var(--iz-${row.promo.family}-200));`}
                       >
@@ -240,6 +242,8 @@ const structuredData = [
                         href={sponsorUrl(row.promo.href, 'promo')}
                         class="bot-row"
                         data-promo
+                        data-sponsor={row.promo.name}
+                        data-sponsor-placement="promo"
                         data-at={row.promo.at}
                         style={`background: var(--iz-${row.promo.family}-50);`}
                       >

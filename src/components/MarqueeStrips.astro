@@ -37,7 +37,12 @@ const strips = [
               <span class="strip-name">Advertise</span>
             </a>
           ) : (
-            <a href={sponsorUrl(item.sponsor.url, 'marquee')} class="strip-pill">
+            <a
+              href={sponsorUrl(item.sponsor.url, 'marquee')}
+              class="strip-pill"
+              data-sponsor={item.sponsor.name}
+              data-sponsor-placement="marquee"
+            >
               <SponsorLogo sponsor={item.sponsor} class="strip-logo" />
               <span class="strip-name">{item.sponsor.name}</span>
             </a>

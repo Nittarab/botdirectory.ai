@@ -134,7 +134,12 @@ const structuredData = [
       <p class="section-note">The prompt asks for these as it goes — however you normally connect them works.</p>
       {
         CONNECT_SPONSOR.enabled && (
-          <a href={sponsorUrl(CONNECT_SPONSOR.url, 'connect')} class="connect-sponsor">
+          <a
+            href={sponsorUrl(CONNECT_SPONSOR.url, 'connect')}
+            class="connect-sponsor"
+            data-sponsor={CONNECT_SPONSOR.name}
+            data-sponsor-placement="connect"
+          >
             <img src={CONNECT_SPONSOR.logo} alt={`${CONNECT_SPONSOR.name} logo`} width="128" height="128" class="connect-sponsor-logo" loading="lazy" />
             <span class="connect-sponsor-copy">
               {CONNECT_SPONSOR.copy} <span class="connect-sponsor-cta">{CONNECT_SPONSOR.cta}</span>

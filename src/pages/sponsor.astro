@@ -187,7 +187,13 @@ const structuredData = [
       <div class="sp-sponsors">
         {
           SPONSORS.map((s) => (
-            <a href={sponsorUrl(s.url, 'sponsor-page')} class="sp-sponsor" {...sponsorAbAttrs(s)}>
+            <a
+              href={sponsorUrl(s.url, 'sponsor-page')}
+              class="sp-sponsor"
+              data-sponsor={s.name}
+              data-sponsor-placement="sponsor-page"
+              {...sponsorAbAttrs(s)}
+            >
               <SponsorLogo sponsor={s} class="sp-sponsor-logo" />
               <span class="sp-sponsor-name">{s.name}</span>
               <p class="sp-sponsor-tagline" data-ab-line>{s.tagline}</p>
