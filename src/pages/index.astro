@@ -102,16 +102,6 @@ const structuredData = [
           </p>
           <h1 class="hero-title">The Grok Bot directory</h1>
           <p class="hero-sub">Bots that get stuff done. Set one up with a single prompt for work, business, or everyday life.</p>
-          <nav class="discovery-links" aria-label="Browse prompt collections">
-            <span>Explore:</span>
-            {CATEGORIES.map((category) => <a href={`/categories/${categorySlug(category)}/`}>{category}</a>)}
-            <a href="/integrations/">By integration</a>
-            <a href="/collections/chief-of-staff/">Chief of Staff prompts</a>
-          </nav>
-          <nav class="discovery-links discovery-links-tools" aria-label="Popular integrations">
-            <span>Popular tools:</span>
-            {topIntegrationHubs.map((integration) => <a href={`/integrations/${integration.slug}/`}>{integration.name}</a>)}
-          </nav>
         </section>
 
         <section id="browse" class="browse" style={`max-width: ${browseMax};`}>
@@ -305,6 +295,21 @@ I review before merge.</pre>
           </p>
         </div>
         <PrimaryButton href="/sponsor/">Sponsor</PrimaryButton>
+      </div>
+    </section>
+
+    <section class="discovery-section">
+      <div class="discovery-inner">
+        <nav class="discovery-links" aria-label="Browse prompt collections">
+          <span>Explore:</span>
+          {CATEGORIES.map((category) => <a href={`/categories/${categorySlug(category)}/`}>{category}</a>)}
+          <a href="/integrations/">By integration</a>
+          <a href="/collections/chief-of-staff/">Chief of Staff prompts</a>
+        </nav>
+        <nav class="discovery-links discovery-links-tools" aria-label="Popular integrations">
+          <span>Popular tools:</span>
+          {topIntegrationHubs.map((integration) => <a href={`/integrations/${integration.slug}/`}>{integration.name}</a>)}
+        </nav>
       </div>
     </section>
 

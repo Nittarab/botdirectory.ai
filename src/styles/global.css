@@ -403,6 +403,10 @@ code, .iz-code {
 .discovery-links + .discovery-links { margin-top: 8px; }
 .discovery-links span { font-weight: 600; color: var(--iz-muted-2); }
 .discovery-links a { color: var(--iz-blue-600); text-decoration: underline; text-underline-offset: 3px; }
+.discovery-section { border-top: 1px solid var(--iz-line); }
+.discovery-inner { max-width: 1150px; margin: 0 auto; padding: 30px 24px; }
+.discovery-section .discovery-links { margin-top: 0; }
+.discovery-section .discovery-links + .discovery-links { margin-top: 8px; }
 
 /* ---------- Browse area ---------- */
 .browse { margin: 0 auto; padding: 0 24px 96px; }
@@ -1667,6 +1671,7 @@ a.connect-chip:hover { border-color: var(--iz-blue-150); color: var(--iz-blue-60
   .hero-title { font-size: 36px; }
   .hero-sub { font-size: 16px; text-wrap: pretty; }
   .discovery-links { gap: 7px 12px; }
+  .discovery-inner { padding: 24px 18px; }
   .browse { padding: 0 18px 64px; }
 
   .filterbar {
