@@ -4,15 +4,23 @@ import PostHog from '../components/posthog.astro';
 import OutboundTracking from '../components/OutboundTracking.astro';
 import SponsorAb from '../components/SponsorAb.astro';
 import { SITE } from '../config';
+import { OPENAPI_MEDIA_TYPE } from '../lib/api-discovery';
 
 interface Props {
   title: string;
   description: string;
   type?: 'website' | 'article';
   structuredData?: Record<string, unknown> | Record<string, unknown>[];
+  robots?: string;
 }
 
-const { title, description, type = 'website', structuredData } = Astro.props;
+const {
+  title,
+  description,
+  type = 'website',
+  structuredData,
+  robots = 'index, follow, max-image-preview:large',
+} = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).href;
 const ogImage = new URL('/og.png', Astro.site ?? SITE.url).href;
 const ogImageAlt = 'botdirectory.ai — Meet the bots';
@@ -28,13 +36,16 @@ const jsonLd = structuredData
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="robots" content={robots} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/images/brand/icon-32.png" sizes="32x32" type="image/png" />
     <link rel="icon" href="/images/brand/icon-16.png" sizes="16x16" type="image/png" />
     <link rel="apple-touch-icon" href="/images/brand/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title={`${SITE.wordmark} — new bot prompts`} href="/rss.xml" />
+    <link rel="alternate" type="text/markdown" title={`${SITE.wordmark} agent instructions`} href="/llms.txt" />
+    <link rel="api-catalog" href="/.well-known/api-catalog" />
+    <link rel="service-desc" type={OPENAPI_MEDIA_TYPE} href="/openapi.json" />
     <meta property="og:type" content={type} />
     <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content={SITE.wordmark} />

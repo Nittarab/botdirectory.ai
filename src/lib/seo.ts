@@ -4,6 +4,27 @@ import { SITE } from '../config';
 
 export const MIN_INTEGRATION_HUB_BOTS = 5;
 
+export function organizationStructuredData() {
+  return {
+    '@type': 'Organization',
+    '@id': `${SITE.url}/#organization`,
+    name: SITE.wordmark,
+    legalName: SITE.copyrightHolder,
+    url: SITE.url,
+    description: SITE.tagline,
+    logo: `${SITE.url}/og.png`,
+    email: SITE.contactEmail,
+    sameAs: [SITE.xUrl, SITE.repoUrl],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer support',
+      email: SITE.contactEmail,
+      url: `${SITE.url}/contact/`,
+      availableLanguage: ['English'],
+    },
+  };
+}
+
 interface CategoryPageCopy {
   title: string;
   description: string;

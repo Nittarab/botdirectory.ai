@@ -5,18 +5,23 @@
 
 export type SponsorMode = 'rail' | 'both' | 'inline';
 
+export const SITE_URL = 'https://botdirectory.ai';
+export const API_URL = 'https://api.botdirectory.ai';
+export const SITE_INFO_LAST_MODIFIED = '2026-08-25';
+
 export const SITE = {
   /** Wordmark shown in the header, footer and `<title>` suffix. */
   wordmark: 'botdirectory.ai',
   /** Canonical origin (no trailing slash). */
-  url: 'https://botdirectory.ai',
+  url: SITE_URL,
   /** Default meta description / footer blurb. */
   tagline: 'Ready-to-use prompts for Grok Bot, Rakazo, and other AI agents. Copy one, connect your tools, done.',
   /** X handle the mention bot listens on. */
   xHandle: '@botdirectoryai',
   xUrl: 'https://x.com/botdirectoryai',
+  contactEmail: 'elie@getinboxzero.com',
 
-  /** Public GitHub repo (placeholder org until the real one exists). */
+  /** Public GitHub repository. */
   repoUrl: 'https://github.com/elie222/botdirectory.ai',
   contributingUrl: 'https://github.com/elie222/botdirectory.ai/blob/main/CONTRIBUTING.md',
 
@@ -68,12 +73,12 @@ export const COPIES_API = {
    * flip on once it's deployed and `endpoint` points at it.
    */
   enabled: true,
-  endpoint: 'https://api.botdirectory.ai/api/copies',
+  endpoint: `${API_URL}/api/copies`,
 } as const;
 
 export const NEWSLETTER_API = {
   /** Public, keyless endpoint used by people and bots to subscribe an email. */
-  endpoint: 'https://api.botdirectory.ai/api/newsletter',
+  endpoint: `${API_URL}/api/newsletter`,
   /** Keep local form submissions in the local D1 database during development. */
   localEndpoint: 'http://localhost:8787/api/newsletter',
 } as const;

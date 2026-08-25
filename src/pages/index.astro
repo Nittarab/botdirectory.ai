@@ -14,7 +14,7 @@ import NewsletterSignup from '../components/NewsletterSignup.astro';
 import { FEATURES, SITE, SPONSORING } from '../config';
 import { CATEGORIES, catStyle, fmt } from '../lib/constants';
 import { getBots, SPONSORS, PROMOS, type Bot, type Promo } from '../lib/data';
-import { categorySlug, listIntegrations, MIN_INTEGRATION_HUB_BOTS } from '../lib/seo';
+import { categorySlug, listIntegrations, MIN_INTEGRATION_HUB_BOTS, organizationStructuredData } from '../lib/seo';
 import { sponsorUrl } from '../lib/utm';
 
 const bots = [...(await getBots())].sort(
@@ -57,13 +57,7 @@ const structuredData = [
     name: SITE.wordmark,
     url: SITE.url,
     description,
-    publisher: {
-      '@type': 'Organization',
-      '@id': `${SITE.url}/#organization`,
-      name: SITE.wordmark,
-      url: SITE.url,
-      sameAs: [SITE.xUrl, SITE.repoUrl],
-    },
+    publisher: organizationStructuredData(),
   },
   {
     '@context': 'https://schema.org',

@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  heading: string;
+  eyebrow: string;
+  robots?: string;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { title, description, heading, eyebrow, robots, structuredData } = Astro.props;
+---
+
+<Base title={title} description={description} robots={robots} structuredData={structuredData}>
+  <div class="iz-page-root">
+    <Header />
+
+    <main class="info-page">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">All bots</a>
+        <span aria-hidden="true">/</span>
+        <span>{eyebrow}</span>
+      </nav>
+
+      <p class="iz-eyebrow">{eyebrow}</p>
+      <h1 class="api-title">{heading}</h1>
+      <p class="api-lead">{description}</p>
+
+      <article class="info-content">
+        <slot />
+      </article>
+    </main>
+
+    <Footer />
+  </div>
+</Base>

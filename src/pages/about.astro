@@ -1,0 +1,62 @@
+---
+import InfoPage from '../components/InfoPage.astro';
+import { SITE } from '../config';
+import { organizationStructuredData } from '../lib/seo';
+
+const description =
+  'botdirectory.ai is a public, open-source directory of practical prompts for scheduled bots and AI agents.';
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: `About ${SITE.wordmark}`,
+  description,
+  url: `${SITE.url}/about/`,
+  mainEntity: organizationStructuredData(),
+};
+---
+
+<InfoPage
+  title={`About | ${SITE.wordmark}`}
+  description={description}
+  heading="A public directory for useful bots"
+  eyebrow="About"
+  structuredData={structuredData}
+>
+  <section>
+    <h2>What botdirectory.ai does</h2>
+    <p>
+      botdirectory.ai collects ready-to-copy prompts for agents that perform recurring work: triaging an inbox,
+      preparing a briefing, monitoring a system, researching a market, coordinating a team, or handling an everyday
+      task. Each listing names the integrations it expects, preserves the full prompt, links to its source when one is
+      available, and gives people a concrete starting point they can adapt to their own tools and permissions.
+    </p>
+    <p>
+      The directory is designed for both people and software. Humans can browse by category or integration. Agents can
+      read the complete JSON feed, search and synchronize through the public API, follow the instructions in
+      <a href="/llms.txt">llms.txt</a>, or generate a client from the <a href="/openapi.json">OpenAPI contract</a>.
+    </p>
+  </section>
+
+  <section>
+    <h2>How listings get here</h2>
+    <p>
+      The catalog is maintained in the public <a href={SITE.repoUrl}>botdirectory.ai GitHub repository</a>. A listing is
+      a Markdown file reviewed through a pull request. People can contribute directly, tag {SITE.xHandle} beneath a
+      public description of a working bot, or use the authenticated API to open a contribution pull request. API
+      submissions do not push directly to the main branch. Source links and contributor attribution remain part of the
+      listing so readers can inspect where a workflow came from.
+    </p>
+  </section>
+
+  <section>
+    <h2>Who operates the site</h2>
+    <p>
+      botdirectory.ai is operated by {SITE.copyrightHolder}. The project is open source and its public catalog can be
+      audited through GitHub. The directory is an index of prompts, not a certification program: a listing does not
+      guarantee that every integration is available, safe for a particular account, or appropriate without human
+      review. Before running a workflow, confirm its requested access, schedule, destinations, and possible side
+      effects. Questions about the site, data, attribution, or a listing can be sent through the
+      <a href="/contact/">contact page</a>.
+    </p>
+  </section>
+</InfoPage>

@@ -1,14 +1,18 @@
 {
   "name": "botdirectory",
+  "main": "./worker/index.ts",
   "compatibility_date": "2026-08-01",
+  "compatibility_flags": ["assets_navigation_has_no_effect"],
   "routes": [
     { "pattern": "botdirectory.ai", "custom_domain": true },
     { "pattern": "www.botdirectory.ai", "custom_domain": true }
   ],
-  // Pure static site: Wrangler serves the built Astro output as static assets.
+  // Static Astro output with a small Worker for content negotiation and discovery.
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/", "/.well-known/api-catalog", "/openapi.json", "/llms.txt"],
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page"
+    "not_found_handling": "none"
   }
 }

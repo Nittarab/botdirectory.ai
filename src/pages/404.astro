@@ -1,0 +1,29 @@
+---
+import InfoPage from '../components/InfoPage.astro';
+import { SITE } from '../config';
+
+const description =
+  'The requested botdirectory.ai page does not exist. Use the directory, sitemap, agent instructions, or developer resources to recover.';
+---
+
+<InfoPage
+  title={`Page not found | ${SITE.wordmark}`}
+  description={description}
+  heading="Page not found"
+  eyebrow="404"
+  robots="noindex, follow"
+>
+  <section class="info-callout">
+    <h2>Recover from this URL</h2>
+    <p>
+      This path is not part of botdirectory.ai. Browse the <a href="/">bot directory</a>, inspect the
+      <a href="/sitemap-index.xml">sitemap</a>, or use the machine-readable resources below to find a valid page.
+    </p>
+    <ul>
+      <li><a href="/llms.txt">Agent instructions and canonical resources</a></li>
+      <li><a href="/developers/">Developer hub</a></li>
+      <li><a href="/api/bots.json">Complete JSON bot feed</a></li>
+      <li><a href="/openapi.json">OpenAPI 3.1 specification</a></li>
+    </ul>
+  </section>
+</InfoPage>

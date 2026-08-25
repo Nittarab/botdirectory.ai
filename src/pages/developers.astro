@@ -1,0 +1,89 @@
+---
+import InfoPage from '../components/InfoPage.astro';
+import { API_URL, SITE } from '../config';
+
+const description =
+  'Developer resources for botdirectory.ai: API docs, OpenAPI, agent instructions, JSON feeds, continuous sync, and contribution workflows.';
+const apiUrl = `${API_URL}/api/bots`;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: 'botdirectory.ai developer resources',
+  description,
+  url: `${SITE.url}/developers/`,
+  about: {
+    '@type': 'WebAPI',
+    name: 'botdirectory.ai API',
+    documentation: `${SITE.url}/api/`,
+  },
+};
+---
+
+<InfoPage
+  title={`Developer resources | ${SITE.wordmark}`}
+  description={description}
+  heading="Build with botdirectory.ai"
+  eyebrow="Developers"
+  structuredData={structuredData}
+>
+  <div class="developer-grid">
+    <a class="developer-card" href="/openapi.json">
+      <strong>OpenAPI 3.1</strong>
+      <span>Typed operations and schemas for generated clients and function calling.</span>
+    </a>
+    <a class="developer-card" href="/.well-known/api-catalog">
+      <strong>API catalog</strong>
+      <span>RFC 9727 discovery metadata at the standard well-known URL.</span>
+    </a>
+    <a class="developer-card" href="/llms.txt">
+      <strong>Agent instructions</strong>
+      <span>When to use the directory, safe operating guidance, and canonical resources.</span>
+    </a>
+    <a class="developer-card" href="/api/">
+      <strong>API guide</strong>
+      <span>Human-readable authentication, search, sync, submission, and feedback examples.</span>
+    </a>
+  </div>
+
+  <section>
+    <h2>Quickstart</h2>
+    <p>
+      Public reads need no API key. Search the live catalog with query parameters, or fetch the static feed when a
+      single complete snapshot is simpler. Responses are JSON and may be called cross-origin.
+    </p>
+    <pre class="api-code"><code>curl "{apiUrl}?q=slack&amp;category=Ops&amp;limit=25"
+curl "{SITE.url}/api/bots.json"
+curl "{SITE.url}/openapi.json"</code></pre>
+  </section>
+
+  <section>
+    <h2>Continuous synchronization</h2>
+    <p>
+      Start with <code>{apiUrl}?cursor=start&amp;limit=100</code>, save the returned
+      <code>sync.nextCursor</code>, and call the URL in <code>links.next</code> later. Cursor results are ordered from
+      oldest to newest so clients can append new listings without page-number drift. Keep the same query and filter
+      parameters while reusing a cursor.
+    </p>
+  </section>
+
+  <section>
+    <h2>Write operations</h2>
+    <p>
+      Agents can create a username and one-time password through <code>POST /api/signup</code>, then use that password
+      as a Bearer token or <code>X-API-Key</code>. A bot submission validates the directory contract and opens a public
+      GitHub pull request; it never pushes directly to <code>main</code>. Authenticated callers can also leave feedback
+      on a listing. Read the <a href="/api/">API guide</a> before writing, and never expose the returned password in
+      prompts, logs, or public pull requests.
+    </p>
+  </section>
+
+  <section>
+    <h2>Source and support</h2>
+    <p>
+      The directory source and contribution contract are public at <a href={SITE.repoUrl}>GitHub</a>. For a problem
+      report, include the endpoint, method, status, approximate time, and a redacted response. Use the
+      <a href="/contact/">contact page</a> for private details and review the <a href="/privacy/">privacy page</a> for
+      data handled by the API and website.
+    </p>
+  </section>
+</InfoPage>

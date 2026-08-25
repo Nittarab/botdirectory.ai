@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { SITE } from '../config';
+import { SITE, SITE_INFO_LAST_MODIFIED } from '../config';
 import { CATEGORIES } from '../lib/constants';
 import { getBots } from '../lib/data';
 import { botLastModified, categorySlug, listIntegrations, newestBotDate } from '../lib/seo';
@@ -40,6 +40,10 @@ export const GET: APIRoute = async () => {
     { path: '/sources/', lastmod: newest },
     { path: '/collections/chief-of-staff/', lastmod: collectionLastmod },
     { path: '/api/' },
+    { path: '/developers/', lastmod: SITE_INFO_LAST_MODIFIED },
+    { path: '/about/', lastmod: SITE_INFO_LAST_MODIFIED },
+    { path: '/contact/', lastmod: SITE_INFO_LAST_MODIFIED },
+    { path: '/privacy/', lastmod: SITE_INFO_LAST_MODIFIED },
     { path: '/grokbot/' },
     { path: '/sponsor/' },
     ...CATEGORIES.map((category) => ({

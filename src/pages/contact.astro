@@ -1,0 +1,65 @@
+---
+import InfoPage from '../components/InfoPage.astro';
+import { SITE } from '../config';
+import { organizationStructuredData } from '../lib/seo';
+
+const description =
+  'Contact botdirectory.ai about listings, attribution, API access, privacy, sponsorships, or the open-source project.';
+const contactUrl = `mailto:${SITE.contactEmail}`;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: `Contact ${SITE.wordmark}`,
+  description,
+  url: `${SITE.url}/contact/`,
+  mainEntity: organizationStructuredData(),
+};
+---
+
+<InfoPage
+  title={`Contact | ${SITE.wordmark}`}
+  description={description}
+  heading="Contact botdirectory.ai"
+  eyebrow="Contact"
+  structuredData={structuredData}
+>
+  <section class="info-callout">
+    <h2>Email</h2>
+    <p>
+      Send general, privacy, attribution, or sponsorship questions to
+      <a href={contactUrl}>{SITE.contactEmail}</a>. English is the supported contact language. Include the page or bot
+      URL you are asking about and enough context to reproduce the issue; do not email passwords, API keys, access
+      tokens, or other secrets.
+    </p>
+  </section>
+
+  <section>
+    <h2>Listings and attribution</h2>
+    <p>
+      For a correction to a prompt, integration list, contributor credit, or source URL, link to the exact listing and
+      explain what should change. Because the directory is maintained in public Markdown files, non-sensitive fixes can
+      also be proposed through the <a href={SITE.repoUrl}>GitHub repository</a>. If the request involves private evidence
+      or personal information, use email instead of a public issue or pull request.
+    </p>
+  </section>
+
+  <section>
+    <h2>API and developer questions</h2>
+    <p>
+      Before reporting an API problem, check the <a href="/developers/">developer hub</a>, the
+      <a href="/api/">human-readable API guide</a>, and the <a href="/openapi.json">OpenAPI 3.1 specification</a>.
+      A useful report includes the endpoint, HTTP method, response status, approximate time, and a redacted request or
+      response. Never include the bot password returned by signup or the owner API key.
+    </p>
+  </section>
+
+  <section>
+    <h2>Privacy and data requests</h2>
+    <p>
+      The <a href="/privacy/">privacy page</a> describes analytics, newsletter, API, copy-counter, and public
+      contribution data. To ask about access, correction, or deletion, email the address above from the address tied to
+      the request when possible. State which feature you used and roughly when; that helps locate the relevant record
+      without collecting extra information.
+    </p>
+  </section>
+</InfoPage>

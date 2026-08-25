@@ -1,0 +1,118 @@
+---
+import InfoPage from '../components/InfoPage.astro';
+import { SITE, SITE_INFO_LAST_MODIFIED } from '../config';
+
+const description =
+  'How botdirectory.ai handles website analytics, newsletter signups, API activity, copy counts, feedback, and public contributions.';
+const contactUrl = `mailto:${SITE.contactEmail}`;
+const lastUpdated = new Intl.DateTimeFormat('en-US', {
+  dateStyle: 'long',
+  timeZone: 'UTC',
+}).format(new Date(`${SITE_INFO_LAST_MODIFIED}T00:00:00Z`));
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: `Privacy | ${SITE.wordmark}`,
+  description,
+  url: `${SITE.url}/privacy/`,
+  dateModified: SITE_INFO_LAST_MODIFIED,
+};
+---
+
+<InfoPage
+  title={`Privacy | ${SITE.wordmark}`}
+  description={description}
+  heading="Privacy"
+  eyebrow="Privacy"
+  structuredData={structuredData}
+>
+  <p class="info-updated">Last updated: {lastUpdated}</p>
+
+  <section>
+    <h2>Scope</h2>
+    <p>
+      This page describes data handled by botdirectory.ai, its public API at api.botdirectory.ai, and the supporting
+      services used to operate them. Most of the directory is public and can be browsed without an account. Different
+      data is processed when someone subscribes to the newsletter, records a prompt copy, creates an API account,
+      submits a bot, leaves feedback, or contributes through GitHub.
+    </p>
+  </section>
+
+  <section>
+    <h2>Website analytics and local preferences</h2>
+    <p>
+      The site uses PostHog to understand page views, navigation, outbound-link clicks, newsletter completion, and
+      sponsor-card experiments. Analytics requests are proxied through a botdirectory.ai subdomain. As with ordinary
+      web requests, the service can receive technical information such as IP address, user agent, device and browser
+      properties, referrer, approximate location derived from the network, page path, and event time. Outbound-link
+      events record the destination domain and path, link text, source page, and whether the link is a sponsor; they do
+      not intentionally send the contents of prompts or newsletter email fields as event properties.
+    </p>
+    <p>
+      The browser's local storage may remember the light or dark theme and the sponsor-copy variant assigned for an
+      experiment. These values stay in the browser unless analytics registration also associates the experiment variant
+      with the current analytics session. Clearing site data in the browser removes the local values.
+    </p>
+  </section>
+
+  <section>
+    <h2>Newsletter</h2>
+    <p>
+      A newsletter signup sends the email address, a short source label such as “website” or “bot,” and the request's
+      user agent to the botdirectory.ai API. The email address is normalized and stored so duplicate signups can be
+      handled safely. A valid request receives the same response whether the address was new or already subscribed, so
+      the endpoint cannot be used to check another person's membership. Do not subscribe someone without their
+      permission. To request removal, contact us from the subscribed address when possible.
+    </p>
+  </section>
+
+  <section>
+    <h2>API accounts, activity, copy counts, and feedback</h2>
+    <p>
+      The API processes IP address and user agent information for rate limiting, abuse prevention, and copy-count
+      deduplication; country information supplied by the network may also be recorded for copy events. Copy events store
+      the listing slug and whether the event counted. API signup stores the chosen username and a one-way hash of the
+      generated password; the password itself is shown once and should be kept secret by the caller. Authenticated
+      feedback stores the listing slug, message, rating or outcome, account username when applicable, IP address, user
+      agent, and timestamps. Public review responses omit IP address and user agent.
+    </p>
+    <p>
+      Bot submissions create public branches and pull requests in the GitHub repository. The submitted prompt,
+      integrations, contributor information, source links, branch name, and pull-request discussion are therefore
+      public. Do not submit personal information or secrets in a prompt, source URL, contributor field, or feedback
+      message.
+    </p>
+  </section>
+
+  <section>
+    <h2>Service providers and public sources</h2>
+    <p>
+      Cloudflare serves the website and API and stores operational API data in its D1 service. PostHog provides product
+      analytics. GitHub hosts the public source repository and contribution workflow. Requests to sponsor, integration,
+      contributor, and source links are governed by the destination site's own privacy terms once the browser leaves
+      botdirectory.ai. Public social posts or websites may be referenced as sources, but the directory does not make a
+      private source public on a user's behalf.
+    </p>
+  </section>
+
+  <section>
+    <h2>Your choices and requests</h2>
+    <p>
+      You can browse without creating an API account or joining the newsletter, block or clear browser storage through
+      browser controls, and avoid public contribution fields that contain personal information. For questions or a
+      request to access, correct, or delete data associated with you, email
+      <a href={contactUrl}>{SITE.contactEmail}</a>. Include which feature you used and an approximate date, but do not
+      send passwords or API keys. Some public Git history, security logs, aggregated counts, or records required to
+      prevent abuse may not be removable in the same way as an active newsletter or account record.
+    </p>
+  </section>
+
+  <section>
+    <h2>Changes</h2>
+    <p>
+      This notice may change as the directory, API, analytics, or contribution flow changes. The “Last updated” date
+      identifies the current version. Material changes will be reflected on this page before or when the changed
+      behavior is released.
+    </p>
+  </section>
+</InfoPage>

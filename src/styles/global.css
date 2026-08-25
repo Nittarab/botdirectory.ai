@@ -1322,6 +1322,51 @@ a.pbtn { text-decoration: none; }
 }
 .breadcrumb a { color: var(--iz-muted); }
 .breadcrumb a:hover { color: var(--iz-ink); }
+.info-page { max-width: 820px; margin: 0 auto; padding: 32px 24px 72px; }
+.info-page .iz-eyebrow { margin: 0 0 10px; }
+.info-content { margin-top: 48px; color: var(--iz-body); }
+.info-content section + section { margin-top: 42px; }
+.info-content h2 {
+  margin: 0;
+  color: var(--iz-ink);
+  font-family: var(--iz-font-display);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.info-content p, .info-content li { color: var(--iz-muted); font-size: 15.5px; line-height: 1.7; }
+.info-content p { margin: 14px 0 0; }
+.info-content ul, .info-content ol { margin: 14px 0 0; padding-left: 22px; }
+.info-content li + li { margin-top: 8px; }
+.info-content a { color: var(--iz-blue-600); text-decoration: underline; text-underline-offset: 3px; }
+.info-content code { overflow-wrap: anywhere; }
+.info-updated { margin: -22px 0 36px !important; font-size: 13px !important; }
+.info-callout {
+  padding: 24px;
+  border: 1px solid var(--iz-blue-150);
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--iz-blue-50), var(--iz-white));
+}
+.developer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 48px;
+}
+.developer-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  border: 1px solid var(--iz-line);
+  border-radius: 14px;
+  background: var(--iz-white);
+  box-shadow: var(--iz-shadow);
+  text-decoration: none !important;
+}
+.developer-card:hover { box-shadow: var(--iz-shadow-lg); }
+.developer-card strong { color: var(--iz-ink); font-family: var(--iz-font-display); font-size: 19px; font-weight: 500; }
+.developer-card span { color: var(--iz-muted); font-size: 13.5px; line-height: 1.55; }
 .bot-title {
   font-family: var(--iz-font-display);
   font-weight: 500;
@@ -1751,8 +1796,10 @@ a.connect-chip:hover { border-color: var(--iz-blue-150); color: var(--iz-blue-60
   }
 
   .api-page { padding: 24px 18px 56px; }
+  .info-page { padding: 24px 18px 56px; }
   .api-title { font-size: 36px; }
   .api-lead { font-size: 16px; }
+  .developer-grid { grid-template-columns: minmax(0, 1fr); }
 
   .hero { padding: 28px 18px 24px; }
   .hero-title { font-size: 36px; }

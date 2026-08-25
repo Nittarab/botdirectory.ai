@@ -2,18 +2,21 @@
 import Base from '../../layouts/Base.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import { SITE } from '../../config';
+import { API_URL, SITE } from '../../config';
 
 const title = `Public API | ${SITE.wordmark}`;
 const description =
   'Search, sync, sign up, add bots, and leave feedback through the botdirectory.ai JSON API at api.botdirectory.ai.';
-const apiBase = 'https://api.botdirectory.ai';
+const apiBase = API_URL;
 const apiUrl = `${apiBase}/api/bots`;
 const signupUrl = `${apiBase}/api/signup`;
 const newsletterUrl = `${apiBase}/api/newsletter`;
 const meUrl = `${apiBase}/api/me`;
 const feedbackUrl = `${apiBase}/api/feedback`;
 const rawFeedUrl = `${SITE.url}/api/bots.json`;
+const developerUrl = `${SITE.url}/developers/`;
+const openApiUrl = `${SITE.url}/openapi.json`;
+const apiCatalogUrl = `${SITE.url}/.well-known/api-catalog`;
 const cursorExample = `GET ${apiUrl}?cursor=start&limit=100
 
 {
@@ -114,6 +117,17 @@ const structuredData = {
         <span class="api-method">GET</span>
         <a href={apiUrl} class="api-endpoint">{apiUrl}</a>
       </div>
+
+      <section class="api-doc-section" id="machine-contract">
+        <h2>Machine-readable contract</h2>
+        <p>
+          Agents and generated clients can use the <a href={openApiUrl}>OpenAPI 3.1 specification</a>. The
+          <a href={apiCatalogUrl}>RFC 9727 API catalog</a> advertises the same API at the standard well-known URL,
+          and the <a href={developerUrl}>developer hub</a> collects every integration surface in one place.
+        </p>
+        <pre class="api-code"><code>curl {openApiUrl}
+curl -H "Accept: application/linkset+json" {apiCatalogUrl}</code></pre>
+      </section>
 
       <section class="api-doc-section">
         <h2>Browse and search</h2>
