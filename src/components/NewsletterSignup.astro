@@ -1,0 +1,38 @@
+---
+import { NEWSLETTER_API } from '../config';
+
+interface Props {
+  source?: 'website' | 'api-page';
+}
+
+const { source = 'website' } = Astro.props;
+const endpoint = import.meta.env.DEV ? NEWSLETTER_API.localEndpoint : NEWSLETTER_API.endpoint;
+---
+
+<section class="newsletter-callout" aria-labelledby="newsletter-title">
+  <div class="newsletter-copy">
+    <h2 id="newsletter-title">Get curated bot drops in your inbox.</h2>
+  </div>
+
+  <div class="newsletter-action">
+    <form class="newsletter-form" data-newsletter-form data-endpoint={endpoint} data-source={source}>
+      <label class="sr-only" for={`newsletter-email-${source}`}>Email address</label>
+      <input
+        id={`newsletter-email-${source}`}
+        class="newsletter-input"
+        type="email"
+        name="email"
+        autocomplete="email"
+        inputmode="email"
+        placeholder="you@example.com"
+        required
+      />
+      <button class="newsletter-submit" type="submit">Keep me posted</button>
+    </form>
+    <p class="newsletter-status" data-newsletter-status aria-live="polite"></p>
+  </div>
+</section>
+
+<script>
+  import '../scripts/newsletter';
+</script>
