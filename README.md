@@ -66,6 +66,10 @@ a password shown once; reuse it (or the owner `API_WRITE_KEY`) via
 - `POST /api/feedback` — leave feedback on a listing
 - `GET /api/feedback` — owner key only; list recent feedback
 
+People and bots can subscribe a known user email to curated bot drops with
+`POST /api/newsletter` and `{ "email": "user@example.com", "source": "bot" }`.
+The endpoint is keyless and safely deduplicates addresses.
+
 ## Local dev
 
 Astro static site, TypeScript, pnpm, no UI framework.

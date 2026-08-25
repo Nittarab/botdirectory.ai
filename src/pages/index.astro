@@ -10,6 +10,7 @@ import EdgeColumn from '../components/EdgeColumn.astro';
 import SponsorShuffle from '../components/SponsorShuffle.astro';
 import ToolIcon from '../components/ToolIcon.astro';
 import Select from '../components/Select.astro';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
 import { FEATURES, SITE, SPONSORING } from '../config';
 import { CATEGORIES, catStyle, fmt } from '../lib/constants';
 import { getBots, SPONSORS, PROMOS, type Bot, type Promo } from '../lib/data';
@@ -103,6 +104,8 @@ const structuredData = [
           <h1 class="hero-title">The Grok Bot directory</h1>
           <p class="hero-sub">Bots that get stuff done. Set one up with a single prompt for work, business, or everyday life.</p>
         </section>
+
+        <NewsletterSignup />
 
         <section id="browse" class="browse" style={`max-width: ${browseMax};`}>
           <div class="iz-browse-grid" style={`grid-template-columns: ${browseGrid};`}>

@@ -71,6 +71,13 @@ export const COPIES_API = {
   endpoint: 'https://api.botdirectory.ai/api/copies',
 } as const;
 
+export const NEWSLETTER_API = {
+  /** Public, keyless endpoint used by people and bots to subscribe an email. */
+  endpoint: 'https://api.botdirectory.ai/api/newsletter',
+  /** Keep local form submissions in the local D1 database during development. */
+  localEndpoint: 'http://localhost:8787/api/newsletter',
+} as const;
+
 /**
  * Contextual sponsor in the bot pages' "Connect first" section — separate
  * inventory from the sidebar slots (not part of sponsors.json rotation).
