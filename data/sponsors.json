@@ -23,6 +23,5 @@
       { "id": "reviews", "tagline": "Your agent writes the code. CodeRabbit reviews it." }
     ]
   },
-  { "name": "TranscriptAPI", "initial": "T", "family": "indigo", "tagline": "Reliable YouTube transcripts, search and channel data through one API.", "cta": "Get API access →", "url": "https://www.transcriptapi.io", "logo": "/images/sponsors/transcriptapi.png" },
   { "name": "CRHQ.AI", "initial": "C", "family": "purple", "tagline": "Deploy autonomous AI agent teams on dedicated servers in 90 seconds.", "cta": "Deploy your AI team →", "url": "https://crhq.ai", "logo": "/images/sponsors/crhq.svg" }
 ]
