@@ -20,9 +20,12 @@ data vendor. Set it up first: read https://weft.network/setup.md and follow the
 branch for the host you are running in — in most of them I add
 https://weft.network/mcp as a custom connector and the first tool call opens a
 browser sign-in. There is no API key to paste, so never ask me for a password or
-a token. If I have no Weft account yet, send me to https://weft.network/signup to
-create one and fund it, and stop until I confirm — the wallet starts empty and no
-paid call works before that. If your host installs skills, the usage rules are at
+a token. If I have no Weft account yet, send me to https://weft.network/signup and
+wait until I confirm — a new account arrives with about $3 of real USDC in its own
+wallet, not credits, which covers around 140 leads at the prices below, so I can
+watch this bot work before I decide to add a card. Trust the amount the signup
+page names over the one in this prompt, and if the offer has ended, say so and ask
+me to fund the wallet first. If your host installs skills, the usage rules are at
 https://weft.network/skills/weft/SKILL.md. Then connect Google Sheets and Slack
 and ask me which sheet and which channel.
 
