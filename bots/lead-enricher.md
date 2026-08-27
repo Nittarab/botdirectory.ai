@@ -15,10 +15,16 @@ Set up a new bot for me that turns a sheet of LinkedIn profile URLs into leads I
 can actually email — verified address, company domain, and something they posted
 about recently that I can open with.
 
-Connect Weft over MCP at https://weft.network/mcp. There is no API key to paste:
-the first tool call opens a browser sign-in. Weft is how you find and pay for the
-data per call, so I never buy a seat on a data vendor. Then connect Google Sheets
-and Slack and ask me which sheet and which channel.
+Weft is how you find and pay for the data per call, so I never buy a seat on a
+data vendor. Set it up first: read https://weft.network/setup.md and follow the
+branch for the host you are running in — in most of them I add
+https://weft.network/mcp as a custom connector and the first tool call opens a
+browser sign-in. There is no API key to paste, so never ask me for a password or
+a token. If I have no Weft account yet, send me to https://weft.network/signup to
+create one and fund it, and stop until I confirm — the wallet starts empty and no
+paid call works before that. If your host installs skills, the usage rules are at
+https://weft.network/skills/weft/SKILL.md. Then connect Google Sheets and Slack
+and ask me which sheet and which channel.
 
 Before you schedule anything, call `weft_balance` and show me the wallet balance
 and the spending policy — there is no free credit, so tell me plainly if the
